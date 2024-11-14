@@ -2,6 +2,7 @@ import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/data/data.dart';
 import 'package:bible_faq/model/model.dart';
+import 'package:bible_faq/view_model/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -83,39 +84,45 @@ class InfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeController themeController = Get.find();
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          RichText(
-            text: const TextSpan(
-              children: [
-                TextSpan(
-                  text:
-                      "Before asking your question, we encourage you to search our previously asked questions ",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.black,
+          Obx(() {
+            bool isDarkMode = themeController.isDarkMode.value;
+
+            return RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text:
+                        "Before asking your question, we encourage you to search our previously asked questions ",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: AppFontSize.small,
+                      color: isDarkMode ? AppColors.white : AppColors.black,
+                    ),
                   ),
-                ),
-                TextSpan(
-                  text:
-                      "to see if someone else has already asked the same or a similar question.",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.lightGray,
+                  const TextSpan(
+                    text:
+                        "to see if someone else has already asked the same or a similar question.",
+                    style: TextStyle(
+                      fontSize: AppFontSize.xsmall,
+                      color: AppColors.lightGray,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
+                ],
+              ),
+            );
+          }),
           const Gap(12),
           const LabelText(
             text:
                 "We have over 2,100 questions answered on various topics. You may search and filter below.",
             textColor: AppColors.lightGray,
+            isChangeTextColor: false,
           ),
           const Gap(12),
           RichText(

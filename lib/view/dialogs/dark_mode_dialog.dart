@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/app_colors.dart';
+import 'package:bible_faq/view_model/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,9 +18,12 @@ class DarkModeDialog {
   static void show() {
     log("show method call");
     final DarkModeController controller = Get.put(DarkModeController());
-
-    Get.dialog(
-      AlertDialog(
+    final ThemeController themeController = Get.find<ThemeController>();
+    Get.dialog(Obx(() {
+      bool isDarkMode = themeController.isDarkMode.value;
+      return AlertDialog(
+        backgroundColor:
+            isDarkMode ? AppColors.black.withOpacity(.9) : AppColors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Center(
           child: TitleText(
@@ -79,8 +83,8 @@ class DarkModeDialog {
             ),
           ),
         ],
-      ),
-    );
+      );
+    }));
   }
 }
 
@@ -110,6 +114,7 @@ class CustomRadioOption extends StatelessWidget {
             value: value,
             groupValue: groupValue,
             onChanged: onChanged,
+            activeColor: AppColors.tealBlue,
           ),
         ],
       ),
