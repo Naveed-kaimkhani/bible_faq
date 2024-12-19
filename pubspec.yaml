@@ -39,7 +39,10 @@ dependencies:
   get: ^4.6.6
   gap: ^3.0.1
   flutter_spinkit: ^5.2.1
-
+  sqflite:
+  path_provider:
+  device_preview: ^1.2.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -68,7 +71,7 @@ flutter:
     - assets/icons/
     - assets/icons/svg_icons/
     - assets/images/
-  #   - images/a_dot_ham.jpeg
+    - assets/QuestionsAnswers.DB
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

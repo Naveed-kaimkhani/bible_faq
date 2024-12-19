@@ -1,5 +1,6 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_faq/view_model/api_controller/all_question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -27,7 +28,10 @@ class SearchAndSettingsRow extends StatelessWidget {
             child: Center(
               child: GestureDetector(
                 onTap: () {
-                  Get.toNamed(AppRouts.settingScreen);
+                  // Get.toNamed(AppRouts.settingScreen);
+                  
+  final controller = Get.find<AllQuestionProvider>();
+  controller.requestGet();
                 },
                 child: const Icon(Icons.settings_outlined),
               ),

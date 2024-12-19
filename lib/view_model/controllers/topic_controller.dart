@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class TopicController extends GetxController {
   var topics = <Topic>[].obs;
   final TopicRepository _repository = TopicRepository();
-
+  
   @override
   void onInit() {
     super.onInit();
