@@ -76,4 +76,10 @@ Future<List<QuestionData>> fetchQuestions() async {
     );
   }
 
+Future<bool> isDatabaseEmpty() async {
+  final db = await database;
+  final result = await db.query('questions', limit: 1);
+  return result.isEmpty;
+}
+
 }
