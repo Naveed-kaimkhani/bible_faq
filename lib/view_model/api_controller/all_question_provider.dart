@@ -6,7 +6,7 @@ import 'package:bible_faq/services/api_services/api_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AllQuestionProvider extends GetxController {
+class QuestionProviderAPI extends GetxController {
   // Observable loading state
   var isLoading = false.obs;
   

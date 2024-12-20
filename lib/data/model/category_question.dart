@@ -1,24 +1,18 @@
-class CategoryQuestion {
-  // Properties
-  int? catId;
-  int? qId;
+class CategoryQuestionData {
+  String? qId;
+  String? catId;
 
-  // Constructor
-  CategoryQuestion({this.catId, this.qId});
+  CategoryQuestionData({this.qId, this.catId});
 
-  // Factory constructor for JSON deserialization
-  factory CategoryQuestion.fromJson(Map<String, dynamic> json) {
-    return CategoryQuestion(
-      catId: json['cat_id'] as int?,
-      qId: json['q_id'] as int?,
-    );
+  CategoryQuestionData.fromJson(Map<String, dynamic> json) {
+    qId = json['q_id'];
+    catId = json['cat_id'];
   }
 
-  // Method for JSON serialization
   Map<String, dynamic> toJson() {
-    return {
-      'cat_id': catId,
-      'q_id': qId,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['q_id'] = this.qId;
+    data['cat_id'] = this.catId;
+    return data;
   }
 }

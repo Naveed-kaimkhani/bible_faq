@@ -1,49 +1,49 @@
-import 'dart:convert';
 
-class Questions {
-  // Properties
-  String? answer;
-  String? book;
-  int? hits;
-  int? qId;
+class QuestionData {
+  String? qId;
   String? question;
-  String? timestamp;
+  String? book;
   String? verse;
+  String? answer;
+  String? hits;
+  String? timestamp;
+  String? image;
+  String? websiteId;
 
-  // Constructor
-  Questions({
-    this.answer,
-    this.book,
-    this.hits,
-    this.qId,
-    this.question,
-    this.timestamp,
-    this.verse,
-  });
+  QuestionData(
+      {this.qId,
+      this.question,
+      this.book,
+      this.verse,
+      this.answer,
+      this.hits,
+      this.timestamp,
+      this.image,
+      this.websiteId});
 
-  // Factory constructor for JSON deserialization
-  factory Questions.fromJson(Map<String, dynamic> json) {
-    return Questions(
-      answer: json['answer'] as String?,
-      book: json['book'] as String?,
-      hits: json['hits'] as int?,
-      qId: json['q_id'] as int?,
-      question: json['question'] as String?,
-      timestamp: json['timestamp'] as String?,
-      verse: json['verse'] as String?,
-    );
+  QuestionData.fromJson(Map<String, dynamic> json) {
+    qId = json['q_id'];
+    question = json['question'];
+    book = json['book'];
+    verse = json['verse'];
+    answer = json['answer'];
+    hits = json['hits'];
+    timestamp = json['timestamp'];
+    image = json['image'];
+    websiteId = json['website_id'];
   }
 
-  // Method for JSON serialization
   Map<String, dynamic> toJson() {
-    return {
-      'answer': answer,
-      'book': book,
-      'hits': hits,
-      'q_id': qId,
-      'question': question,
-      'timestamp': timestamp,
-      'verse': verse,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['q_id'] = this.qId;
+    data['question'] = this.question;
+    data['book'] = this.book;
+    data['verse'] = this.verse;
+    data['answer'] = this.answer;
+    data['hits'] = this.hits;
+    data['timestamp'] = this.timestamp;
+    data['image'] = this.image;
+    data['website_id'] = this.websiteId;
+    return data;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/view/home_screen/home_screen.dart';
 import 'package:bible_faq/view_model/controllers/controllers.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -8,10 +9,13 @@ import 'package:get/get.dart';
 class HomeScreen extends StatelessWidget {
   final TopicController topicController = Get.put(TopicController());
 
+  final DBcontroller = Get.find<QuestionsProviderSql>();
+
   HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+  // DBcontroller.questionsList;                        we have to use this list in overall project.
     final ThemeController themeController = Get.find();
     return Obx(() {
       bool isDarkMode = themeController.isDarkMode.value;
