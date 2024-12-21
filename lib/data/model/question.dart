@@ -1,11 +1,10 @@
-
 class QuestionData {
-  String? qId;
+  int? qId;
   String? question;
   String? book;
   String? verse;
   String? answer;
-  String? hits;
+  int? hits;
   String? timestamp;
   String? image;
   String? websiteId;
