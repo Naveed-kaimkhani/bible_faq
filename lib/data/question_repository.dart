@@ -18,31 +18,7 @@ class QuestionRepository {
         text: "How did David defeat Goliath with just a sling and a stone?",
         imagePath: AppImages.questionImages[2],
       ),
-      Question(
-        text:
-            "What are the four horsemen of the Apocalypse in the Book of Revelation?",
-        imagePath: AppImages.questionImages[3],
-      ),
-      Question(
-        text: "Why did Moses part the Red Sea in the Old Testament?",
-        imagePath: AppImages.questionImages[4],
-      ),
-      Question(
-        text: "What is the story of the prodigal son in the Bible?",
-        imagePath: AppImages.questionImages[5],
-      ),
-      Question(
-        text: "How did David defeat Goliath with just a sling and a stone?",
-        imagePath: AppImages.questionImages[6],
-      ),
-      Question(
-        text: "What is the significance of the Last Supper?",
-        imagePath: AppImages.questionImages[7],
-      ),
-      Question(
-        text: "Why did Moses part the Red Sea?",
-        imagePath: AppImages.questionImages[8],
-      ),
+      
     ];
   }
 }

@@ -31,7 +31,7 @@ class SearchAndSettingsRow extends StatelessWidget {
                   // Get.toNamed(AppRouts.settingScreen);
                   
   final controller = Get.find<QuestionProviderAPI>();
-  controller.requestGet();
+  // controller.requestGet();
                 },
                 child: const Icon(Icons.settings_outlined),
               ),

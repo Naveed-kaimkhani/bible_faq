@@ -1,6 +1,6 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/model/model.dart';
+import 'package:bible_faq/model/topic.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,9 +12,7 @@ class TopicTileComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(
-        vertical: 4.0,
-      ),
+      margin: const EdgeInsets.symmetric(vertical: 4.0),
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -32,10 +30,9 @@ class TopicTileComponent extends StatelessWidget {
             text: topic.title,
           ),
           subtitle: SizedBox(
-            height: 24, // Fix the height of the subtitle
+            height: 24,
             child: Align(
-              alignment: Alignment
-                  .centerLeft, // Align the subtitle to the left if needed
+              alignment: Alignment.centerLeft,
               child: Container(
                 width: 52,
                 decoration: BoxDecoration(
@@ -68,7 +65,11 @@ class TopicTileComponent extends StatelessWidget {
             ),
           ),
           onTap: () {
-            Get.toNamed(AppRouts.topicScreen);
+            // Navigate to TopicScreen with the selected category's ID
+            Get.toNamed(
+              AppRouts.topicScreen,
+              arguments: topic.catId, // Pass catId as an argument
+            );
           },
         ),
       ),

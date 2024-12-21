@@ -15,4 +15,6 @@ class AppRouts {
   static const String freeBilbeGuideScreen = "/freeBilbeGuideScreen";
   static const String askQuestionScreen = "/askQuestionScreen";
   static const String topicDeatailsScreen = "/topicDeatailsScreen";
+  static const String questionDetailScreen = "/questionDetailScreen";
+
 }

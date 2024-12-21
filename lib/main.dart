@@ -16,10 +16,7 @@ void main() {
   
   Get.put(QuestionsProviderSql());
   Get.put(QuestionProviderAPI());
-  // DevicePreview(
-  //   enabled: !kReleaseMode,
-  //   builder: (context) => const BibleFAQ()
-  //   );
+
   runApp(const BibleFAQ());
 }
 

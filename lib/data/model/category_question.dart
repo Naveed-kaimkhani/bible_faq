@@ -1,6 +1,6 @@
 class CategoryQuestionData {
-  String? qId;
-  String? catId;
+  int? qId;
+  int? catId;
 
   CategoryQuestionData({this.qId, this.catId});
 

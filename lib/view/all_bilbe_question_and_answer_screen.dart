@@ -22,22 +22,32 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
         isShowInternetTrailing: true,
       ),
       body: Obx(() {
-        if (DBcontroller.isLoading.value) {
-          // Show a loading spinner while fetching data
+        // Handle the loading state
+        if (DBcontroller.isAllQuestionsLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (DBcontroller.isError.value) {
-          // Show an error message if something goes wrong
+        // Handle the error state
+        if (DBcontroller.isAllQuestionsError.value) {
           return const Center(
-              child: Text("Failed to fetch questions. Please try again."));
+            child: Text(
+              "Failed to fetch questions. Please try again.",
+              style: TextStyle(fontSize: 16, color: Colors.red),
+            ),
+          );
         }
 
+        // Retrieve all questions
         final questions = DBcontroller.allQuestions;
 
+        // Handle the empty state
         if (questions.isEmpty) {
-          // Show a message when no questions are available
-          return const Center(child: Text("No questions available."));
+          return const Center(
+            child: Text(
+              "No questions available.",
+              style: TextStyle(fontSize: 16),
+            ),
+          );
         }
 
         return Padding(
@@ -57,6 +67,7 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
                     final question = questions[index];
                     return Card(
                       elevation: 3,
+                      margin: const EdgeInsets.symmetric(vertical: 8),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -81,6 +92,17 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        subtitle: Text(
+                          'Book: ${question.book ?? 'N/A'} | Verse: ${question.verse ?? 'N/A'}',
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                        onTap: () {
+                          // Navigate to QuestionDetailScreen with the selected question as an argument
+                          Get.toNamed(
+                            AppRouts.questionDetailScreen,
+                            arguments: question,
+                          );
+                        },
                       ),
                     );
                   },
