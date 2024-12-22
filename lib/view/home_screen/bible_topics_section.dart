@@ -1,4 +1,5 @@
 import 'package:bible_faq/components/componets.dart';
+import 'package:bible_faq/constants/app_images.dart';
 import 'package:bible_faq/constants/app_routs.dart';
 import 'package:bible_faq/model/topic.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider.dart';
@@ -11,7 +12,7 @@ class BibleTopicsSection extends StatelessWidget {
 
   // final QuestionsProviderSql provider = Get.put(QuestionsProviderSql());  //// we used put only 1 time in main.dart, so we use Get.find() to get the instance of QuestionsProviderSql
 
-final  provider = Get.find<QuestionsProviderSql>();  
+  final provider = Get.find<QuestionsProviderSql>();
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -57,8 +58,8 @@ final  provider = Get.find<QuestionsProviderSql>();
                     catId: topic.catId,
                     title: topic.name ?? 'Unnamed Topic',
                     count: 45, // Replace with actual count if available
-                    imageUrl:
-                        "assets/images/questionImage1.png", // Replace with actual URL if available
+                    imageUrl: AppImages
+                        .getRandomImage(), // Replace with actual URL if available
                   ),
                 );
               },

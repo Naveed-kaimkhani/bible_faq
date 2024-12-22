@@ -16,5 +16,4 @@ class AppRouts {
   static const String askQuestionScreen = "/askQuestionScreen";
   static const String topicDeatailsScreen = "/topicDeatailsScreen";
   static const String questionDetailScreen = "/questionDetailScreen";
-
 }

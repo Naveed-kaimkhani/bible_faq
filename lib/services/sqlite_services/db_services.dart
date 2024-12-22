@@ -1,7 +1,6 @@
 import 'package:bible_faq/data/model/category_question.dart';
 import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/data/model/question_category.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';

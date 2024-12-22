@@ -1,61 +1,3 @@
-// import 'package:bible_faq/components/componets.dart';
-// import 'package:bible_faq/constants/constants.dart';
-// import 'package:bible_faq/data/data.dart';
-// import 'package:bible_faq/model/model.dart';
-// import 'package:bible_faq/view_model/question_provider/question_provider.dart';
-// import 'package:flutter/material.dart';
-// import 'package:gap/gap.dart';
-// import 'package:get/get.dart';
-// import 'package:get/get_core/src/get_main.dart';
-
-// class SearchQuestionsScreen extends StatelessWidget {
-//   SearchQuestionsScreen({super.key});
-
-//   final  dbController = Get.find<QuestionsProviderSql>();
-
-//   @override
-//   Widget build(BuildContext context) {
-    
-//         final questions = dbController.allQuestions;
-//     return Scaffold(
-//       appBar: const CustomAppBar(
-//         title: "Search Questions",
-//         isShowSettingTrailing: true,
-//       ),
-//       body: BodyContainerComponent(
-//         child: Column(
-//           children: [
-//             const CustomTextField(),
-//             const Gap(10),
-//             Expanded(
-//               child: ListView.builder(
-//                 padding: EdgeInsets.zero,
-//                 itemCount: questions.length,
-//                 itemBuilder: (context, index) {
-//                   final question = questions[index];
-//                   return Card(
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(8),
-//                       child: ListTile(
-//                         contentPadding: const EdgeInsets.all(0),
-//                         leading: Image.asset('assets/images/questionImage1.png'),
-//                         title: TitleText(
-//                           text: question.question??
-//                               'Unnamed Question',
-//                           fontSize: AppFontSize.xsmall,
-//                         ),
-//                       ),
-//                     ),
-//                   );
-//                 },
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 
 import 'package:bible_faq/components/componets.dart';
@@ -147,7 +89,8 @@ class _SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
                       padding: const EdgeInsets.all(8),
                       child: ListTile(
                         contentPadding: const EdgeInsets.all(0),
-                        leading: Image.asset('assets/images/questionImage1.png'),
+                        leading: Image.asset(
+                             AppImages.getRandomImage()),
                         title: TitleText(
                           text: question.question ?? 'Unnamed Question',
                           fontSize: AppFontSize.xsmall,

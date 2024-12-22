@@ -14,7 +14,7 @@ class DownloadController extends GetxController {
       }
     });
   }
-
+  
   void resetDownload() {
     downloadProgress.value = 0.0;
   }

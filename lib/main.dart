@@ -15,8 +15,8 @@ void main() {
   
   Get.put(ThemeController());
   Get.put(QuestionsProviderSql());
-
-  // Get.put(QuestionProviderAPI());    // no need to call api provider here. we are using only sql provider
+  
+  // Get.put(QuestionProviderAPI());
 
   runApp(const BibleFAQ());
 }

@@ -34,22 +34,19 @@ class QuestionsProviderSql extends GetxController {
 
     // Fetch raw data
     final result = await db.query('category');
-    print("Raw data fetched from DB: $result");
 
     // Map to Dart model
     categories.value = result.map((json) {
       try {
         return QuestionCategory.fromJson(json);
       } catch (e) {
-        print("Error mapping category: $json, Error: $e");
+Get.snackbar("Error"," Error mapping category: $json, Error: $e");
         throw e;
       }
     }).toList();
 
-    print("Mapped categories: ${categories.map((c) => c.name).toList()}");
   } catch (e) {
     isCategoriesError.value = true;
-    print("Error in fetchCategories: $e");
     Get.snackbar("Error", "Failed to fetch categories: $e");
   } finally {
     isCategoriesLoading.value = false;
@@ -94,7 +91,6 @@ class QuestionsProviderSql extends GetxController {
     }
   } catch (e) {
     isAllQuestionsError.value = true;
-    print("Error in fetchQuestionsByCategory: $e");
   } finally {
     isAllQuestionsLoading.value = false;
   }
@@ -114,16 +110,13 @@ class QuestionsProviderSql extends GetxController {
         orderBy: 'timestamp DESC',
       );
 
-      print("Fetched Latest Questions from DB: $result"); // Debugging log
 
       // Map the results to the model
       latestQuestions.value =
           result.map((json) => QuestionData.fromJson(json)).toList();
 
-      print("Mapped Latest Questions: $latestQuestions"); // Final list log
     } catch (e) {
       isLatestQuestionsError.value = true;
-      print("Error in fetchLatestQuestions: $e");
       Get.snackbar("Error", "Failed to fetch latest questions: $e");
     } finally {
       isLatestQuestionsLoading.value = false;
@@ -146,10 +139,8 @@ class QuestionsProviderSql extends GetxController {
 
       allQuestions.value =
           result.map((json) => QuestionData.fromJson(json)).toList();
-      print("Fetched All Questions: $allQuestions");
     } catch (e) {
       isAllQuestionsError.value = true;
-      print("Error in fetchAllQuestions: $e");
       Get.snackbar("Error", "Failed to fetch all questions: $e");
     } finally {
       isAllQuestionsLoading.value = false;
@@ -163,6 +154,7 @@ class QuestionsProviderSql extends GetxController {
 
     // Preload some data
     fetchLatestQuestions(); // Fetch latest questions
+    fetchAllQuestions();
     fetchCategories(); // Fetch categories
   }
 }

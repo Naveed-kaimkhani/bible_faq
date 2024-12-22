@@ -1,8 +1,7 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/data/data.dart';
-import 'package:bible_faq/model/model.dart';
 import 'package:bible_faq/view_model/controllers/controllers.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -167,10 +166,14 @@ class InfoSection extends StatelessWidget {
 class QuestionSection extends StatelessWidget {
   QuestionSection({super.key});
 
-  final List<Question> questions = QuestionRepository.fetchLatestQuestions();
+  // final List<Question> questions = QuestionRepository.fetchLatestQuestions();
+  
+  final  dbController = Get.find<QuestionsProviderSql>();
 
   @override
   Widget build(BuildContext context) {
+    
+        final questions = dbController.allQuestions;
     return ListView.builder(
       padding: EdgeInsets.zero,
       itemCount: questions.length,
@@ -181,9 +184,9 @@ class QuestionSection extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: ListTile(
               contentPadding: const EdgeInsets.all(0),
-              leading: Image.asset(question.imagePath),
+              leading: Image.asset(AppImages.getRandomImage()),
               title: TitleText(
-                text: question.text,
+                text: question.question??"",
                 fontSize: AppFontSize.xsmall,
               ),
             ),

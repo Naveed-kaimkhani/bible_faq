@@ -32,27 +32,17 @@ Future<Map<String, dynamic>?> requestGetMethodForAllQuestion(
   final endpoint = "database_category.php?category_catid=$latestCatId&questions_qid=$latestQId&category_questions_count=$totalCount";
   final url = Uri.parse(baseUrl + endpoint);
 
-  print("Dynamic API URL: $url");
-
   try {
     // Make the HTTP GET request
     final response = await http.get(url, headers: headers);
-
-    print("Response Status Code: ${response.statusCode}");
-    print("Response Body: ${response.body}");
-
     if (response.statusCode == 200) {
-      print("Request succeeded.");
       final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
-      print("Decoded JSON Data: $jsonData");
       return jsonData; // Return raw JSON
     } else {
-      print("Error: HTTP ${response.statusCode} - ${response.reasonPhrase}");
       Get.snackbar("Error", "HTTP ${response.statusCode}: ${response.reasonPhrase}");
       return null;
     }
   } catch (e) {
-    print("Request failed with exception: $e");
     Get.snackbar("Error", "Request failed: $e");
     return null;
   }

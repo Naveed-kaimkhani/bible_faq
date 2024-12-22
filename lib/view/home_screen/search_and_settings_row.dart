@@ -1,5 +1,6 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_faq/view/search_questions_screen.dart';
 import 'package:bible_faq/view_model/api_controller/all_question_provider.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ import 'package:get/get.dart';
 class SearchAndSettingsRow extends StatelessWidget {
   SearchAndSettingsRow({super.key, required this.isDarkMode});
 
-  // final  dbController = Get.find<QuestionsProviderSql>();
+  final dbController = Get.find<QuestionsProviderSql>();
 
   final bool isDarkMode;
   @override
@@ -31,11 +32,14 @@ class SearchAndSettingsRow extends StatelessWidget {
               boxShadow: isDarkMode ? [] : _boxShadow(),
             ),
             child: Center(
-              child: GestureDetector(
-                onTap: () {
-                },
-                child: const Icon(Icons.settings_outlined),
-              ),
+              child: IconButton(
+                  onPressed: () {
+                    Get.toNamed(AppRouts.settingScreen);
+
+                    // final  dbController = Get.find<QuestionProviderAPI>();
+                    // dbController.fetchAndUpdateDataDynamically();
+                  },
+                  icon: const Icon(Icons.settings_outlined)),
             ),
           ),
           const Gap(3),

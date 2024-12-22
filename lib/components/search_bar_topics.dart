@@ -1,14 +1,11 @@
 import 'package:bible_faq/constants/app_colors.dart';
-import 'package:bible_faq/constants/app_routs.dart';
-import 'package:bible_faq/view/home_screen/home_screen.dart';
-import 'package:bible_faq/view/search_questions_screen.dart';
 import 'package:bible_faq/view_model/controllers/controllers.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
+class CustomTextFieldTopics extends StatelessWidget {
+  const CustomTextFieldTopics({
     super.key,
     this.hintText = "Search",
     this.prefixIcon = const Icon(Icons.search),
@@ -48,7 +45,7 @@ class CustomTextField extends StatelessWidget {
             height: height,
             child: TextField(
               onTap: () {
-                Get.toNamed(AppRouts.searchQusetionScreen);
+                // Get.toNamed(AppRouts.searchQusetionScreen);
               },
               decoration: InputDecoration(
                 filled: true,

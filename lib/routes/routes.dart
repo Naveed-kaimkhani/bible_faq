@@ -28,10 +28,10 @@ class Routes {
           name: AppRouts.bibleTopicsScreen,
           page: () => BibleTopicsScreen(),
         ),
-        GetPage(
-          name: AppRouts.browsingHistryScreen,
-          page: () => BrowsingHistryScreen(),
-        ),
+        // GetPage(
+        //   name: AppRouts.browsingHistryScreen,
+        //   page: () => BrowsingHistryScreen(),
+        // ),
         GetPage(
           name: AppRouts.latestQuestionScreen,
           page: () => LatestQuestionScreen(),

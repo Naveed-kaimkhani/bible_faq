@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -50,14 +52,14 @@ class SettingScreen extends StatelessWidget {
                     Get.toNamed(AppRouts.myFavouritQuestionScreen);
                   },
                 ),
-                menuItem(
-                  icon: AppSvgIcons.userStar,
-                  label: 'My Browsing History',
-                  isShowDivider: false,
-                  ontap: () {
-                    Get.toNamed(AppRouts.browsingHistryScreen);
-                  },
-                ),
+                // menuItem(
+                //   icon: AppSvgIcons.userStar,
+                //   label: 'My Browsing History',
+                //   isShowDivider: false,
+                //   ontap: () {
+                //     Get.toNamed(AppRouts.browsingHistryScreen);
+                //   },
+                // ),
               ]),
               const Gap(15),
               const TitleText(text: 'Settings'),
@@ -103,8 +105,13 @@ class SettingScreen extends StatelessWidget {
                 menuItem(
                   icon: AppSvgIcons.browser,
                   label: 'View Our Website',
-                  ontap: () {
-                    Get.toNamed(AppRouts.searchQusetionScreen);
+                  ontap: () async {
+                    final Uri url = Uri.parse("https://bibleresources.info/");
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    } else {
+                      Get.snackbar("Error", "Could not launch $url");
+                    }
                   },
                 ),
                 menuItem(
@@ -133,14 +140,26 @@ class SettingScreen extends StatelessWidget {
               const Gap(15),
               const TitleText(text: 'Mobile App'),
               _buildMenuItemCard(children: [
-                menuItem(icon: AppSvgIcons.share, label: 'Share Application'),
+                // menuItem(icon: AppSvgIcons.share, label: 'Share Application'),
+                menuItem(
+                  icon: AppSvgIcons.share,
+                  label: 'Share Application',
+                  ontap: () {
+                    const String appLink =
+                        "https://example.com/yourapp"; // Replace with your app's URL
+                    Share.share(
+                      "Check out this amazing app: $appLink",
+                      subject: "Share Our Application",
+                    );
+                  },
+                ),
                 menuItem(icon: AppSvgIcons.star, label: 'Rate Application'),
                 menuItem(icon: AppSvgIcons.book, label: 'Update Application'),
                 menuItem(
                     icon: AppSvgIcons.bug, label: 'Report a Bug or Suggestion'),
                 menuItem(
                   icon: AppSvgIcons.mailAtSign,
-                  label: 'App Version 3.0.1',
+                  label: 'App Version 4.0.1',
                   isShowDivider: false,
                   hideLadingAndTrailing: true,
                 ),

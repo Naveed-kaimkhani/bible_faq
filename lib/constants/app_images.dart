@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class AppImages {
   static const String splashImage = "assets/images/splash_image.png";
   static List<String> questionImages = [
@@ -12,7 +14,11 @@ class AppImages {
     "assets/images/questionImage3.png",
     "assets/images/questionImage4.png",
   ];
-
+static String getRandomImage() {
+    final random = Random();
+    int index = random.nextInt(questionImages.length);
+    return questionImages[index];
+  }
   static const List<String> resourceImages = [
     "assets/images/resource_image1.png",
     "assets/images/resource_image2.png",
