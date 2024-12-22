@@ -8,13 +8,19 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
   AllBilbeQuestionAndAnswerScreen({super.key});
 
   // Get the QuestionsProviderSql instance
-  final QuestionsProviderSql DBcontroller = Get.find<QuestionsProviderSql>();
+  final  dbController = Get.find<QuestionsProviderSql>();
 
   @override
   Widget build(BuildContext context) {
-    // Fetch all questions when this screen is loaded
-    DBcontroller.fetchAllQuestions();
 
+    /*
+
+
+    // dbController.fetchAllQuestions();  // no need to call this function again. it is already called in QuestionsProviderSql init method
+
+
+
+*/
     return Scaffold(
       appBar: const CustomAppBar(
         title: "All Bible Questions and Answers",
@@ -23,12 +29,12 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
       ),
       body: Obx(() {
         // Handle the loading state
-        if (DBcontroller.isAllQuestionsLoading.value) {
+        if (dbController.isAllQuestionsLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
 
         // Handle the error state
-        if (DBcontroller.isAllQuestionsError.value) {
+        if (dbController.isAllQuestionsError.value) {
           return const Center(
             child: Text(
               "Failed to fetch questions. Please try again.",
@@ -38,7 +44,7 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
         }
 
         // Retrieve all questions
-        final questions = DBcontroller.allQuestions;
+        final questions = dbController.allQuestions;
 
         // Handle the empty state
         if (questions.isEmpty) {

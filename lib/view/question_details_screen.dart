@@ -2,8 +2,6 @@ import 'package:bible_faq/components/componets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class QuestionDetailScreen extends StatelessWidget {
   QuestionDetailScreen({super.key});
@@ -29,9 +27,9 @@ class QuestionDetailScreen extends StatelessWidget {
               fontSize: 20,
             ),
             const SizedBox(height: 16),
-            Text(
+            const Text(
               "Answer:",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             const SizedBox(height: 8),
             Html(
@@ -45,27 +43,27 @@ class QuestionDetailScreen extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-            Text(
+            const Text(
               "Book:",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(
               question.book ?? 'No Book Info',
               style: const TextStyle(fontSize: 14),
             ),
             const SizedBox(height: 16),
-            Text(
+            const Text(
               "Hits:",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(
               "${question.hits ?? 0}",
               style: const TextStyle(fontSize: 14),
             ),
             const SizedBox(height: 16),
-            Text(
+            const Text(
               "Verse:",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(
               question.verse ?? 'No Verse Info',

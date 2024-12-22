@@ -10,14 +10,28 @@ class LatestQuestionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final QuestionsProviderSql provider = Get.put(QuestionsProviderSql());
+  
+  
+    /*
+
+
+  // final QuestionsProviderSql provider = Get.put(QuestionsProviderSql()); 
+  
+  // we used put only 1 time in main.dart, 
+  // so we use Get.find() to get the instance of QuestionsProviderSql
+
+
+
+*/
+
+final  provider = Get.find<QuestionsProviderSql>();   //this way we can get the instance of QuestionsProviderSql
 
     return Obx(() {
       if (provider.isLatestQuestionsLoading.value) {
         return const Center(child: CircularProgressIndicator());
       }
       if (provider.isLatestQuestionsError.value) {
-        return Center(
+        return const Center(
           child: Text(
             "Failed to load latest questions",
             style: TextStyle(color: Colors.red, fontSize: 16),
@@ -49,18 +63,26 @@ class LatestQuestionSection extends StatelessWidget {
               itemCount: questions.length,
               itemBuilder: (context, index) {
                 final question = questions[index];
-                return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.all(0),
-                      leading: Image.asset('assets/images/questionImage1.png'),
-                      title: TitleText(
-                        text: question.question ?? 'No text available',
-                        fontSize: AppFontSize.xsmall,
+                return GestureDetector(
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.all(0),
+                        leading: Image.asset('assets/images/questionImage1.png'),
+                        title: TitleText(
+                          text: question.question ?? 'No text available',
+                          fontSize: AppFontSize.xsmall,
+                        ),
                       ),
                     ),
                   ),
+                  onTap:  (){
+                    Get.toNamed(
+                            AppRouts.questionDetailScreen,
+                            arguments: question,
+                          );
+                  }
                 );
               },
             ),

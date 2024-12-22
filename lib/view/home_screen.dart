@@ -1,17 +1,11 @@
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/view/home_screen/home_screen.dart';
-import 'package:bible_faq/view_model/api_controller/all_question_provider.dart';
 import 'package:bible_faq/view_model/controllers/controllers.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
-  final TopicController topicController = Get.put(TopicController());
-
-  final DBcontroller = Get.find<QuestionsProviderSql>();
-  final QuestionProviderAPI provider = Get.find<QuestionProviderAPI>(); // Access the initialized provider
 
   HomeScreen({super.key});
 
@@ -47,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                 const Gap(16),
                 SizedBox(
                   height: Get.height * 0.25,
-                  child:  LatestQuestionSection(),
+                  child:  const LatestQuestionSection(),
                 ),
                 SizedBox(
                   height: Get.height * 0.27,

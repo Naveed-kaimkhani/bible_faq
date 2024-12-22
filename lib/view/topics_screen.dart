@@ -5,15 +5,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TopicsScreen extends StatelessWidget {
-  final QuestionsProviderSql provider = Get.put(QuestionsProviderSql());
+/*
 
+
+
+
+  // final QuestionsProviderSql provider = Get.put(QuestionsProviderSql());  // we used put only 1 time in main.dart, so we use Get.find() to get the instance of QuestionsProviderSql
+
+
+
+
+
+*/
+
+  final  provider = Get.find<QuestionsProviderSql>(); // added this
   TopicsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final int catId = Get.arguments;
 
-    provider.fetchQuestionsByCategory(catId);
+  provider.fetchQuestionsByCategory(catId);
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -27,9 +39,9 @@ class TopicsScreen extends StatelessWidget {
         }
 
         if (provider.isAllQuestionsError.value) {
-          return Center(
-            child: Text(
-              "Failed to load questions.",
+          return const Center(
+            child:  Text(
+              "Failed to load Topics.",
               style: TextStyle(color: Colors.red, fontSize: 16),
             ),
           );
@@ -40,7 +52,7 @@ class TopicsScreen extends StatelessWidget {
         if (questions.isEmpty) {
           return const Center(
             child: Text(
-              "No questions available for this category.",
+              "No Topics available for this category.",
               style: TextStyle(fontSize: 16),
             ),
           );

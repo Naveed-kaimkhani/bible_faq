@@ -9,8 +9,9 @@ import 'package:get/get.dart';
 class BibleTopicsSection extends StatelessWidget {
   BibleTopicsSection({super.key});
 
-  final QuestionsProviderSql provider = Get.put(QuestionsProviderSql());
+  // final QuestionsProviderSql provider = Get.put(QuestionsProviderSql());  //// we used put only 1 time in main.dart, so we use Get.find() to get the instance of QuestionsProviderSql
 
+final  provider = Get.find<QuestionsProviderSql>();  
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -18,7 +19,7 @@ class BibleTopicsSection extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       }
       if (provider.isCategoriesError.value) {
-        return Center(
+        return const Center(
           child: Text(
             "Failed to load topics",
             style: TextStyle(color: Colors.red, fontSize: 16),

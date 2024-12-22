@@ -1,9 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:bible_faq/services/api_services/api_manager.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sqflite/sql.dart';
 

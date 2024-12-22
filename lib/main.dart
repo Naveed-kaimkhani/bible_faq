@@ -12,10 +12,11 @@ import 'package:get/get.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Get.put(ThemeController());
   
+  Get.put(ThemeController());
   Get.put(QuestionsProviderSql());
-  Get.put(QuestionProviderAPI());
+
+  // Get.put(QuestionProviderAPI());    // no need to call api provider here. we are using only sql provider
 
   runApp(const BibleFAQ());
 }

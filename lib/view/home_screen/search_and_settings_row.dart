@@ -1,15 +1,20 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/view_model/api_controller/all_question_provider.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class SearchAndSettingsRow extends StatelessWidget {
-  const SearchAndSettingsRow({super.key, required this.isDarkMode});
+  SearchAndSettingsRow({super.key, required this.isDarkMode});
+
+  // final  dbController = Get.find<QuestionsProviderSql>();
+
   final bool isDarkMode;
   @override
   Widget build(BuildContext context) {
+    // final questions = dbController.allQuestions;
     return SizedBox(
       height: 56,
       child: Row(
@@ -28,10 +33,6 @@ class SearchAndSettingsRow extends StatelessWidget {
             child: Center(
               child: GestureDetector(
                 onTap: () {
-                  // Get.toNamed(AppRouts.settingScreen);
-                  
-  final controller = Get.find<QuestionProviderAPI>();
-  // controller.requestGet();
                 },
                 child: const Icon(Icons.settings_outlined),
               ),

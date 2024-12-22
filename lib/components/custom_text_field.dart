@@ -1,5 +1,7 @@
 import 'package:bible_faq/constants/app_colors.dart';
+import 'package:bible_faq/constants/app_routs.dart';
 import 'package:bible_faq/view_model/controllers/controllers.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +19,10 @@ class CustomTextField extends StatelessWidget {
   final double height;
   @override
   Widget build(BuildContext context) {
+    
+  final  dbController = Get.find<QuestionsProviderSql>();
     final ThemeController themeController = Get.find();
+    dbController.allQuestions;
     return Obx(
       () {
         bool isDarkMode = themeController.isDarkMode.value;
@@ -55,7 +60,9 @@ class CustomTextField extends StatelessWidget {
                 disabledBorder: InputBorder.none,
               ),
               maxLines: maxLines,
-              // onChanged: (value) {},
+              onChanged: (value) {
+                
+              },
             ),
           ),
         );
