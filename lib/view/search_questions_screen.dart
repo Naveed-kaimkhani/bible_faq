@@ -1,9 +1,6 @@
-
-
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/data/model/question.dart';
-import 'package:bible_faq/model/question.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -26,7 +23,8 @@ class _SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
   void initState() {
     super.initState();
     questions = dbController.allQuestions; // Get all questions
-    filteredQuestions = questions; // Initialize filtered list with all questions
+    filteredQuestions =
+        questions; // Initialize filtered list with all questions
 
     _searchController.addListener(() {
       _filterQuestions(_searchController.text);
@@ -41,9 +39,11 @@ class _SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
     } else {
       setState(() {
         filteredQuestions = questions
-            .where((question) => question.question
-                ?.toLowerCase()
-                .contains(query.toLowerCase()) ?? false)
+            .where((question) =>
+                question.question
+                    ?.toLowerCase()
+                    .contains(query.toLowerCase()) ??
+                false)
             .toList();
       });
     }
@@ -58,7 +58,7 @@ class _SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: "Search Questions",
         isShowSettingTrailing: true,
       ),
@@ -84,16 +84,28 @@ class _SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
                 itemCount: filteredQuestions.length,
                 itemBuilder: (context, index) {
                   final question = filteredQuestions[index];
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.all(0),
-                        leading: Image.asset(
-                             AppImages.getRandomImage()),
-                        title: TitleText(
-                          text: question.question ?? 'Unnamed Question',
-                          fontSize: AppFontSize.xsmall,
+                  return GestureDetector(
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(0),
+                          leading: Image.asset(AppImages.getRandomImage()),
+                          title: TitleText(
+                            text: question.question ?? 'Unnamed Question',
+                            fontSize: AppFontSize.xsmall,
+                          ),
+                          subtitle: LabelText(
+                            text: "Read on ${question.timestamp}",
+                            textColor: Color(0xffA2A2A2),
+                            fontStyle: FontStyle.italic,
+                          ),
+                          onTap: () {
+                            Get.toNamed(
+                              AppRouts.questionDetailScreen,
+                              arguments: question,
+                            );
+                          },
                         ),
                       ),
                     ),

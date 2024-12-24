@@ -13,7 +13,7 @@ class LatestQuestionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: "Latest Questions",
         isShowSettingTrailing: true,
       ),
@@ -49,11 +49,16 @@ class LatestQuestionScreen extends StatelessWidget {
                         child: ListTile(
                           contentPadding: const EdgeInsets.all(0),
                           leading: Image.asset(
-                             AppImages.getRandomImage(),
+                            AppImages.getRandomImage(),
                           ), // Replace with question.imagePath if applicable
                           title: TitleText(
                             text: question.question ?? 'No text available',
                             fontSize: AppFontSize.xsmall,
+                          ),
+                          subtitle: LabelText(
+                            text: "Read on ${question.timestamp}",
+                            textColor: Color(0xffA2A2A2),
+                            fontStyle: FontStyle.italic,
                           ),
                           onTap: () {
                             // Navigate to QuestionDetailScreen with the selected question as an argument

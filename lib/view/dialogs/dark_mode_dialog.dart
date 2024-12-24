@@ -67,6 +67,18 @@ class DarkModeDialog {
             child: CustomGradientButton(
               text: "Apply",
               onTap: () {
+
+      // Apply the selected theme option
+      if (controller.selectedOption.value == 0) {
+        // Match device setting
+        themeController.toggleTheme();
+      } else if (controller.selectedOption.value == 1) {
+        // Light mode
+        themeController.toggleTheme();
+      } else if (controller.selectedOption.value == 2) {
+        // Dark mode
+        themeController.toggleTheme();
+      }
                 Get.back();
               },
             ),

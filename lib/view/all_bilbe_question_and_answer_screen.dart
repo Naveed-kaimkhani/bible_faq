@@ -7,22 +7,13 @@ import 'package:get/get.dart';
 class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
   AllBilbeQuestionAndAnswerScreen({super.key});
 
-  // Get the QuestionsProviderSql instance
   final  dbController = Get.find<QuestionsProviderSql>();
 
   @override
   Widget build(BuildContext context) {
 
-    /*
-
-
-    // dbController.fetchAllQuestions();  // no need to call this function again. it is already called in QuestionsProviderSql init method
-
-
-
-*/
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar:  CustomAppBar(
         title: "All Bible Questions and Answers",
         isShowSettingTrailing: true,
         isShowInternetTrailing: true,
@@ -99,7 +90,7 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
                           ),
                         ),
                         subtitle: Text(
-                          'Book: ${question.book ?? 'N/A'} | Verse: ${question.verse ?? 'N/A'}',
+                          'Read on: ${question.timestamp ?? 'N/A'}',
                           style: const TextStyle(fontSize: 14),
                         ),
                         onTap: () {

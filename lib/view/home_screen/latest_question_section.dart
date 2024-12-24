@@ -11,18 +11,6 @@ class LatestQuestionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   
-  
-    /*
-
-
-  // final QuestionsProviderSql provider = Get.put(QuestionsProviderSql()); 
-  
-  // we used put only 1 time in main.dart, 
-  // so we use Get.find() to get the instance of QuestionsProviderSql
-
-
-
-*/
 
 final  provider = Get.find<QuestionsProviderSql>();   //this way we can get the instance of QuestionsProviderSql
 

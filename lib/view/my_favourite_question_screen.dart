@@ -1,19 +1,19 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/data/data.dart';
-import 'package:bible_faq/model/model.dart';
+import 'package:bible_faq/view_model/controllers/favorites_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class MyFavouriteQuestionScreen extends StatelessWidget {
   MyFavouriteQuestionScreen({super.key});
 
-  final List<Question> questions = QuestionRepository.fetchLatestQuestions();
+  final FavoritesProvider favoritesProvider = Get.put(FavoritesProvider());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: "My Favourite Questions",
       ),
       body: BodyContainerComponent(
@@ -22,37 +22,73 @@ class MyFavouriteQuestionScreen extends StatelessWidget {
             const CustomTextField(),
             const Gap(10),
             Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: questions.length,
-                itemBuilder: (context, index) {
-                  final question = questions[index];
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 0),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.all(0),
-                        leading: Image.asset(question.imagePath),
-                        title: Column(
-                          children: [
-                            TitleText(
-                              text: question.text,
-                              fontSize: AppFontSize.xsmall,
-                            ),
-                            const Gap(8),
-                          ],
-                        ),
-                        subtitle: const LabelText(
-                          text: "Read on Oct 24, 2024 8:20PM",
-                          textColor: Color(0xffA2A2A2),
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
+              child: Obx(() {
+                // Use reactive favoriteQuestions list
+                final questions = favoritesProvider.favoriteQuestions;
+
+                if (favoritesProvider.isFavoritesLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (questions.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      "No favorite questions yet.",
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                   );
-                },
-              ),
+                }
+
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: questions.length,
+                  itemBuilder: (context, index) {
+                    final question = questions[index];
+                    return Card(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 0),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(0),
+                          leading: Image.asset(AppImages.getRandomImage()),
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TitleText(
+                                text: question.question ?? "No Title",
+                                fontSize: AppFontSize.xsmall,
+                              ),
+                              const Gap(8),
+                            ],
+                          ),
+                          subtitle: LabelText(
+                            text: "Read on ${question.timestamp}",
+                            textColor: Color(0xffA2A2A2),
+                            fontStyle: FontStyle.italic,
+                          ),
+                          trailing: GestureDetector(
+                            onTap: () {
+                              // Toggle favorite status
+                              favoritesProvider
+                                  .toggleFavorite(question.qId.toString());
+                            },
+                            child: Icon(
+                              favoritesProvider
+                                      .isFavorite(question.qId.toString())
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              color: favoritesProvider
+                                      .isFavorite(question.qId.toString())
+                                  ? Colors.yellow
+                                  : Colors.grey,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }),
             ),
           ],
         ),

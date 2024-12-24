@@ -6,18 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TopicsScreen extends StatelessWidget {
-/*
-
-
-
-
-  // final QuestionsProviderSql provider = Get.put(QuestionsProviderSql());  // we used put only 1 time in main.dart, so we use Get.find() to get the instance of QuestionsProviderSql
-
-
-
-
-
-*/
 
   final  provider = Get.find<QuestionsProviderSql>(); // added this
   TopicsScreen({super.key});
@@ -29,7 +17,7 @@ class TopicsScreen extends StatelessWidget {
   provider.fetchQuestionsByCategory(catId);
 
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar:  CustomAppBar(
         title: "Questions",
         isShowSettingTrailing: true,
         isShowInternetTrailing: true,

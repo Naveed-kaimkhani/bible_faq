@@ -1,14 +1,15 @@
 class QuestionData {
   int? qId;
-  String? question;
+  int? hits;
+
   String? book;
   String? verse;
-  String? answer;
-  int? hits;
-  String? timestamp;
-  String? image;
   String? websiteId;
 
+  String? timestamp;
+  String? image;
+  String? answer;
+  String? question;
   QuestionData(
       {this.qId,
       this.question,

@@ -10,9 +10,9 @@ class AboutUsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
       appBar: CustomAppBar(title: "About Us"),
-      body: BodyContainerComponent(child: AboutPage()),
+      body: const BodyContainerComponent(child: AboutPage()),
     );
   }
 }

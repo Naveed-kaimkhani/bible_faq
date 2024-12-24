@@ -16,9 +16,6 @@ class QuestionProviderAPI extends GetxController {
   //  int processedItems = 0;
   Future<void> fetchAndUpdateDataDynamically() async {
     try {
-      // Set loading state
-      // _setLoadingState(true);
-      print("in fetchAndUpdateDataDynamically");
       downloadProgress.value = 0.0;
       // Step 1: Fetch the latest values from SQLite database
       final latestValues = await _fetchLatestDatabaseValues();
@@ -38,20 +35,16 @@ class QuestionProviderAPI extends GetxController {
       );
 
       if (response == null) {
-        _setLoadingState(false);
-        _showSnackbar("Error", "No New Questions Found.");
+           isLoading.value = false;
+        _showSnackbar("Message", "No New Questions Found.");
         return;
       }
 
-      // Step 3: Process and update database with the new data
-      _setLoadingState(false);
 
       await _processApiResponse(response);
     } catch (e) {
-      _showSnackbar("Error", "An error occurred: $e");
-    } finally {
-      // Reset loading state
       _setLoadingState(false);
+      _showSnackbar("Error", "An error occurred: $e");
     }
   }
 
@@ -98,8 +91,9 @@ class QuestionProviderAPI extends GetxController {
     // Extract data from response
     final data = response['response'] ?? {};
     final questions = data['question_data'] ?? [];
-    print("question length: ${questions.length}");
+    debugPrint("question length: ${questions.length}");
     if (questions.length == 0) {
+      debugPrint("No new questions found.");  
       _setLoadingState(false);
       _showSnackbar("Error", "No new questions found.");
       return;
@@ -115,9 +109,8 @@ class QuestionProviderAPI extends GetxController {
 
   /// Update database with API response
   Future<void> updateDatabaseWithResponse(Map<String, dynamic> response) async {
+    print("updating db");
     final db = await _repository.database;
-    print("updateDatabaseWithResponse");
-    // Access the 'response' key first
     final data = response['response'] ?? {};
     final categories = data['category_data'] ?? [];
     final questions = data['question_data'] ?? [];
@@ -138,8 +131,27 @@ class QuestionProviderAPI extends GetxController {
       );
 
       // processedItems++;
+      // Insert or update question     
+    }
+    
       downloadProgress.value = 10.0;
-      // Insert or update questions
+      // Insert or update category_questions
+      for (var catQuestion in categoryQuestions) {
+        int result = await db.insert(
+          'category_questions',
+          {
+            'q_id': catQuestion['q_id'],
+            'cat_id': catQuestion['cat_id'],
+          },
+          conflictAlgorithm: ConflictAlgorithm.ignore,
+        );
+        print("category_questions result: $result");
+        if (result != 0) {
+          hasNewData = true.obs;
+        }
+      }
+
+     downloadProgress.value = 50.0;
       for (var question in questions) {
         await db.insert(
           'questions',
@@ -154,26 +166,13 @@ class QuestionProviderAPI extends GetxController {
           },
           conflictAlgorithm: ConflictAlgorithm.ignore,
         );
-      }
 
-      downloadProgress.value = 50.0;
-      // Insert or update category_questions
-      for (var catQuestion in categoryQuestions) {
-        int result = await db.insert(
-          'category_questions',
-          {
-            'q_id': catQuestion['q_id'],
-            'cat_id': catQuestion['cat_id'],
-          },
-          conflictAlgorithm: ConflictAlgorithm.ignore,
-        );
-        if (result != 0) {
-          hasNewData = true.obs;
-        }
+        print("question result: ");
       }
+      print("db updated");
+      downloadProgress.value = 100.0;
 
       _setLoadingState(false);
-      downloadProgress.value = 100.0;
       // Show Snackbar based on update status
       if (hasNewData.value) {
         Get.snackbar(
@@ -188,14 +187,12 @@ class QuestionProviderAPI extends GetxController {
           snackPosition: SnackPosition.TOP,
         );
       }
-    }
+  }
 
-    @override
-    void onInit() {
-      super.onInit();
-      print("intit stateeee");
-      // Automatically fetch and update data when the controller is initialized
-      fetchAndUpdateDataDynamically();
-    }
+  @override
+  void onInit() {
+    super.onInit();
+    // Automatically fetch and update data when the controller is initialized
+    fetchAndUpdateDataDynamically();
   }
 }

@@ -13,7 +13,7 @@ class AskQuestionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar:  CustomAppBar(
         title: "Ask a Question",
       ),
       body: BodyContainerComponent(

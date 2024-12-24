@@ -13,7 +13,7 @@ class TopicDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar:  CustomAppBar(
         title: "Topics",
         isShowSettingTrailing: true,
         isShowShareTrailing: true,

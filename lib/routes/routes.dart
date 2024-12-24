@@ -57,10 +57,10 @@ class Routes {
           name: AppRouts.aboutUsScreen,
           page: () => const AboutUsScreen(),
         ),
-        GetPage(
-          name: AppRouts.newsAndResourcesScreen,
-          page: () => const NewsAndResourcesScreen(),
-        ),
+        // GetPage(
+        //   name: AppRouts.newsAndResourcesScreen,
+        //   page: () => const NewsAndResourcesScreen(),
+        // ),
         GetPage(
           name: AppRouts.freeBilbeGuideScreen,
           page: () => const FreeBibleGuideScreen(),

@@ -52,7 +52,7 @@ void dispose() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar:  CustomAppBar(
         title: "Bible Topics",
         isShowSettingTrailing: true,
         isShowInternetTrailing: true,

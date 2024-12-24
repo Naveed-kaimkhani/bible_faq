@@ -1,75 +1,93 @@
 import 'package:bible_faq/components/componets.dart';
+import 'package:bible_faq/data/model/question.dart';
+import 'package:bible_faq/services/sqlite_services/db_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class QuestionDetailScreen extends StatelessWidget {
   QuestionDetailScreen({super.key});
 
+  final QuestionsRepository _repository = QuestionsRepository.instance;
   @override
   Widget build(BuildContext context) {
     // Retrieve the question object passed from the previous screen
-    final question = Get.arguments;
-
+    QuestionData question = Get.arguments;
+    _repository.updateTimestamp(question.qId ?? 0);
+    
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: "Question Details",
         isShowSettingTrailing: true,
-        isShowInternetTrailing: true,
+        isShowFavButton: true,
+        isShowStarTrailing: true,
+        qid: question.qId,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TitleText(
-              text: question.question ?? 'No Question Text',
-              fontSize: 20,
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              "Answer:",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            const SizedBox(height: 8),
-            Html(
-              data: question.answer ?? "<p>No Answer Available</p>",
-              style: {
-                "body": Style(
-                  fontSize:  FontSize(14),
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white,
-                ),
-              },
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              "Book:",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Text(
-              question.book ?? 'No Book Info',
-              style: const TextStyle(fontSize: 14),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              "Hits:",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Text(
-              "${question.hits ?? 0}",
-              style: const TextStyle(fontSize: 14),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              "Verse:",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Text(
-              question.verse ?? 'No Verse Info',
-              style: const TextStyle(fontSize: 14),
-            ),
-          ],
+      body: BodyContainerComponent(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Gap(16),
+              TitleText(
+                text: question.question ?? 'No Question Text',
+                fontSize: 20,
+              ),
+              const Gap(16),
+
+              // Display the answer section
+              const Text(
+                "Answer:",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              const Gap(8),
+              Html(
+                data: question.answer ?? "<p>No Answer Available</p>",
+                style: {
+                  "body": Style(
+                    fontSize: FontSize(14),
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
+                },
+              ),
+              const Gap(16),
+
+              // Book Info Section
+              const Text(
+                "Book:",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              Text(
+                question.book.toString() ?? 'No Book Info',
+                style: const TextStyle(fontSize: 14),
+              ),
+              const Gap(16),
+
+              // Hits Section
+              const Text(
+                "Hits:",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              Text(
+                "${question.hits ?? 0}",
+                style: const TextStyle(fontSize: 14),
+              ),
+              const Gap(16),
+
+              // Verse Section
+              const Text(
+                "Verse:",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              Text(
+                question.verse.toString() ?? 'No Verse Info',
+                style: const TextStyle(fontSize: 14),
+              ),
+              const Gap(16),
+            ],
+          ),
         ),
       ),
     );

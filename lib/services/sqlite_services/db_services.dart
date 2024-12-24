@@ -43,6 +43,17 @@ class QuestionsRepository {
     Map<String, dynamic> categoryQuestionMap = categoryQuestion.toJson();
     await db.insert('category_questions', categoryQuestionMap);
   }
+Future<void> updateTimestamp(int questionId) async {
+  final db = await database;
+  final currentTimestamp = DateTime.now().toIso8601String(); // Get the current timestamp
+
+  await db.update(
+    'questions',
+    {'timestamp': currentTimestamp},  // Update the timestamp field
+    where: 'q_id = ?',
+    whereArgs: [questionId],
+  );
+}
 
   Future<void> insertQuestion(QuestionData question) async {
     final db = await database;
