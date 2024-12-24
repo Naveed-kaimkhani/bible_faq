@@ -44,6 +44,7 @@ class QuestionsRepository {
     await db.insert('category_questions', categoryQuestionMap);
   }
 Future<void> updateTimestamp(int questionId) async {
+  print("in updateTimestamp");
   final db = await database;
   final currentTimestamp = DateTime.now().toIso8601String(); // Get the current timestamp
 
