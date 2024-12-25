@@ -1,5 +1,7 @@
 import 'package:bible_faq/components/componets.dart';
+import 'package:bible_faq/components/last_read_time.dart';
 import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_faq/services/sqlite_services/db_services.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -10,6 +12,7 @@ class LatestQuestionScreen extends StatelessWidget {
 
   final QuestionsProviderSql provider = Get.put(QuestionsProviderSql());
 
+  final QuestionsRepository _repository = QuestionsRepository.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +25,7 @@ class LatestQuestionScreen extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         if (provider.isLatestQuestionsError.value) {
-          return Center(
+          return const Center(
             child: Text(
               "Failed to load latest questions",
               style: TextStyle(color: Colors.red, fontSize: 16),
@@ -55,11 +58,7 @@ class LatestQuestionScreen extends StatelessWidget {
                             text: question.question ?? 'No text available',
                             fontSize: AppFontSize.xsmall,
                           ),
-                          subtitle: LabelText(
-                            text: "Read on ${question.timestamp}",
-                            textColor: Color(0xffA2A2A2),
-                            fontStyle: FontStyle.italic,
-                          ),
+                          subtitle: LastReadTime(repository: _repository, question: question),
                           onTap: () {
                             // Navigate to QuestionDetailScreen with the selected question as an argument
                             Get.toNamed(

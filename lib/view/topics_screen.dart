@@ -1,23 +1,25 @@
 import 'package:bible_faq/components/componets.dart';
+import 'package:bible_faq/components/last_read_time.dart';
 import 'package:bible_faq/constants/app_images.dart';
 import 'package:bible_faq/constants/app_routs.dart';
+import 'package:bible_faq/services/sqlite_services/db_services.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TopicsScreen extends StatelessWidget {
-
-  final  provider = Get.find<QuestionsProviderSql>(); // added this
+  final provider = Get.find<QuestionsProviderSql>(); // added this
   TopicsScreen({super.key});
+  final QuestionsRepository _repository = QuestionsRepository.instance;
 
   @override
   Widget build(BuildContext context) {
     final int catId = Get.arguments;
 
-  provider.fetchQuestionsByCategory(catId);
+    provider.fetchQuestionsByCategory(catId);
 
     return Scaffold(
-      appBar:  CustomAppBar(
+      appBar: CustomAppBar(
         title: "Questions",
         isShowSettingTrailing: true,
         isShowInternetTrailing: true,
@@ -29,7 +31,7 @@ class TopicsScreen extends StatelessWidget {
 
         if (provider.isAllQuestionsError.value) {
           return const Center(
-            child:  Text(
+            child: Text(
               "Failed to load Topics.",
               style: TextStyle(color: Colors.red, fontSize: 16),
             ),
@@ -55,11 +57,11 @@ class TopicsScreen extends StatelessWidget {
             return Card(
               child: ListTile(
                 leading: Image.asset(
-                 
-                            AppImages.getRandomImage(),
+                  AppImages.getRandomImage(),
                 ),
                 title: Text(question.question ?? 'No Question Text'),
-                subtitle: Text("Book: ${question.book ?? 'No Book Info'}"),
+                subtitle:
+                    LastReadTime(repository: _repository, question: question),
                 onTap: () {
                   // Navigate to QuestionDetailScreen with the selected question
                   Get.toNamed(

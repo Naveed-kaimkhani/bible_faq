@@ -14,8 +14,10 @@ class QuestionDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Retrieve the question object passed from the previous screen
     QuestionData question = Get.arguments;
+    print("in buildddd");
     _repository.updateTimestamp(question.qId ?? 0);
-    
+  
+    print("updated timestamp");
     return Scaffold(
       appBar: CustomAppBar(
         title: "Question Details",

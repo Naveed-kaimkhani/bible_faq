@@ -1,5 +1,8 @@
 import 'package:bible_faq/components/componets.dart';
+import 'package:bible_faq/components/last_read_time.dart';
 import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_faq/data/model/question.dart';
+import 'package:bible_faq/services/sqlite_services/db_services.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,13 +10,13 @@ import 'package:get/get.dart';
 class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
   AllBilbeQuestionAndAnswerScreen({super.key});
 
-  final  dbController = Get.find<QuestionsProviderSql>();
+  final dbController = Get.find<QuestionsProviderSql>();
 
+  final QuestionsRepository _repository = QuestionsRepository.instance;
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar:  CustomAppBar(
+      appBar: CustomAppBar(
         title: "All Bible Questions and Answers",
         isShowSettingTrailing: true,
         isShowInternetTrailing: true,
@@ -89,10 +92,8 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        subtitle: Text(
-                          'Read on: ${question.timestamp ?? 'N/A'}',
-                          style: const TextStyle(fontSize: 14),
-                        ),
+                        subtitle: LastReadTime(repository: _repository, question: question),
+
                         onTap: () {
                           // Navigate to QuestionDetailScreen with the selected question as an argument
                           Get.toNamed(

@@ -1,5 +1,7 @@
 import 'package:bible_faq/components/componets.dart';
+import 'package:bible_faq/components/last_read_time.dart';
 import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_faq/services/sqlite_services/db_services.dart';
 import 'package:bible_faq/view_model/controllers/favorites_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -10,6 +12,7 @@ class MyFavouriteQuestionScreen extends StatelessWidget {
 
   final FavoritesProvider favoritesProvider = Get.put(FavoritesProvider());
 
+  final QuestionsRepository _repository = QuestionsRepository.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,14 +64,9 @@ class MyFavouriteQuestionScreen extends StatelessWidget {
                               const Gap(8),
                             ],
                           ),
-                          subtitle: LabelText(
-                            text: "Read on ${question.timestamp}",
-                            textColor: Color(0xffA2A2A2),
-                            fontStyle: FontStyle.italic,
-                          ),
+                          subtitle: LastReadTime(repository: _repository, question: question),
                           trailing: GestureDetector(
                             onTap: () {
-                              // Toggle favorite status
                               favoritesProvider
                                   .toggleFavorite(question.qId.toString());
                             },

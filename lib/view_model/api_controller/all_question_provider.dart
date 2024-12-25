@@ -129,9 +129,7 @@ class QuestionProviderAPI extends GetxController {
         },
         conflictAlgorithm: ConflictAlgorithm.ignore,
       );
-
-      // processedItems++;
-      // Insert or update question     
+  
     }
     
       downloadProgress.value = 10.0;
@@ -145,7 +143,7 @@ class QuestionProviderAPI extends GetxController {
           },
           conflictAlgorithm: ConflictAlgorithm.ignore,
         );
-        print("category_questions result: $result");
+        debugPrint("category_questions result: $result");
         if (result != 0) {
           hasNewData = true.obs;
         }
@@ -167,9 +165,9 @@ class QuestionProviderAPI extends GetxController {
           conflictAlgorithm: ConflictAlgorithm.ignore,
         );
 
-        print("question result: ");
+        debugPrint("question result: ");
       }
-      print("db updated");
+      debugPrint("db updated");
       downloadProgress.value = 100.0;
 
       _setLoadingState(false);

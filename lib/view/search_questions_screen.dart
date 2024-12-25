@@ -1,6 +1,8 @@
 import 'package:bible_faq/components/componets.dart';
+import 'package:bible_faq/components/last_read_time.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/data/model/question.dart';
+import 'package:bible_faq/services/sqlite_services/db_services.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -19,6 +21,7 @@ class _SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
   late List<QuestionData> filteredQuestions;
   final TextEditingController _searchController = TextEditingController();
 
+  final QuestionsRepository _repository = QuestionsRepository.instance;
   @override
   void initState() {
     super.initState();
@@ -95,11 +98,7 @@ class _SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
                             text: question.question ?? 'Unnamed Question',
                             fontSize: AppFontSize.xsmall,
                           ),
-                          subtitle: LabelText(
-                            text: "Read on ${question.timestamp}",
-                            textColor: Color(0xffA2A2A2),
-                            fontStyle: FontStyle.italic,
-                          ),
+                          subtitle: LastReadTime(repository: _repository, question: question),
                           onTap: () {
                             Get.toNamed(
                               AppRouts.questionDetailScreen,
