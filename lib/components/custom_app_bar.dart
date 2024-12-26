@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/view_model/controllers/controllers.dart';
 import 'package:bible_faq/view_model/controllers/favorites_provider.dart';
@@ -98,7 +96,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             if (isShowSettingTrailing)
               GestureDetector(
                 onTap: () {
-                  log("on tap");
                   Get.toNamed(AppRouts.settingScreen);
                 },
                 child:

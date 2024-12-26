@@ -1,6 +1,7 @@
 import 'package:bible_faq/constants/app_routs.dart';
 import 'package:bible_faq/view/ask_question_screen.dart';
 import 'package:bible_faq/view/free_bible_guide_screen.dart';
+import 'package:bible_faq/view/home_screen/fav_question_search_screen.dart';
 import 'package:bible_faq/view/question_details_screen.dart';
 import 'package:bible_faq/view/topic_details_screen.dart';
 import 'package:bible_faq/view/view.dart';
@@ -68,6 +69,11 @@ class Routes {
         GetPage(
           name: AppRouts.askQuestionScreen,
           page: () => const AskQuestionScreen(),
+        ),
+        
+        GetPage(
+          name: AppRouts.favQuestionSearchScreen,
+          page: () => const FavQuestionSearchScreen(),
         ),
         GetPage(
           name: AppRouts.topicDeatailsScreen,

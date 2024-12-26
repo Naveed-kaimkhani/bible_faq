@@ -75,7 +75,8 @@ class QuestionsRepository {
   Future<String> getTimestamp(int questionId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String timestamp = prefs.getString('timestamp_$questionId') ??
-        DateTime.now().toIso8601String();
+        "";
+        if (timestamp.isEmpty) return "";
     DateTime parsedTimestamp = DateTime.parse(timestamp);
     String formattedTimestamp =
         DateFormat('yyyy-MM-dd hh:mm a').format(parsedTimestamp);

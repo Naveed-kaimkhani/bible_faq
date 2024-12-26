@@ -31,11 +31,15 @@ class LastReadTime extends StatelessWidget {
             style: TextStyle(fontSize: 14),
           );
         } else if (snapshot.hasData) {
-          return Text(
-            'Read on: ${snapshot.data}',
-            style: const TextStyle(fontSize: 14),
-          );
-        } else {
+  if (snapshot.data?.isEmpty ?? true) {
+    return const SizedBox.shrink(); // Transparent widget
+  }
+  return Text(
+    'Read on: ${snapshot.data}',
+    style: const TextStyle(fontSize: 14),
+  );
+}
+ else {
           return const Text(
             'No timestamp found',
             style: TextStyle(fontSize: 14),

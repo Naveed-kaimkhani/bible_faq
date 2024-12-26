@@ -14,6 +14,7 @@ class FavoritesProvider extends GetxController {
   var favoriteQIDs = <String>[].obs; // List of favorite question IDs
   var favoriteQuestions = <QuestionData>[].obs; // List of favorite questions
 
+  var filteredQuestions = <QuestionData>[].obs; // Filtered list
   @override
   void onInit() {
     super.onInit();
@@ -39,7 +40,17 @@ class FavoritesProvider extends GetxController {
       isFavoritesLoading.value = false;
     }
   }
-
+// Call this method to filter questions
+  void filterFavoriteQuestions(String query) {
+    if (query.isEmpty) {
+      filteredQuestions.value = favoriteQuestions;
+    } else {
+      filteredQuestions.value = favoriteQuestions
+          .where((question) =>
+              (question.question ?? "").toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
+  }
   // Toggle favorite status of a question
   Future<void> toggleFavorite(String qid) async {
     final prefs = await SharedPreferences.getInstance();
