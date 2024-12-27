@@ -7,13 +7,16 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class FontSizeDialog {
-  static void show() {
+  static void show() async {
     final FontSizeController controller = Get.put(FontSizeController());
     final ThemeController themeController = Get.find<ThemeController>();
+    ValueNotifier<double> tempFontSize =
+        ValueNotifier(controller.fontSize.value);
 
     Get.dialog(
       Obx(() {
         bool isDarkMode = themeController.isDarkMode.value;
+
         return AlertDialog(
           backgroundColor: isDarkMode ? Colors.grey[900] : Colors.white,
           shape:
@@ -28,47 +31,54 @@ class FontSizeDialog {
               ),
             ),
           ),
-          content: Obx(
-            () => Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Preview text using temporary font size
+              ValueListenableBuilder(
+                valueListenable: tempFontSize,
+                builder: (context, value, child) => Text(
                   "The Lord is my shepherd; I shall not want. — Psalm 23:1",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 14,
-                    fontStyle: FontStyle.italic,
+                    fontSize: tempFontSize.value,
+                    // fontStyle: FontStyle.italic,
                     color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _fontOptionButton(controller, "Arial", isDarkMode),
-                    _fontOptionButton(controller, "Gentium", isDarkMode),
-                    _fontOptionButton(controller, "Georgia", isDarkMode),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Slider.adaptive(
-                  value: controller.fontSize.value,
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _fontOptionButton(controller, "Arial", isDarkMode),
+                  _fontOptionButton(controller, "Gentium", isDarkMode),
+                  _fontOptionButton(controller, "Georgia", isDarkMode),
+                ],
+              ),
+              const SizedBox(height: 16),
+              // Slider updates the temporary font size
+              ValueListenableBuilder(
+                valueListenable: tempFontSize,
+                builder: (context, value, child) => Slider.adaptive(
+                  value: tempFontSize.value,
                   min: 12,
-                  max: 32,
+                  max: 50,
                   activeColor: AppColors.tealBlue,
                   onChanged: (value) {
-                    controller.setFontSize(value);
+                    tempFontSize.value = value;
                   },
                 ),
-              ],
-            ),
+              )
+            ],
           ),
           actions: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: CustomGradientButton(
                 text: "Apply",
-                onTap: () {
+                onTap: () async {
+                  controller.setFontSize(tempFontSize.value);
                   Get.back();
                 },
               ),
@@ -94,12 +104,12 @@ class FontSizeDialog {
 
   static Widget _fontOptionButton(
       FontSizeController controller, String font, bool isDarkMode) {
-    return Obx(() {
-      return GestureDetector(
-        onTap: () {
-          controller.setFont(font);
-        },
-        child: Column(
+    return GestureDetector(
+      onTap: () {
+        controller.setFont(font);
+      },
+      child: Obx(() {
+        return Column(
           children: [
             LabelText(
               text: font,
@@ -118,8 +128,8 @@ class FontSizeDialog {
                   : (isDarkMode ? Colors.white : Colors.black),
             ),
           ],
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 }

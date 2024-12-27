@@ -30,81 +30,100 @@ class QuestionDetailScreen extends StatelessWidget {
         qid: question.qId,
       ),
       body: BodyContainerComponent(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Gap(16),
-              Obx(() {
-                return TitleText(
-                  text: question.question ?? 'No Question Text',
-                  fontSize: fontSizeController.fontSize.value,
-                );
-              }),
-              const Gap(16),
-
-              // Display the answer section
-              const Text(
-                "Answer:",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
               ),
-              const Gap(8),
-              Obx(() {
-                return Html(
-                  data: question.answer ?? "<p>No Answer Available</p>",
-                  style: {
-                    "body": Style(
-                      fontSize: FontSize(fontSizeController.fontSize.value),
-                      fontWeight: FontWeight.w400,
-                      color: themeController.isDarkMode.value
-                          ? Colors.white
-                          : Colors.black,
-                    ),
-                  },
-                );
-              }),
-              const Gap(16),
+              child: IntrinsicHeight(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Gap(16),
+                      Obx(() {
+                        return TitleText(
+                          text: question.question ?? 'No Question Text',
+                          fontSize: fontSizeController.fontSize.value,
+                        );
+                      }),
+                      const Gap(16),
 
-              // Book Info Section
-              const Text(
-                "Book:",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              Obx(() {
-                return Text(
-                  question.book.toString() ?? 'No Book Info',
-                  style: TextStyle(fontSize: fontSizeController.fontSize.value),
-                );
-              }),
-              const Gap(16),
+                      // Display the answer section
+                      const Text(
+                        "Answer:",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      const Gap(8),
+                      Obx(() {
+                        return Html(
+                          data: question.answer ?? "<p>No Answer Available</p>",
+                          style: {
+                            "body": Style(
+                              fontSize:
+                                  FontSize(fontSizeController.fontSize.value),
+                              fontWeight: FontWeight.w400,
+                              color: themeController.isDarkMode.value
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                          },
+                        );
+                      }),
+                      const Gap(16),
 
-              // Hits Section
-              const Text(
-                "Hits:",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              Obx(() {
-                return Text(
-                  "${question.hits ?? 0}",
-                  style: TextStyle(fontSize: fontSizeController.fontSize.value),
-                );
-              }),
-              const Gap(16),
+                      // Book Info Section
+                      const Text(
+                        "Book:",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      Obx(() {
+                        return Text(
+                          question.book.toString() ?? 'No Book Info',
+                          style: TextStyle(
+                              fontSize: fontSizeController.fontSize.value),
+                        );
+                      }),
+                      const Gap(16),
 
-              // Verse Section
-              const Text(
-                "Verse:",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      // Hits Section
+                      const Text(
+                        "Hits:",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      Obx(() {
+                        return Text(
+                          "${question.hits ?? 0}",
+                          style: TextStyle(
+                              fontSize: fontSizeController.fontSize.value),
+                        );
+                      }),
+                      const Gap(16),
+
+                      // Verse Section
+                      const Text(
+                        "Verse:",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      Obx(() {
+                        return Text(
+                          question.verse.toString() ?? 'No Verse Info',
+                          style: TextStyle(
+                              fontSize: fontSizeController.fontSize.value),
+                        );
+                      }),
+                      const Gap(16),
+                    ],
+                  ),
+                ),
               ),
-              Obx(() {
-                return Text(
-                  question.verse.toString() ?? 'No Verse Info',
-                  style: TextStyle(fontSize: fontSizeController.fontSize.value),
-                );
-              }),
-              const Gap(16),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/view/dialogs/dialos.dart';
@@ -174,7 +175,7 @@ class SettingScreen extends StatelessWidget {
                 menuItem(
                   icon: AppSvgIcons.star,
                   label: 'Rate Application',
-                    ontap: () async {
+                  ontap: () async {
                     // Define the default URLs for iOS and Android
                     String url = '';
 
