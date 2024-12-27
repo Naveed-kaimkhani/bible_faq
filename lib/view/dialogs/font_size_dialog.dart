@@ -1,36 +1,21 @@
 import 'package:bible_faq/components/componets.dart'; // Assuming CustomGradientButton is here
 import 'package:bible_faq/constants/app_colors.dart';
 import 'package:bible_faq/view_model/controllers/controllers.dart';
+import 'package:bible_faq/view_model/font_size_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class FontSizeController extends GetxController {
-  var selectedFont = "Arial".obs;
-  var fontSize = 16.0.obs;
-
-  void setFont(String font) {
-    selectedFont.value = font;
-  }
-
-  void setFontSize(double size) {
-    fontSize.value = size;
-  }
-}
-
 class FontSizeDialog {
   static void show() {
     final FontSizeController controller = Get.put(FontSizeController());
-    final ThemeController themeController =
-        Get.find<ThemeController>(); // Assume ThemeController manages dark mode
+    final ThemeController themeController = Get.find<ThemeController>();
 
     Get.dialog(
       Obx(() {
         bool isDarkMode = themeController.isDarkMode.value;
         return AlertDialog(
-          backgroundColor: isDarkMode
-              ? Colors.grey[900] // Dark background for dark mode
-              : Colors.white, // Light background for light mode
+          backgroundColor: isDarkMode ? Colors.grey[900] : Colors.white,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title: Center(
@@ -57,8 +42,6 @@ class FontSizeDialog {
                   ),
                 ),
                 const SizedBox(height: 16),
-
-                // Font selection options
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -67,9 +50,7 @@ class FontSizeDialog {
                     _fontOptionButton(controller, "Georgia", isDarkMode),
                   ],
                 ),
-
                 const SizedBox(height: 16),
-
                 Slider.adaptive(
                   value: controller.fontSize.value,
                   min: 12,
@@ -88,15 +69,14 @@ class FontSizeDialog {
               child: CustomGradientButton(
                 text: "Apply",
                 onTap: () {
-                  // Apply the font changes
-                  Get.back(); // Close the dialog
+                  Get.back();
                 },
               ),
             ),
             Center(
               child: TextButton(
                 onPressed: () {
-                  Get.back(); // Close the dialog without saving
+                  Get.back();
                 },
                 child: const Text(
                   "Cancel",
@@ -112,7 +92,6 @@ class FontSizeDialog {
     );
   }
 
-// Helper method to create font option button
   static Widget _fontOptionButton(
       FontSizeController controller, String font, bool isDarkMode) {
     return Obx(() {
@@ -128,23 +107,15 @@ class FontSizeDialog {
                   ? FontWeight.bold
                   : FontWeight.normal,
               textColor: controller.selectedFont.value == font
-                  ? AppColors
-                      .tealBlue // Teal blue for selected font in both themes
-                  : (isDarkMode
-                      ? Colors.white
-                      : Colors
-                          .black), // White in dark mode, black in light mode for unselected fonts
+                  ? AppColors.tealBlue
+                  : (isDarkMode ? Colors.white : Colors.black),
             ),
             const Gap(4),
             TitleText(
               text: "A",
               textColor: controller.selectedFont.value == font
-                  ? AppColors
-                      .tealBlue // Teal blue for selected font in both themes
-                  : (isDarkMode
-                      ? Colors.white
-                      : Colors
-                          .black), // White in dark mode, black in light mode for unselected fonts
+                  ? AppColors.tealBlue
+                  : (isDarkMode ? Colors.white : Colors.black),
             ),
           ],
         ),
