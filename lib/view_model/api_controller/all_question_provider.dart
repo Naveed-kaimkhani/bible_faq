@@ -33,17 +33,18 @@ class QuestionProviderAPI extends GetxController {
         latestQId: latestQId,
         totalCount: totalCount,
       );
-
       if (response == null) {
-           isLoading.value = false;
-        _showSnackbar("Message", "No New Questions Found.");
+        Get.back();
+        _showSnackbar("Info", "Your app is already updated. Lord bless you!");
         return;
+      }else{
+         await _processApiResponse(response);
       }
 
-
-      await _processApiResponse(response);
+     
     } catch (e) {
-      _setLoadingState(false);
+        isLoading =  false.obs;
+        Get.back();
       _showSnackbar("Error", "An error occurred: $e");
     }
   }
@@ -93,13 +94,16 @@ class QuestionProviderAPI extends GetxController {
     final questions = data['question_data'] ?? [];
     debugPrint("question length: ${questions.length}");
     if (questions.length == 0) {
-      debugPrint("No new questions found.");  
-      _setLoadingState(false);
-      _showSnackbar("Error", "No new questions found.");
+      
+      Get.back();
+      _showSnackbar("Info", "Your app is already updated. Lord bless you!");
       return;
-    }
+    } else{
+      Get.back();
+    _showSnackbar("Info", "Your app is already updated. Lord bless you!");
     // Update database
     await updateDatabaseWithResponse(response);
+    }
   }
 
   /// Show a Snackbar
@@ -109,7 +113,6 @@ class QuestionProviderAPI extends GetxController {
 
   /// Update database with API response
   Future<void> updateDatabaseWithResponse(Map<String, dynamic> response) async {
-    print("updating db");
     final db = await _repository.database;
     final data = response['response'] ?? {};
     final categories = data['category_data'] ?? [];
@@ -129,62 +132,61 @@ class QuestionProviderAPI extends GetxController {
         },
         conflictAlgorithm: ConflictAlgorithm.ignore,
       );
-  
     }
-    
-      downloadProgress.value = 10.0;
-      // Insert or update category_questions
-      for (var catQuestion in categoryQuestions) {
-        int result = await db.insert(
-          'category_questions',
-          {
-            'q_id': catQuestion['q_id'],
-            'cat_id': catQuestion['cat_id'],
-          },
-          conflictAlgorithm: ConflictAlgorithm.ignore,
-        );
-        debugPrint("category_questions result: $result");
-        if (result != 0) {
-          hasNewData = true.obs;
-        }
-      }
 
-     downloadProgress.value = 50.0;
-      for (var question in questions) {
-        await db.insert(
-          'questions',
-          {
-            'q_id': question['q_id'],
-            'question': question['question'],
-            'book': question['book'],
-            'verse': question['verse'],
-            'answer': question['answer'],
-            'hits': question['hits'],
-            'timestamp': question['timestamp'],
-          },
-          conflictAlgorithm: ConflictAlgorithm.ignore,
-        );
-
-        debugPrint("question result: ");
+    downloadProgress.value = 10.0;
+    // Insert or update category_questions
+    for (var catQuestion in categoryQuestions) {
+      int result = await db.insert(
+        'category_questions',
+        {
+          'q_id': catQuestion['q_id'],
+          'cat_id': catQuestion['cat_id'],
+        },
+        conflictAlgorithm: ConflictAlgorithm.ignore,
+      );
+      debugPrint("category_questions result: $result");
+      if (result != 0) {
+        hasNewData = true.obs;
       }
-      debugPrint("db updated");
-      downloadProgress.value = 100.0;
+    }
 
-      _setLoadingState(false);
-      // Show Snackbar based on update status
-      if (hasNewData.value) {
-        Get.snackbar(
-          "Update Successful",
-          "New Question Added.",
-          snackPosition: SnackPosition.TOP,
-        );
-      } else {
-        Get.snackbar(
-          "No Updates",
-          "No new data found.",
-          snackPosition: SnackPosition.TOP,
-        );
-      }
+    downloadProgress.value = 50.0;
+    for (var question in questions) {
+      await db.insert(
+        'questions',
+        {
+          'q_id': question['q_id'],
+          'question': question['question'],
+          'book': question['book'],
+          'verse': question['verse'],
+          'answer': question['answer'],
+          'hits': question['hits'],
+          'timestamp': question['timestamp'],
+        },
+        conflictAlgorithm: ConflictAlgorithm.ignore,
+      );
+
+      debugPrint("question result: ");
+    }
+    debugPrint("db updated");
+    downloadProgress.value = 100.0;
+
+    _setLoadingState(false);
+    // Show Snackbar based on update status
+    if (hasNewData.value) {
+      Get.snackbar(
+        "Update Successful",
+        "New Question Added.",
+        snackPosition: SnackPosition.TOP,
+      );
+    } else {
+      Get.snackbar(
+        "No Updates",
+        "No new data found.",
+        snackPosition: SnackPosition.TOP,
+      );
+    }
   }
 
   @override

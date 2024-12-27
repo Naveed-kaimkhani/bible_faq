@@ -16,7 +16,6 @@ class DarkModeController extends GetxController {
 
 class DarkModeDialog {
   static void show() {
-    log("show method call");
     final DarkModeController controller = Get.put(DarkModeController());
     final ThemeController themeController = Get.find<ThemeController>();
     Get.dialog(Obx(() {
