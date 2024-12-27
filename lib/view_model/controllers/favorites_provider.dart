@@ -57,10 +57,8 @@ class FavoritesProvider extends GetxController {
 
     if (favoriteQIDs.contains(qid)) {
       favoriteQIDs.remove(qid);
-      print("Removed $qid from favorites");
     } else {
       favoriteQIDs.add(qid);
-      print("Added $qid to favorites");
     }
 
     // Save updated list to SharedPreferences

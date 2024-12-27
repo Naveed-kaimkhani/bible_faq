@@ -47,21 +47,6 @@ class QuestionsRepository {
     await db.insert('category_questions', categoryQuestionMap);
   }
 
-  // Future<void> updateTimestamp(int questionId) async {
-  //   print("in updateTimestamp");
-  //   print(questionId);
-  //   final db = await database;
-  //   final currentTimestamp =
-  //       DateTime.now().toIso8601String(); // Get the current timestamp
-
-  //   await db.update(
-  //     'questions',
-  //     {'timestamp': currentTimestamp}, // Update the timestamp field
-  //     where: 'q_id = ?',
-  //     whereArgs: [questionId],
-  //   );
-  //   print("time updateddd");
-  // }
   Future<void> updateTimestamp(int questionId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 

@@ -1,12 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:bible_faq/data/model/question.dart';
-import 'package:bible_faq/data/model/response_model.dart';
-import 'package:bible_faq/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 
 class APIManager {
@@ -71,10 +66,10 @@ Future<Map<String, dynamic>?> requestGetMethodForAllQuestion(
         final jsonData = jsonDecode(response.body);
         onSuccess(jsonData['link']);
       } else {
-        print("Error: ${response.reasonPhrase}");
+        Get.snackbar("Error", 'HTTP ${response.reasonPhrase}');
       }
     } catch (e) {
-      print("Request failed: $e");
+      Get.snackbar("Error", 'Request failed: $e');
     } finally {
       Navigator.pop(context); // Hide loader
     }
@@ -89,11 +84,6 @@ Future<Map<String, dynamic>?> requestGetMethodForAllQuestion(
     bool isInfoNull = false,
     required Function(Map<String, dynamic>) onSuccess,
   }) async {
-    // if (!await isNetworkConnected()) {
-    //   _showAlertDialog(context, "No Internet Connection");
-    //   return;
-    // }
-
     _showProgressDialog(context);
 
     final url = Uri.parse(staticBaseUrl + endpoint);
@@ -113,10 +103,10 @@ Future<Map<String, dynamic>?> requestGetMethodForAllQuestion(
         final jsonData = jsonDecode(response.body);
         onSuccess(jsonData);
       } else {
-        print("Error: ${response.reasonPhrase}");
+        Get.snackbar("Error", 'HTTP ${response.reasonPhrase}');
       }
     } catch (e) {
-      print("Request failed: $e");
+      Get.snackbar("Error", 'Request failed: $e');
     } finally {
       Navigator.pop(context); // Hide loader
     }
@@ -138,11 +128,11 @@ Future<Map<String, dynamic>?> requestGetMethodForAllQuestion(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Error"),
+          title: const Text("Error"),
           content: Text(message),
           actions: [
             TextButton(
-              child: Text("OK"),
+              child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -159,7 +149,7 @@ Future<Map<String, dynamic>?> requestGetMethodForAllQuestion(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(),
         );
       },

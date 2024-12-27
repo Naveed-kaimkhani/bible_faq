@@ -25,9 +25,7 @@ class QuestionProviderAPI extends GetxController {
 
       debugPrint(
           "Latest Cat ID: $latestCatId, Latest QID: $latestQId, Total Count: $totalCount");
-      // Step 2: Make API call with the latest values
-      // isLoading=true.obs;
-
+    
       final response = await _fetchNewDataFromApi(
         latestCatId: latestCatId,
         latestQId: latestQId,
@@ -37,14 +35,12 @@ class QuestionProviderAPI extends GetxController {
         Get.back();
         _showSnackbar("Info", "Your app is already updated. Lord bless you!");
         return;
-      }else{
-         await _processApiResponse(response);
+      } else {
+        await _processApiResponse(response);
       }
-
-     
     } catch (e) {
-        isLoading =  false.obs;
-        Get.back();
+      isLoading = false.obs;
+      Get.back();
       _showSnackbar("Error", "An error occurred: $e");
     }
   }
@@ -94,15 +90,13 @@ class QuestionProviderAPI extends GetxController {
     final questions = data['question_data'] ?? [];
     debugPrint("question length: ${questions.length}");
     if (questions.length == 0) {
-      
       Get.back();
       _showSnackbar("Info", "Your app is already updated. Lord bless you!");
       return;
-    } else{
-      Get.back();
-    _showSnackbar("Info", "Your app is already updated. Lord bless you!");
-    // Update database
-    await updateDatabaseWithResponse(response);
+    } else {
+        Get.back();
+      _showSnackbar("Info", "Your app is already updated. Lord bless you!");
+      // await updateDatabaseWithResponse(response);
     }
   }
 
