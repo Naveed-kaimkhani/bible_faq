@@ -1,5 +1,6 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_faq/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class LinkButton extends StatelessWidget {
@@ -10,7 +11,9 @@ class LinkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        launchURL(url);
+      },
       child: IntrinsicWidth(
         child: Card(
           margin: const EdgeInsets.symmetric(vertical: 4),
