@@ -12,6 +12,35 @@ import 'package:url_launcher/url_launcher.dart';
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
+Future<void> launchWebsite(String url) async {
+  final Uri uri = Uri.parse(url);
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    Get.snackbar("Error", "Could not launch $url");
+  }
+}
+Future<void> launchBibleApplications() async {
+  String url = '';
+
+  // Check the platform and assign the correct URL
+  if (Platform.isIOS) {
+    url =
+        "https://apps.apple.com/pk/app/bible-questions-answers-faq/id910797800?platform=iphone&see-all=developer-other-apps";
+  } else if (Platform.isAndroid) {
+    url =
+        "https://play.google.com/store/apps/collection/cluster?gsr=SkxqGGZCQTB4MXQwSU1RaGprMURlZkduOXc9PbICLwoSCg5jb20uYm9vay5iaWJsZRAHEhcIARITNjg4MjA5OTEyMDgxNDAwNDYyMxgA:S:ANO1ljJNwuQ";
+  }
+
+  final Uri launchUri = Uri.parse(url);
+
+  // Launch the URL
+  if (await canLaunchUrl(launchUri)) {
+    await launchUrl(launchUri);
+  } else {
+    Get.snackbar("Error", "Could not launch $url");
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,12 +121,9 @@ class SettingScreen extends StatelessWidget {
                   icon: AppSvgIcons.browser,
                   label: 'View Our Website',
                   ontap: () async {
-                    final Uri url = Uri.parse("https://bibleresources.info/");
-                    if (await canLaunchUrl(url)) {
-                      await launchUrl(url);
-                    } else {
-                      Get.snackbar("Error", "Could not launch $url");
-                    }
+                       await launchWebsite("https://bibleresources.info/");
+
+                
                   },
                 ),
                 menuItem(
@@ -111,26 +137,27 @@ class SettingScreen extends StatelessWidget {
                   icon: AppSvgIcons.arrowShuffle,
                   label: 'More Bible Applications',
                   ontap: () async {
-                    // Define the default URLs for iOS and Android
-                    String url = '';
+                     await launchBibleApplications();
+                    // // Define the default URLs for iOS and Android
+                    // String url = '';
 
-                    // Check the platform
-                    if (Platform.isIOS) {
-                      url =
-                          "https://apps.apple.com/pk/app/bible-questions-answers-faq/id910797800?platform=iphone&see-all=developer-other-apps"; // iOS link
-                    } else if (Platform.isAndroid) {
-                      url =
-                          "https://play.google.com/store/apps/collection/cluster?gsr=SkxqGGZCQTB4MXQwSU1RaGprMURlZkduOXc9PbICLwoSCg5jb20uYm9vay5iaWJsZRAHEhcIARITNjg4MjA5OTEyMDgxNDAwNDYyMxgA:S:ANO1ljJNwuQ"; // Android link
-                    }
+                    // // Check the platform
+                    // if (Platform.isIOS) {
+                    //   url =
+                    //       "https://apps.apple.com/pk/app/bible-questions-answers-faq/id910797800?platform=iphone&see-all=developer-other-apps"; // iOS link
+                    // } else if (Platform.isAndroid) {
+                    //   url =
+                    //       "https://play.google.com/store/apps/collection/cluster?gsr=SkxqGGZCQTB4MXQwSU1RaGprMURlZkduOXc9PbICLwoSCg5jb20uYm9vay5iaWJsZRAHEhcIARITNjg4MjA5OTEyMDgxNDAwNDYyMxgA:S:ANO1ljJNwuQ"; // Android link
+                    // }
 
-                    final Uri launchUri = Uri.parse(url);
-                    // Launch the URL
-                    if (await canLaunchUrl(launchUri)) {
-                      await launchUrl(launchUri);
-                    } else {
-                      // throw 'Could not launch $url';
-                      Get.snackbar("Error", "Could not launch $url");
-                    }
+                    // final Uri launchUri = Uri.parse(url);
+                    // // Launch the URL
+                    // if (await canLaunchUrl(launchUri)) {
+                    //   await launchUrl(launchUri);
+                    // } else {
+                    //   // throw 'Could not launch $url';
+                    //   Get.snackbar("Error", "Could not launch $url");
+                    // }
                   },
                 ),
                 menuItem(
