@@ -43,17 +43,17 @@ class Routes {
         ),
         GetPage(
           name: AppRouts.searchQusetionScreen,
-          page: () => SearchQuestionsScreen(),
+          page: () => const SearchQuestionsScreen(),
         ),
         GetPage(
           name: AppRouts.topicScreen,
           page: () => TopicsScreen(),
         ),
-         GetPage(
+        GetPage(
           name: AppRouts.questionDetailScreen,
           page: () => QuestionDetailScreen(),
         ),
-        
+
         GetPage(
           name: AppRouts.aboutUsScreen,
           page: () => const AboutUsScreen(),
@@ -70,7 +70,7 @@ class Routes {
           name: AppRouts.askQuestionScreen,
           page: () => const AskQuestionScreen(),
         ),
-        
+
         GetPage(
           name: AppRouts.favQuestionSearchScreen,
           page: () => const FavQuestionSearchScreen(),
