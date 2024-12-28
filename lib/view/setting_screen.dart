@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_faq/utils/url_launcher.dart';
 import 'package:bible_faq/view/dialogs/dialos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,36 +13,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
-
-Future<void> launchWebsite(String url) async {
-  final Uri uri = Uri.parse(url);
-  if (await canLaunchUrl(uri)) {
-    await launchUrl(uri);
-  } else {
-    Get.snackbar("Error", "Could not launch $url");
-  }
-}
-Future<void> launchBibleApplications() async {
-  String url = '';
-
-  // Check the platform and assign the correct URL
-  if (Platform.isIOS) {
-    url =
-        "https://apps.apple.com/pk/app/bible-questions-answers-faq/id910797800?platform=iphone&see-all=developer-other-apps";
-  } else if (Platform.isAndroid) {
-    url =
-        "https://play.google.com/store/apps/collection/cluster?gsr=SkxqGGZCQTB4MXQwSU1RaGprMURlZkduOXc9PbICLwoSCg5jb20uYm9vay5iaWJsZRAHEhcIARITNjg4MjA5OTEyMDgxNDAwNDYyMxgA:S:ANO1ljJNwuQ";
-  }
-
-  final Uri launchUri = Uri.parse(url);
-
-  // Launch the URL
-  if (await canLaunchUrl(launchUri)) {
-    await launchUrl(launchUri);
-  } else {
-    Get.snackbar("Error", "Could not launch $url");
-  }
-}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,26 +110,7 @@ Future<void> launchBibleApplications() async {
                   label: 'More Bible Applications',
                   ontap: () async {
                      await launchBibleApplications();
-                    // // Define the default URLs for iOS and Android
-                    // String url = '';
-
-                    // // Check the platform
-                    // if (Platform.isIOS) {
-                    //   url =
-                    //       "https://apps.apple.com/pk/app/bible-questions-answers-faq/id910797800?platform=iphone&see-all=developer-other-apps"; // iOS link
-                    // } else if (Platform.isAndroid) {
-                    //   url =
-                    //       "https://play.google.com/store/apps/collection/cluster?gsr=SkxqGGZCQTB4MXQwSU1RaGprMURlZkduOXc9PbICLwoSCg5jb20uYm9vay5iaWJsZRAHEhcIARITNjg4MjA5OTEyMDgxNDAwNDYyMxgA:S:ANO1ljJNwuQ"; // Android link
-                    // }
-
-                    // final Uri launchUri = Uri.parse(url);
-                    // // Launch the URL
-                    // if (await canLaunchUrl(launchUri)) {
-                    //   await launchUrl(launchUri);
-                    // } else {
-                    //   // throw 'Could not launch $url';
-                    //   Get.snackbar("Error", "Could not launch $url");
-                    // }
+        
                   },
                 ),
                 menuItem(
@@ -166,19 +118,7 @@ Future<void> launchBibleApplications() async {
                   label: 'Contact Us',
                   isShowDivider: false,
                   ontap: () async {
-                    final Uri emailUri = Uri(
-                      scheme: 'mailto',
-                      path: 'info@bibleresources.info',
-                      query: Uri.encodeFull('Subject=Contact Us'),
-                    );
-
-                    // Launch the email app with the pre-filled email details
-                    if (await canLaunchUrl(emailUri)) {
-                      await launchUrl(emailUri);
-                    } else {
-                      // throw 'Could not open email client.';
-                      Get.snackbar("Error", "Could not open email client.");
-                    }
+                     launchEmail('info@bibleresources.info') ;
                   },
                 ),
               ]),
@@ -189,86 +129,27 @@ Future<void> launchBibleApplications() async {
                 menuItem(
                   icon: AppSvgIcons.share,
                   label: 'Share Application',
-                  ontap: () {
-                    const String appLink =
-                        "http://bibleresources.info/christian-resources/"; // Replace with your app's URL
-                    Share.share(
-                      "Check out this amazing app: $appLink",
-                      subject: "Share Our Application",
-                    );
-                  },
+                  ontap: shareBibleApp,
                 ),
 
                 menuItem(
                   icon: AppSvgIcons.star,
                   label: 'Rate Application',
-                  ontap: () async {
-                    // Define the default URLs for iOS and Android
-                    String url = '';
+                  ontap: launchAppStoreLink,
 
-                    // Check the platform
-                    if (Platform.isIOS) {
-                      url =
-                          "https://apps.apple.com/pk/app/bible-questions-answers-faq/id910797800"; // iOS App link
-                    } else if (Platform.isAndroid) {
-                      url =
-                          "https://play.google.com/store/apps/details?id=com.ChristianResources"; // Android App link
-                    }
-
-                    final Uri launchUri = Uri.parse(url);
-
-                    // Attempt to launch the URL
-                    if (await canLaunchUrl(launchUri)) {
-                      await launchUrl(launchUri);
-                    } else {
-                      Get.snackbar("Error", "Could not launch $url");
-                    }
-                  },
                 ),
 
                 menuItem(
                   icon: AppSvgIcons.book,
                   label: 'Update Application',
-                  ontap: () async {
-                    // Define the default URLs for iOS and Android
-                    String url = '';
-
-                    // Check the platform
-                    if (Platform.isIOS) {
-                      url =
-                          "https://apps.apple.com/pk/app/bible-questions-answers-faq/id910797800"; // iOS App link
-                    } else if (Platform.isAndroid) {
-                      url =
-                          "https://play.google.com/store/apps/details?id=com.ChristianResources"; // Android App link
-                    }
-
-                    final Uri launchUri = Uri.parse(url);
-
-                    // Attempt to launch the URL
-                    if (await canLaunchUrl(launchUri)) {
-                      await launchUrl(launchUri);
-                    } else {
-                      Get.snackbar("Error", "Could not launch $url");
-                    }
-                  },
+                  ontap: launchAppStoreLink,
                 ),
                 menuItem(
                   icon: AppSvgIcons.bug,
                   label: 'Report a Bug or Suggestion',
-                  ontap: () async {
-                    final Uri emailUri = Uri(
-                      scheme: 'mailto',
-                      path: 'info@bibleresources.info',
-                      query: Uri.encodeFull('Subject=Contact Us'),
-                    );
-
-                    // Launch the email app with the pre-filled email details
-                    if (await canLaunchUrl(emailUri)) {
-                      await launchUrl(emailUri);
-                    } else {
-                      // throw 'Could not open email client.';
-                      Get.snackbar("Error", "Could not open email client.");
-                    }
+                  ontap:
+                  () async {
+                   launchEmail('info@bibleresources.info') ;
                   },
                 ),
                 menuItem(
@@ -285,6 +166,8 @@ Future<void> launchBibleApplications() async {
       ),
     );
   }
+
+ 
 
   Widget _buildMenuItemCard({required List<Widget> children}) {
     return Card(
