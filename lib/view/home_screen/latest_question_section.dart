@@ -2,7 +2,6 @@ import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class LatestQuestionSection extends StatelessWidget {
@@ -10,13 +9,12 @@ class LatestQuestionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
-
-final  provider = Get.find<QuestionsProviderSql>();   //this way we can get the instance of QuestionsProviderSql
+    final provider = Get.find<
+        QuestionsProviderSql>(); //this way we can get the instance of QuestionsProviderSql
 
     return Obx(() {
       if (provider.isLatestQuestionsLoading.value) {
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator.adaptive());
       }
       if (provider.isLatestQuestionsError.value) {
         return const Center(
@@ -28,7 +26,6 @@ final  provider = Get.find<QuestionsProviderSql>();   //this way we can get the 
       }
 
       final questions = provider.latestQuestions;
-
       return Column(
         children: [
           Row(
@@ -43,36 +40,33 @@ final  provider = Get.find<QuestionsProviderSql>();   //this way we can get the 
               ),
             ],
           ),
-          const Gap(10),
           SizedBox(
-            height: 150,
+            height: 134,
             child: ListView.builder(
               padding: EdgeInsets.zero,
-              itemCount: questions.length,
+              itemCount: 5,
               itemBuilder: (context, index) {
                 final question = questions[index];
                 return GestureDetector(
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.all(0),
-                        leading: Image.asset(
-                             AppImages.getRandomImage()),
-                        title: TitleText(
-                          text: question.question ?? 'No text available',
-                          fontSize: AppFontSize.xsmall,
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: Image.asset(AppImages.getRandomImage()),
+                          title: TitleText(
+                            text: question.question ?? 'No text available',
+                            fontSize: AppFontSize.xsmall,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  onTap:  (){
-                    Get.toNamed(
-                            AppRouts.questionDetailScreen,
-                            arguments: question,
-                          );
-                  }
-                );
+                    onTap: () {
+                      Get.toNamed(
+                        AppRouts.questionDetailScreen,
+                        arguments: question,
+                      );
+                    });
               },
             ),
           ),

@@ -22,7 +22,9 @@ class MyFavouriteQuestionScreen extends StatelessWidget {
       body: BodyContainerComponent(
         child: Column(
           children: [
-            const CustomTextField(isFavQuestionSearchBar: true,),
+            const CustomTextField(
+              isFavQuestionSearchBar: true,
+            ),
             const Gap(10),
             Expanded(
               child: Obx(() {
@@ -30,7 +32,8 @@ class MyFavouriteQuestionScreen extends StatelessWidget {
                 final questions = favoritesProvider.favoriteQuestions;
 
                 if (favoritesProvider.isFavoritesLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
                 }
 
                 if (questions.isEmpty) {
@@ -150,7 +153,7 @@ class MyFavouriteQuestionScreen extends StatelessWidget {
 //                 final questions = favoritesProvider.favoriteQuestions;
 
 //                 if (favoritesProvider.isFavoritesLoading.value) {
-//                   return const Center(child: CircularProgressIndicator());
+//                   return const Center(child: CircularProgressIndicator.adaptive());
 //                 }
 
 //                 if (questions.isEmpty) {

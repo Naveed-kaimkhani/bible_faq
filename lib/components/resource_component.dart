@@ -30,8 +30,12 @@ class ResourceComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  image,
+                Center(
+                  child: Image.asset(
+                    image,
+                    height: 150,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 const Gap(8),
                 TitleText(

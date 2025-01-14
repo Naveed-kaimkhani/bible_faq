@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/utils/url_launcher.dart';
@@ -8,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -93,9 +89,7 @@ class SettingScreen extends StatelessWidget {
                   icon: AppSvgIcons.browser,
                   label: 'View Our Website',
                   ontap: () async {
-                       await launchWebsite("https://bibleresources.info/");
-
-                
+                    await launchWebsite("https://bibleresources.info/");
                   },
                 ),
                 menuItem(
@@ -109,8 +103,7 @@ class SettingScreen extends StatelessWidget {
                   icon: AppSvgIcons.arrowShuffle,
                   label: 'More Bible Applications',
                   ontap: () async {
-                     await launchBibleApplications();
-        
+                    await launchBibleApplications();
                   },
                 ),
                 menuItem(
@@ -118,7 +111,7 @@ class SettingScreen extends StatelessWidget {
                   label: 'Contact Us',
                   isShowDivider: false,
                   ontap: () async {
-                     launchEmail('info@bibleresources.info') ;
+                    launchEmail('info@bibleresources.info');
                   },
                 ),
               ]),
@@ -136,7 +129,6 @@ class SettingScreen extends StatelessWidget {
                   icon: AppSvgIcons.star,
                   label: 'Rate Application',
                   ontap: launchAppStoreLink,
-
                 ),
 
                 menuItem(
@@ -147,9 +139,8 @@ class SettingScreen extends StatelessWidget {
                 menuItem(
                   icon: AppSvgIcons.bug,
                   label: 'Report a Bug or Suggestion',
-                  ontap:
-                  () async {
-                   launchEmail('info@bibleresources.info') ;
+                  ontap: () async {
+                    launchEmail('info@bibleresources.info');
                   },
                 ),
                 menuItem(
@@ -166,8 +157,6 @@ class SettingScreen extends StatelessWidget {
       ),
     );
   }
-
- 
 
   Widget _buildMenuItemCard({required List<Widget> children}) {
     return Card(
