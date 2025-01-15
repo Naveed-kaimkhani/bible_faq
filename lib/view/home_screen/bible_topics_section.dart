@@ -2,6 +2,7 @@ import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/app_images.dart';
 import 'package:bible_faq/constants/app_routs.dart';
 import 'package:bible_faq/model/topic.dart';
+import 'package:bible_faq/view_model/api_controller/all_question_provider.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,15 +53,31 @@ class BibleTopicsSection extends StatelessWidget {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 final topic = topics[index];
-                return TopicTileComponent(
+                return FutureBuilder<int>(
+      future: QuestionProviderAPI().getQuestionCountByCatId(topic.catId??0),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator(); // Show a loader while fetching
+        } else if (snapshot.hasError) {
+          return Text("Error: ${snapshot.error}");
+        } else if (snapshot.hasData) {
+          final questionCount = snapshot.data ?? 0;
+          
+          return  TopicTileComponent(
                   topic: Topic(
                     catId: topic.catId,
                     title: topic.name ?? 'Unnamed Topic',
-                    count: 45, // Replace with actual count if available
+                    count: questionCount, // Replace with actual count if available
                     imageUrl: AppImages
                         .getRandomImage(), // Replace with actual URL if available
                   ),
                 );
+        } else {
+          return const Text("No data available.");
+        }
+      },
+    );
+               
               },
             ),
           ),

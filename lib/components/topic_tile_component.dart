@@ -40,7 +40,8 @@ class TopicTileComponent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Center(
-                  child: LabelText(
+                  child: 
+                  LabelText(
                     text: "${topic.count}",
                     textColor: AppColors.tealBlue,
                     textAlign: TextAlign.center,

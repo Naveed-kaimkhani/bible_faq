@@ -76,10 +76,10 @@ class Routes {
           name: AppRouts.favQuestionSearchScreen,
           page: () => const FavQuestionSearchScreen(),
         ),
-        GetPage(
-          name: AppRouts.topicDeatailsScreen,
-          page: () => const TopicDetailsScreen(),
-        ),
+        // GetPage(
+        //   name: AppRouts.topicDeatailsScreen,
+        //   page: () => const TopicDetailsScreen(),
+        // ),
         GetPage(
           name: AppRouts.askAQuestion,
           page: () => const AskAQuestionScreen(),

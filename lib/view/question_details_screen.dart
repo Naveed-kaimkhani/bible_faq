@@ -4,6 +4,7 @@ import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
 import 'package:bible_faq/view_model/controllers/theme_controller.dart';
 import 'package:bible_faq/view_model/font_size_provider.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:gap/gap.dart';
@@ -15,6 +16,8 @@ class QuestionDetailScreen extends StatelessWidget {
   final themeController = Get.find<ThemeController>();
   final fontSizeController = Get.find<FontSizeController>();
   final QuestionsRepository _repository = QuestionsRepository.instance;
+
+  final questionController = Get.find<QuestionsProviderSql>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,21 +47,35 @@ class QuestionDetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width: 52,
+                        width: 302,
                         decoration: BoxDecoration(
                           color: AppColors.aquaBlue.withOpacity(.2),
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        child: Center(
-                          child: LabelText(
-                            ///Naveed add correct values here asked in pdf
-                            text: "${question.qId}",
-                            textColor: AppColors.tealBlue,
-                            textAlign: TextAlign.center,
-                            fontWeight: FontWeight.w700,
-                            fontSize: AppFontSize.medium,
-                            isChangeTextColor: false,
-                          ),
+                        child: FutureBuilder<String?>(
+                          future: questionController
+                              .fetchCategoryNameByQid(question.qId ?? 0),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              return const Text("Error fetching category");
+                            } else if (!snapshot.hasData ||
+                                snapshot.data == null) {
+                              return const Text("Category not found");
+                            } else {
+                              return LabelText(
+                                text:
+                                    "${snapshot.data}", // Your dynamic data here
+                                textColor: AppColors.tealBlue,
+                                textAlign: TextAlign.center,
+                                fontWeight: FontWeight.w700,
+                                fontSize: AppFontSize.medium,
+                                isChangeTextColor: false,
+                              );
+                            }
+                          },
                         ),
                       ),
                       const Gap(16),
@@ -98,6 +115,55 @@ class QuestionDetailScreen extends StatelessWidget {
                         );
                       }),
                       const Gap(16),
+                      FutureBuilder<List<QuestionData>>(
+                        future: questionController
+                            .fetchRandomQuestionsFromSameCategory(
+                                question.qId ?? 0),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return const Text("Error fetching questions");
+                          } else if (!snapshot.hasData ||
+                              snapshot.data!.isEmpty) {
+                            return const Text("No random questions available");
+                          } else {
+                            return SizedBox(
+                              height: Get.height * 0.3,
+                              child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                itemCount: 5,
+                                itemBuilder: (context, index) {
+                                  final question = snapshot.data![index];
+                                  return GestureDetector(
+                                      child: Card(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: ListTile(
+                                            contentPadding: EdgeInsets.zero,
+                                            leading: Image.asset(
+                                                AppImages.getRandomImage()),
+                                            title: TitleText(
+                                              text: question.question ??
+                                                  'No text available',
+                                              fontSize: AppFontSize.xsmall,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Get.toNamed(
+                                          AppRouts.questionDetailScreen,
+                                          arguments: question,
+                                        );
+                                      });
+                                },
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
