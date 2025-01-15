@@ -93,9 +93,7 @@ class SettingScreen extends StatelessWidget {
                   icon: AppSvgIcons.browser,
                   label: 'View Our Website',
                   ontap: () async {
-                       await launchWebsite("https://bibleresources.info/");
-
-                
+                    await launchWebsite("https://bibleresources.info/");
                   },
                 ),
                 menuItem(
@@ -109,8 +107,7 @@ class SettingScreen extends StatelessWidget {
                   icon: AppSvgIcons.arrowShuffle,
                   label: 'More Bible Applications',
                   ontap: () async {
-                     await launchBibleApplications();
-        
+                    await launchBibleApplications();
                   },
                 ),
                 menuItem(
@@ -118,7 +115,7 @@ class SettingScreen extends StatelessWidget {
                   label: 'Contact Us',
                   isShowDivider: false,
                   ontap: () async {
-                     launchEmail('info@bibleresources.info') ;
+                    launchEmail('info@bibleresources.info');
                   },
                 ),
               ]),
@@ -136,7 +133,6 @@ class SettingScreen extends StatelessWidget {
                   icon: AppSvgIcons.star,
                   label: 'Rate Application',
                   ontap: launchAppStoreLink,
-
                 ),
 
                 menuItem(
@@ -147,9 +143,8 @@ class SettingScreen extends StatelessWidget {
                 menuItem(
                   icon: AppSvgIcons.bug,
                   label: 'Report a Bug or Suggestion',
-                  ontap:
-                  () async {
-                   launchEmail('info@bibleresources.info') ;
+                  ontap: () async {
+                    launchEmail('info@bibleresources.info');
                   },
                 ),
                 menuItem(
@@ -166,8 +161,6 @@ class SettingScreen extends StatelessWidget {
       ),
     );
   }
-
- 
 
   Widget _buildMenuItemCard({required List<Widget> children}) {
     return Card(
