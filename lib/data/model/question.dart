@@ -24,10 +24,10 @@ class QuestionData {
   QuestionData.fromJson(Map<String, dynamic> json) {
     qId = json['q_id'];
     question = json['question'];
-    book = json['book'];
-    verse = json['verse'];
+    // book = json['book'];
+    // verse = json['verse'];
     answer = json['answer'];
-    hits = json['hits'];
+    // hits = json['hits'];
     timestamp = json['timestamp'];
     image = json['image'];
     websiteId = json['website_id'];
@@ -35,15 +35,15 @@ class QuestionData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['q_id'] = this.qId;
-    data['question'] = this.question;
-    data['book'] = this.book;
-    data['verse'] = this.verse;
-    data['answer'] = this.answer;
-    data['hits'] = this.hits;
-    data['timestamp'] = this.timestamp;
-    data['image'] = this.image;
-    data['website_id'] = this.websiteId;
+    data['q_id'] = qId;
+    data['question'] = question;
+    // data['book'] = this.book;
+    // data['verse'] = this.verse;
+    data['answer'] = answer;
+    // data['hits'] = hits;
+    data['timestamp'] = timestamp;
+    data['image'] = image;
+    data['website_id'] = websiteId;
     return data;
   }
 }

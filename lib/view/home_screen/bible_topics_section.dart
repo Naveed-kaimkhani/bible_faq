@@ -54,30 +54,31 @@ class BibleTopicsSection extends StatelessWidget {
               itemBuilder: (context, index) {
                 final topic = topics[index];
                 return FutureBuilder<int>(
-      future: QuestionProviderAPI().getQuestionCountByCatId(topic.catId??0),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator(); // Show a loader while fetching
-        } else if (snapshot.hasError) {
-          return Text("Error: ${snapshot.error}");
-        } else if (snapshot.hasData) {
-          final questionCount = snapshot.data ?? 0;
-          
-          return  TopicTileComponent(
-                  topic: Topic(
-                    catId: topic.catId,
-                    title: topic.name ?? 'Unnamed Topic',
-                    count: questionCount, // Replace with actual count if available
-                    imageUrl: AppImages
-                        .getRandomImage(), // Replace with actual URL if available
-                  ),
+                  future: QuestionProviderAPI()
+                      .getQuestionCountByCatId(topic.catId ?? 0),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator(); // Show a loader while fetching
+                    } else if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}");
+                    } else if (snapshot.hasData) {
+                      final questionCount = snapshot.data ?? 0;
+
+                      return TopicTileComponent(
+                        topic: Topic(
+                          catId: topic.catId,
+                          title: topic.name ?? 'Unnamed Topic',
+                          count:
+                              questionCount, // Replace with actual count if available
+                          imageUrl:
+                              "${AppImages.initialPath} ${topic.image}", // Replace with actual URL if available
+                        ),
+                      );
+                    } else {
+                      return const Text("No data available.");
+                    }
+                  },
                 );
-        } else {
-          return const Text("No data available.");
-        }
-      },
-    );
-               
               },
             ),
           ),

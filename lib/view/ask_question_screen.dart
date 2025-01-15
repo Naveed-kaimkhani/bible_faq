@@ -184,7 +184,7 @@ class QuestionSection extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: ListTile(
               contentPadding: const EdgeInsets.all(0),
-              leading: Image.asset(AppImages.getRandomImage()),
+              leading: Image.asset("${AppImages.initialPath} ${question.image}"),
               title: TitleText(
                 text: question.question??"",
                 fontSize: AppFontSize.xsmall,

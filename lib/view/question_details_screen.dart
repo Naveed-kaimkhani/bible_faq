@@ -143,7 +143,7 @@ class QuestionDetailScreen extends StatelessWidget {
                                           child: ListTile(
                                             contentPadding: EdgeInsets.zero,
                                             leading: Image.asset(
-                                                AppImages.getRandomImage()),
+                                                "assets/images/${question.image}"),
                                             title: TitleText(
                                               text: question.question ??
                                                   'No text available',
