@@ -57,7 +57,7 @@ class TopicsScreen extends StatelessWidget {
             return Card(
               child: ListTile(
                 leading: Image.asset(
-                  "${AppImages.initialPath} ${question.image}",
+                  "${AppImages.initialPath}${question.image}",
                 ),
                 title: Text(question.question ?? 'No Question Text'),
                 subtitle:

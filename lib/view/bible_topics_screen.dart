@@ -131,7 +131,7 @@ class _BibleTopicsScreenState extends State<BibleTopicsScreen> {
                               title: topic.name ?? 'Unnamed Topic',
                               count:
                                   questionCount, // Replace with actual count if available
-                              imageUrl: "${AppImages.initialPath} ${topic.image}", // Replace with actual URL if available
+                              imageUrl: "${AppImages.initialPath}${topic.image}", // Replace with actual URL if available
                             ),
                           );
                         } else {

@@ -22,8 +22,8 @@ class TopicTileComponent extends StatelessWidget {
         child: ListTile(
           contentPadding: EdgeInsets.zero,
           leading: SizedBox(
-            width: 40,
-            height: 40,
+            width: 80,
+            height: 80,
             child: Image.asset(topic.imageUrl, width: 40, height: 40),
           ),
           title: TitleText(
@@ -40,8 +40,7 @@ class TopicTileComponent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Center(
-                  child: 
-                  LabelText(
+                  child: LabelText(
                     text: "${topic.count}",
                     textColor: AppColors.tealBlue,
                     textAlign: TextAlign.center,

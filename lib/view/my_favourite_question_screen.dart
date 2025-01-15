@@ -56,7 +56,7 @@ class MyFavouriteQuestionScreen extends StatelessWidget {
                             horizontal: 8, vertical: 0),
                         child: ListTile(
                             contentPadding: const EdgeInsets.all(0),
-                            leading: Image.asset("${AppImages.initialPath} ${question.image}"),
+                            leading: Image.asset("${AppImages.initialPath}${question.image}"),
                             title: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

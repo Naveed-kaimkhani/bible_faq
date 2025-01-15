@@ -78,7 +78,7 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
                         leading: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.asset(
-                            "${AppImages.initialPath} ${question.image}", // Placeholder image
+                            "${AppImages.initialPath}${question.image}", // Placeholder image
                             height: 50,
                             width: 50,
                             fit: BoxFit.cover,

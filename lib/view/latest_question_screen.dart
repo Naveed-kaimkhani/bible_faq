@@ -52,7 +52,7 @@ class LatestQuestionScreen extends StatelessWidget {
                         child: ListTile(
                           contentPadding: const EdgeInsets.all(0),
                           leading: Image.asset(
-                            "${AppImages.initialPath} ${question.image}",
+                            "${AppImages.initialPath}${question.image}",
                           ), // Replace with question.imagePath if applicable
                           title: TitleText(
                             text: question.question ?? 'No text available',

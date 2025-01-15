@@ -92,7 +92,7 @@ class QuestionDetailScreen extends StatelessWidget {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(16)),
                         child: Image.asset(
-                          AppImages.splashImage,
+                          "${AppImages.initialPath}${question.image}",
                           width: double.infinity,
                           height: Get.height * 0.25,
                           fit: BoxFit.cover,

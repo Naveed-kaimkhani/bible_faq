@@ -31,7 +31,8 @@ class QuestionProviderAPI extends GetxController {
         latestQId: latestQId,
         totalCount: totalCount,
       );
-      if (response == null) {
+      debugPrint(response.toString());
+      if (response == null || response.isEmpty) {
         Get.back();
         _showSnackbar("Info", "Your app is already updated. Lord bless you!");
         return;
@@ -94,9 +95,9 @@ class QuestionProviderAPI extends GetxController {
       _showSnackbar("Info", "Your app is already updated. Lord bless you!");
       return;
     } else {
-        Get.back();
-      _showSnackbar("Info", "Your app is already updated. Lord bless you!");
-      // await updateDatabaseWithResponse(response);
+        // Get.back();
+      // _showSnackbar("Info", "Your app is already updated. Lord bless you!");
+      await updateDatabaseWithResponse(response);
     }
   }
 
@@ -157,6 +158,8 @@ class QuestionProviderAPI extends GetxController {
           'answer': question['answer'],
           'hits': question['hits'],
           'timestamp': question['timestamp'],
+          
+          'image': question['image'],
         },
         conflictAlgorithm: ConflictAlgorithm.ignore,
       );

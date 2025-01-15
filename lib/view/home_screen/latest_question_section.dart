@@ -53,7 +53,7 @@ class LatestQuestionSection extends StatelessWidget {
                         padding: const EdgeInsets.all(8),
                         child: ListTile(
                           contentPadding: EdgeInsets.zero,
-                          leading: Image.asset("${AppImages.initialPath} ${question.image}"),
+                          leading: Image.asset("${AppImages.initialPath}${question.image}"),
                           title: TitleText(
                             text: question.question ?? 'No text available',
                             fontSize: AppFontSize.xsmall,
