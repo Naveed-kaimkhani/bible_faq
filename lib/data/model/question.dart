@@ -4,7 +4,7 @@ class QuestionData {
 
   String? book;
   String? verse;
-  String? websiteId;
+  int? websiteId;
 
   String? timestamp;
   String? image;
