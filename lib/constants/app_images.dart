@@ -2,6 +2,9 @@ import 'dart:math';
 
 class AppImages {
   static const String splashImage = "assets/images/splash_image.png";
+  static const String askQuestion = "assets/images/ask_question.png";
+  static const String favoriteImage = "assets/images/favorite_image.png";
+
   static List<String> questionImages = [
     "assets/images/questionImage1.png",
     "assets/images/questionImage2.png",
@@ -14,15 +17,16 @@ class AppImages {
     "assets/images/questionImage3.png",
     "assets/images/questionImage4.png",
   ];
-static String getRandomImage() {
+  static String getRandomImage() {
     final random = Random();
     int index = random.nextInt(questionImages.length);
     return questionImages[index];
   }
+
   static const List<String> resourceImages = [
     "assets/images/resource_image1.png",
     "assets/images/resource_image2.png",
     "assets/images/resource_image3.png",
   ];
-  static const String bookImage = "assets/images/book_image.png";
+  static const String bookImage = "assets/images/book_image.gif";
 }

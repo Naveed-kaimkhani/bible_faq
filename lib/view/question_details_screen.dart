@@ -1,4 +1,5 @@
 import 'package:bible_faq/components/componets.dart';
+import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
 import 'package:bible_faq/view_model/controllers/theme_controller.dart';
@@ -27,6 +28,7 @@ class QuestionDetailScreen extends StatelessWidget {
         isShowSettingTrailing: true,
         isShowFavButton: true,
         isShowStarTrailing: true,
+        isShowShareTrailing: true,
         qid: question.qId,
       ),
       body: BodyContainerComponent(
@@ -41,6 +43,24 @@ class QuestionDetailScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Container(
+                        width: 52,
+                        decoration: BoxDecoration(
+                          color: AppColors.aquaBlue.withOpacity(.2),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Center(
+                          child: LabelText(
+                            ///Naveed add correct values here asked in pdf
+                            text: "${question.qId}",
+                            textColor: AppColors.tealBlue,
+                            textAlign: TextAlign.center,
+                            fontWeight: FontWeight.w700,
+                            fontSize: AppFontSize.medium,
+                            isChangeTextColor: false,
+                          ),
+                        ),
+                      ),
                       const Gap(16),
                       Obx(() {
                         return TitleText(
@@ -50,13 +70,18 @@ class QuestionDetailScreen extends StatelessWidget {
                       }),
                       const Gap(16),
 
-                      // Display the answer section
-                      const Text(
-                        "Answer:",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ///Naveed add correct associated image from the database
+                      ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
+                        child: Image.asset(
+                          AppImages.splashImage,
+                          width: double.infinity,
+                          height: Get.height * 0.25,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      const Gap(8),
+                      // const Gap(10),
                       Obx(() {
                         return Html(
                           data: question.answer ?? "<p>No Answer Available</p>",
@@ -70,51 +95,6 @@ class QuestionDetailScreen extends StatelessWidget {
                                   : Colors.black,
                             ),
                           },
-                        );
-                      }),
-                      const Gap(16),
-
-                      // Book Info Section
-                      const Text(
-                        "Book:",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      Obx(() {
-                        return Text(
-                          question.book.toString() ?? 'No Book Info',
-                          style: TextStyle(
-                              fontSize: fontSizeController.fontSize.value),
-                        );
-                      }),
-                      const Gap(16),
-
-                      // Hits Section
-                      const Text(
-                        "Hits:",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      Obx(() {
-                        return Text(
-                          "${question.hits ?? 0}",
-                          style: TextStyle(
-                              fontSize: fontSizeController.fontSize.value),
-                        );
-                      }),
-                      const Gap(16),
-
-                      // Verse Section
-                      const Text(
-                        "Verse:",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      Obx(() {
-                        return Text(
-                          question.verse.toString() ?? 'No Verse Info',
-                          style: TextStyle(
-                              fontSize: fontSizeController.fontSize.value),
                         );
                       }),
                       const Gap(16),

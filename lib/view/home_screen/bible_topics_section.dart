@@ -4,7 +4,6 @@ import 'package:bible_faq/constants/app_routs.dart';
 import 'package:bible_faq/model/topic.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class BibleTopicsSection extends StatelessWidget {
@@ -17,7 +16,7 @@ class BibleTopicsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (provider.isCategoriesLoading.value) {
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator.adaptive());
       }
       if (provider.isCategoriesError.value) {
         return const Center(
@@ -44,12 +43,12 @@ class BibleTopicsSection extends StatelessWidget {
               ),
             ],
           ),
-          const Gap(10),
+          // const Gap(10),
           SizedBox(
-            height: 170,
+            height: 160,
             child: ListView.builder(
               padding: EdgeInsets.zero,
-              itemCount: topics.length,
+              itemCount: 5,
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 final topic = topics[index];

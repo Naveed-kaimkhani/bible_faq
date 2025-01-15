@@ -1,4 +1,5 @@
 import 'package:bible_faq/constants/app_routs.dart';
+import 'package:bible_faq/view/ask_a_question_screen.dart';
 import 'package:bible_faq/view/ask_question_screen.dart';
 import 'package:bible_faq/view/free_bible_guide_screen.dart';
 import 'package:bible_faq/view/home_screen/fav_question_search_screen.dart';
@@ -15,7 +16,7 @@ class Routes {
         ),
         GetPage(
           name: AppRouts.homeScreen,
-          page: () => HomeScreen(),
+          page: () => const HomeScreen(),
         ),
         GetPage(
           name: AppRouts.settingScreen,
@@ -27,7 +28,7 @@ class Routes {
         ),
         GetPage(
           name: AppRouts.bibleTopicsScreen,
-          page: () => BibleTopicsScreen(),
+          page: () => const BibleTopicsScreen(),
         ),
         // GetPage(
         //   name: AppRouts.browsingHistryScreen,
@@ -78,6 +79,10 @@ class Routes {
         GetPage(
           name: AppRouts.topicDeatailsScreen,
           page: () => const TopicDetailsScreen(),
+        ),
+        GetPage(
+          name: AppRouts.askAQuestion,
+          page: () => const AskAQuestionScreen(),
         ),
       ];
 }

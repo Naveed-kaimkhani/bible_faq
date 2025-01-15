@@ -26,7 +26,7 @@ class TopicsScreen extends StatelessWidget {
       ),
       body: Obx(() {
         if (provider.isAllQuestionsLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator.adaptive());
         }
 
         if (provider.isAllQuestionsError.value) {

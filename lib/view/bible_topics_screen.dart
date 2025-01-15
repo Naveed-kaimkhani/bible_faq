@@ -1,5 +1,4 @@
 import 'package:bible_faq/components/componets.dart';
-import 'package:bible_faq/components/search_bar_topics.dart';
 import 'package:bible_faq/constants/app_images.dart';
 import 'package:bible_faq/data/model/question_category.dart';
 import 'package:bible_faq/model/topic.dart';
@@ -9,8 +8,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class BibleTopicsScreen extends StatefulWidget {
-
-  BibleTopicsScreen({super.key});
+  const BibleTopicsScreen({super.key});
 
   @override
   State<BibleTopicsScreen> createState() => _BibleTopicsScreenState();
@@ -21,38 +19,41 @@ class _BibleTopicsScreenState extends State<BibleTopicsScreen> {
   // late List<QuestionCategory> topics;
   late List<QuestionCategory> filteredQuestions;
   final TextEditingController _searchController = TextEditingController();
-@override
-void initState() {
-  super.initState();
-  filteredQuestions = provider.categories;
+  @override
+  void initState() {
+    super.initState();
+    filteredQuestions = provider.categories;
     _searchController.addListener(() {
       _filterQuestions(_searchController.text);
     });
-}
+  }
+
   void _filterQuestions(String query) {
     if (query.isEmpty) {
       setState(() {
-        filteredQuestions =  provider.categories;
+        filteredQuestions = provider.categories;
       });
     } else {
       setState(() {
-        filteredQuestions =  provider.categories
-            .where((question) => question.name
-                ?.toLowerCase()
-                .contains(query.toLowerCase()) ?? false)
+        filteredQuestions = provider.categories
+            .where((question) =>
+                question.name?.toLowerCase().contains(query.toLowerCase()) ??
+                false)
             .toList();
       });
     }
   }
-@override
-void dispose() {
-  _searchController.dispose();
-  super.dispose();
-}
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  CustomAppBar(
+      appBar: CustomAppBar(
         title: "Bible Topics",
         isShowSettingTrailing: true,
         isShowInternetTrailing: true,
@@ -62,22 +63,23 @@ void dispose() {
         child: Column(
           children: [
             // const CustomTextFieldTopics(),
-              TextField(
+            TextField(
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: "Search questions...",
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(15),
                 ),
               ),
             ),
-          
+
             const Gap(10),
             Expanded(
               child: Obx(() {
                 if (provider.isCategoriesLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
                 }
                 if (provider.isCategoriesError.value) {
                   return const Center(
@@ -107,7 +109,9 @@ void dispose() {
                       topic: Topic(
                         catId: topic.catId,
                         title: topic.name ?? 'Unnamed Topic',
-                        count: 45, // Replace with actual count if available
+
+                        ///naveed show exact length instead of 45. i don't which parameter has this value
+                        count: 45,
                         imageUrl: AppImages.getRandomImage(),
                       ),
                     );

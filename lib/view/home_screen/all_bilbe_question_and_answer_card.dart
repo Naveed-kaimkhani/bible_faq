@@ -22,10 +22,12 @@ class AllBilbeQuestionAndAnswerCard extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
+              flex: 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -67,11 +69,12 @@ class AllBilbeQuestionAndAnswerCard extends StatelessWidget {
                 ],
               ),
             ),
-            Image.asset(
-              AppImages.bookImage,
-              height: 100,
-              width: 100,
-              fit: BoxFit.cover,
+            Expanded(
+              child: Image.asset(
+                AppImages.bookImage,
+                fit: BoxFit.cover,
+                height: 250,
+              ),
             ),
           ],
         ),

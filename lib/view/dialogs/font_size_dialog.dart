@@ -31,46 +31,48 @@ class FontSizeDialog {
               ),
             ),
           ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Preview text using temporary font size
-              ValueListenableBuilder(
-                valueListenable: tempFontSize,
-                builder: (context, value, child) => Text(
-                  "The Lord is my shepherd; I shall not want. — Psalm 23:1",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: tempFontSize.value,
-                    // fontStyle: FontStyle.italic,
-                    color: isDarkMode ? Colors.white : Colors.black,
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Preview text using temporary font size
+                ValueListenableBuilder(
+                  valueListenable: tempFontSize,
+                  builder: (context, value, child) => Text(
+                    "The Lord is my shepherd; I shall not want. — Psalm 23:1",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: tempFontSize.value,
+                      // fontStyle: FontStyle.italic,
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _fontOptionButton(controller, "Arial", isDarkMode),
-                  _fontOptionButton(controller, "Gentium", isDarkMode),
-                  _fontOptionButton(controller, "Georgia", isDarkMode),
-                ],
-              ),
-              const SizedBox(height: 16),
-              // Slider updates the temporary font size
-              ValueListenableBuilder(
-                valueListenable: tempFontSize,
-                builder: (context, value, child) => Slider.adaptive(
-                  value: tempFontSize.value,
-                  min: 12,
-                  max: 50,
-                  activeColor: AppColors.tealBlue,
-                  onChanged: (value) {
-                    tempFontSize.value = value;
-                  },
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _fontOptionButton(controller, "Arial", isDarkMode),
+                    _fontOptionButton(controller, "Gentium", isDarkMode),
+                    _fontOptionButton(controller, "Georgia", isDarkMode),
+                  ],
                 ),
-              )
-            ],
+                const SizedBox(height: 16),
+                // Slider updates the temporary font size
+                ValueListenableBuilder(
+                  valueListenable: tempFontSize,
+                  builder: (context, value, child) => Slider.adaptive(
+                    value: tempFontSize.value,
+                    min: 12,
+                    max: 50,
+                    activeColor: AppColors.tealBlue,
+                    onChanged: (value) {
+                      tempFontSize.value = value;
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
           actions: [
             Padding(

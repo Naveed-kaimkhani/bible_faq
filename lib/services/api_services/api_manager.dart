@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -21,29 +22,31 @@ class APIManager {
         "Content-Type": "application/x-www-form-urlencoded",
         "Accept-Encoding": "gzip, deflate",
       };
-      
-Future<Map<String, dynamic>?> requestGetMethodForAllQuestion(
-    {required int latestCatId, required int latestQId, required int totalCount}) async {
-  final endpoint = "database_category.php?category_catid=$latestCatId&questions_qid=$latestQId&category_questions_count=$totalCount";
-  final url = Uri.parse(baseUrl + endpoint);
 
-  try {
-    // Make the HTTP GET request
-    final response = await http.get(url, headers: headers);
-    if (response.statusCode == 200) {
-      final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
-      return jsonData; // Return raw JSON
-    } else {
-      Get.snackbar("Error", "HTTP ${response.statusCode}: ${response.reasonPhrase}");
+  Future<Map<String, dynamic>?> requestGetMethodForAllQuestion(
+      {required int latestCatId,
+      required int latestQId,
+      required int totalCount}) async {
+    final endpoint =
+        "database_category.php?category_catid=$latestCatId&questions_qid=$latestQId&category_questions_count=$totalCount";
+    final url = Uri.parse(baseUrl + endpoint);
+
+    try {
+      // Make the HTTP GET request
+      final response = await http.get(url, headers: headers);
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
+        return jsonData; // Return raw JSON
+      } else {
+        Get.snackbar(
+            "Error", "HTTP ${response.statusCode}: ${response.reasonPhrase}");
+        return null;
+      }
+    } catch (e) {
+      Get.snackbar("Error", "Request failed: $e");
       return null;
     }
-  } catch (e) {
-    Get.snackbar("Error", "Request failed: $e");
-    return null;
   }
-}
-
-
 
   // GET Static Web URL
   Future<void> getStaticWebURL({
@@ -150,7 +153,7 @@ Future<Map<String, dynamic>?> requestGetMethodForAllQuestion(
       barrierDismissible: false,
       builder: (BuildContext context) {
         return const Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator.adaptive(),
         );
       },
     );

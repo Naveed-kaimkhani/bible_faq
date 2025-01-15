@@ -22,7 +22,7 @@ class LatestQuestionScreen extends StatelessWidget {
       ),
       body: Obx(() {
         if (provider.isLatestQuestionsLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator.adaptive());
         }
         if (provider.isLatestQuestionsError.value) {
           return const Center(
@@ -58,7 +58,8 @@ class LatestQuestionScreen extends StatelessWidget {
                             text: question.question ?? 'No text available',
                             fontSize: AppFontSize.xsmall,
                           ),
-                          subtitle: LastReadTime(repository: _repository, question: question),
+                          subtitle: LastReadTime(
+                              repository: _repository, question: question),
                           onTap: () {
                             // Navigate to QuestionDetailScreen with the selected question as an argument
                             Get.toNamed(

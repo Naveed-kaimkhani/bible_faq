@@ -12,10 +12,10 @@ class SearchQuestionsScreen extends StatefulWidget {
   const SearchQuestionsScreen({super.key});
 
   @override
-  _SearchQuestionsScreenState createState() => _SearchQuestionsScreenState();
+  SearchQuestionsScreenState createState() => SearchQuestionsScreenState();
 }
 
-class _SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
+class SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
   final dbController = Get.find<QuestionsProviderSql>();
   late List<QuestionData> questions;
   late List<QuestionData> filteredQuestions;
@@ -71,11 +71,12 @@ class _SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
             // Search Bar
             TextField(
               controller: _searchController,
+              autofocus: true,
               decoration: InputDecoration(
                 hintText: "Search questions...",
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(15),
                 ),
               ),
             ),
@@ -98,7 +99,8 @@ class _SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
                             text: question.question ?? 'Unnamed Question',
                             fontSize: AppFontSize.xsmall,
                           ),
-                          subtitle: LastReadTime(repository: _repository, question: question),
+                          subtitle: LastReadTime(
+                              repository: _repository, question: question),
                           onTap: () {
                             Get.toNamed(
                               AppRouts.questionDetailScreen,

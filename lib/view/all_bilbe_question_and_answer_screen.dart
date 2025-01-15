@@ -2,7 +2,6 @@ import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/components/last_read_time.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
-import 'package:bible_faq/view_model/controllers/theme_controller.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +23,7 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
       body: Obx(() {
         // Handle the loading state
         if (dbController.isAllQuestionsLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator.adaptive());
         }
 
         // Handle the error state
@@ -92,8 +91,8 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        subtitle: LastReadTime(repository: _repository, question: question),
-
+                        subtitle: LastReadTime(
+                            repository: _repository, question: question),
                         onTap: () {
                           // Navigate to QuestionDetailScreen with the selected question as an argument
                           Get.toNamed(
