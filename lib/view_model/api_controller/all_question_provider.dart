@@ -1,5 +1,6 @@
 import 'package:bible_faq/services/api_services/api_manager.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sqflite/sql.dart';
@@ -46,12 +47,6 @@ class QuestionProviderAPI extends GetxController {
     }
   }
 
-// Utility Methods
-
-  /// Set the loading state
-  void _setLoadingState(bool value) {
-    isLoading.value = value;
-  }
 
   /// Fetch the latest values from the database
   Future<Map<String, dynamic>> _fetchLatestDatabaseValues() async {
@@ -95,8 +90,6 @@ class QuestionProviderAPI extends GetxController {
       _showSnackbar("Info", "Your app is already updated. Lord bless you!");
       return;
     } else {
-        // Get.back();
-      // _showSnackbar("Info", "Your app is already updated. Lord bless you!");
       await updateDatabaseWithResponse(response);
     }
   }
@@ -168,9 +161,10 @@ class QuestionProviderAPI extends GetxController {
     }
     debugPrint("db updated");
     downloadProgress.value = 100.0;
-
-    _setLoadingState(false);
-    // Show Snackbar based on update status
+    
+  Get.put(QuestionsProviderSql());
+    Get.back();
+    
     if (hasNewData.value) {
       Get.snackbar(
         "Update Successful",

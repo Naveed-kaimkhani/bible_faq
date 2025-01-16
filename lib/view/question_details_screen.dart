@@ -14,14 +14,15 @@ class QuestionDetailScreen extends StatelessWidget {
   QuestionDetailScreen({super.key});
 
   final themeController = Get.find<ThemeController>();
+
   final fontSizeController = Get.find<FontSizeController>();
+
   final QuestionsRepository _repository = QuestionsRepository.instance;
 
   final questionController = Get.find<QuestionsProviderSql>();
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve the question object passed from the previous screen
     QuestionData question = Get.arguments;
     _repository.updateTimestamp(question.qId ?? 0);
 
@@ -58,7 +59,16 @@ class QuestionDetailScreen extends StatelessWidget {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
+                              return const LabelText(
+                                text:
+                                    "Bible and Bible Characters", // Your dynamic data here
+                                textColor: AppColors.tealBlue,
+                                textAlign: TextAlign.center,
+                                fontWeight: FontWeight.w700,
+                                fontSize: AppFontSize.medium,
+                                isChangeTextColor: false,
+                              );
+                              ;
                             } else if (snapshot.hasError) {
                               return const Text("Error fetching category");
                             } else if (!snapshot.hasData ||
@@ -153,9 +163,15 @@ class QuestionDetailScreen extends StatelessWidget {
                                         ),
                                       ),
                                       onTap: () {
-                                        Get.toNamed(
-                                          AppRouts.questionDetailScreen,
-                                          arguments: question,
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                QuestionDetailScreen(),
+                                            settings: RouteSettings(
+                                                arguments:
+                                                    question), // Pass the new question
+                                          ),
                                         );
                                       });
                                 },

@@ -85,16 +85,14 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
                           ),
                         ),
                         title: Text(
-                          question.question ?? 'No Question Text',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                                question.question ?? 'No Question Text',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w900,
+                                )),
                         subtitle: LastReadTime(
                             repository: _repository, question: question),
                         onTap: () {
-                          // Navigate to QuestionDetailScreen with the selected question as an argument
                           Get.toNamed(
                             AppRouts.questionDetailScreen,
                             arguments: question,

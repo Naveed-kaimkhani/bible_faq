@@ -14,7 +14,6 @@ void main() {
   Get.put(ThemeController());
   Get.put(QuestionsProviderSql());
   Get.put(FontSizeController());
-  // Get.put(QuestionProviderAPI());
 
   runApp(const BibleFAQ());
 }
