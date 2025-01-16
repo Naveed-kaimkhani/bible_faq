@@ -1,12 +1,14 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_faq/view_model/api_controller/all_question_provider.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class AllBilbeQuestionAndAnswerCard extends StatelessWidget {
-  const AllBilbeQuestionAndAnswerCard({super.key});
-
+  AllBilbeQuestionAndAnswerCard({super.key});
+  final QuestionsProviderSql controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,8 +34,9 @@ class AllBilbeQuestionAndAnswerCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const LabelText(
-                    text: "All Bible Questions and Answers (2200)",
+                  LabelText(
+                    text:
+                        "All Bible Questions and Answers ${controller.latestQuestions.length}",
                     maxLine: 2,
                     fontSize: AppFontSize.small,
                     fontWeight: FontWeight.w600,

@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
                   child: SearchAndSettingsRow(isDarkMode: isDarkMode),
                 ),
                 // const Gap(16),
-                const AllBilbeQuestionAndAnswerCard(),
+                 AllBilbeQuestionAndAnswerCard(),
                 const Gap(8),
                 const ExploreResourcesSection(),
                 const Gap(5),

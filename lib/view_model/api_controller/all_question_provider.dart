@@ -179,19 +179,31 @@ class QuestionProviderAPI extends GetxController {
       );
     }
   }
+  
 // Method to get the number of questions in a specific category by catId
 Future<int> getQuestionCountByCatId(int catId) async {
   final db = await _repository.database;
-  
-  // Query to fetch all q_ids associated with the cat_id
+
+  // Query to fetch unique q_ids associated with the cat_id
   final result = await db.rawQuery(
-      'SELECT q_id FROM category_questions WHERE cat_id = ?',
-      [catId],
+    '''
+    SELECT q_id 
+    FROM category_questions 
+    WHERE cat_id = ? 
+      AND q_id NOT IN (
+        SELECT q_id 
+        FROM category_questions 
+        GROUP BY q_id 
+        HAVING COUNT(cat_id) > 1
+      )
+    ''',
+    [catId],
   );
 
-  // Return the count of q_ids found
-  return result.length;  // The number of questions associated with the category
+  // Return the count of unique q_ids for this category
+  return result.length;
 }
+
 
   @override
   void onInit() {
