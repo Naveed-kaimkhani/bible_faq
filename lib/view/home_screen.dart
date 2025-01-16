@@ -10,7 +10,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // DBcontroller.questionsList;                        we have to use this list in overall project.
     final ThemeController themeController = Get.find();
     return Obx(() {
       bool isDarkMode = themeController.isDarkMode.value;

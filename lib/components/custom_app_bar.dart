@@ -1,9 +1,11 @@
 import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/view_model/controllers/controllers.dart';
 import 'package:bible_faq/view_model/controllers/favorites_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -13,11 +15,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isShowInternetTrailing;
   final bool isShowFavButton;
   int? qid;
-
+  int? websiteId;
   CustomAppBar({
     super.key,
     required this.title,
     this.qid,
+    this.websiteId,
     this.isShowSettingTrailing = false,
     this.isShowFavButton = false,
     this.isShowStarTrailing = false,
@@ -72,8 +75,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           actions: [
-            if (isShowShareTrailing)
-              const Icon(Icons.ios_share_outlined, color: AppColors.white),
+         if (isShowShareTrailing)
+  GestureDetector(
+    child: const Icon(Icons.ios_share_outlined, color: AppColors.white),
+    onTap: () async {
+      final String websiteLink = 'https://bibleresources.info/?page_id=${websiteId}'; // Replace with your actual website link
+
+      // Format the content to share
+      
+      // Use the share package to share the content
+      await Share.share(websiteLink, subject: 'Question & Answer');
+    },
+  ),
+
             if (isShowStarTrailing) const Gap(10),
             if (isShowInternetTrailing) const Gap(10),
             if (isShowFavButton)

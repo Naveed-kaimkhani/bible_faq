@@ -26,7 +26,7 @@ class QuestionProviderAPI extends GetxController {
 
       debugPrint(
           "Latest Cat ID: $latestCatId, Latest QID: $latestQId, Total Count: $totalCount");
-    
+
       final response = await _fetchNewDataFromApi(
         latestCatId: latestCatId,
         latestQId: latestQId,
@@ -46,7 +46,6 @@ class QuestionProviderAPI extends GetxController {
       _showSnackbar("Error", "An error occurred: $e");
     }
   }
-
 
   /// Fetch the latest values from the database
   Future<Map<String, dynamic>> _fetchLatestDatabaseValues() async {
@@ -151,7 +150,7 @@ class QuestionProviderAPI extends GetxController {
           'answer': question['answer'],
           'hits': question['hits'],
           'timestamp': question['timestamp'],
-          
+          'website_id': question['website_id'],
           'image': question['image'],
         },
         conflictAlgorithm: ConflictAlgorithm.ignore,
@@ -161,10 +160,10 @@ class QuestionProviderAPI extends GetxController {
     }
     debugPrint("db updated");
     downloadProgress.value = 100.0;
-    
-  Get.put(QuestionsProviderSql());
+
+    Get.put(QuestionsProviderSql());
     Get.back();
-    
+
     if (hasNewData.value) {
       Get.snackbar(
         "Update Successful",
@@ -179,14 +178,14 @@ class QuestionProviderAPI extends GetxController {
       );
     }
   }
-  
-// Method to get the number of questions in a specific category by catId
-Future<int> getQuestionCountByCatId(int catId) async {
-  final db = await _repository.database;
 
-  // Query to fetch unique q_ids associated with the cat_id
-  final result = await db.rawQuery(
-    '''
+// Method to get the number of questions in a specific category by catId
+  Future<int> getQuestionCountByCatId(int catId) async {
+    final db = await _repository.database;
+
+    // Query to fetch unique q_ids associated with the cat_id
+    final result = await db.rawQuery(
+      '''
     SELECT q_id 
     FROM category_questions 
     WHERE cat_id = ? 
@@ -197,13 +196,12 @@ Future<int> getQuestionCountByCatId(int catId) async {
         HAVING COUNT(cat_id) > 1
       )
     ''',
-    [catId],
-  );
+      [catId],
+    );
 
-  // Return the count of unique q_ids for this category
-  return result.length;
-}
-
+    // Return the count of unique q_ids for this category
+    return result.length;
+  }
 
   @override
   void onInit() {

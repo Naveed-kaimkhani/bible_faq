@@ -34,6 +34,7 @@ class QuestionDetailScreen extends StatelessWidget {
         isShowStarTrailing: true,
         isShowShareTrailing: true,
         qid: question.qId,
+        websiteId: question.websiteId,
       ),
       body: BodyContainerComponent(
         child: LayoutBuilder(
