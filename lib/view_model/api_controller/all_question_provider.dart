@@ -186,15 +186,10 @@ class QuestionProviderAPI extends GetxController {
     // Query to fetch unique q_ids associated with the cat_id
     final result = await db.rawQuery(
       '''
-    SELECT q_id 
-    FROM category_questions 
-    WHERE cat_id = ? 
-      AND q_id NOT IN (
-        SELECT q_id 
-        FROM category_questions 
-        GROUP BY q_id 
-        HAVING COUNT(cat_id) > 1
-      )
+SELECT COUNT(*) AS question_count
+FROM category_questions
+WHERE cat_id = ?;
+
     ''',
       [catId],
     );
