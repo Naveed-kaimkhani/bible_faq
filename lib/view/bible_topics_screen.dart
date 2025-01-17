@@ -29,15 +29,17 @@ class _BibleTopicsScreenState extends State<BibleTopicsScreen> {
       _filterQuestions(_searchController.text);
     });
   }
-int countUniqueQuestionsByCategory(List<CategoryQuestionData> dataList, int catId) {
-  // Use a Set to collect unique qId values for the specified catId
-  final uniqueQIds = dataList
-      .where((data) => data.catId == catId)
-      .map((data) => data.qId)
-      .toSet();
-  
-  return uniqueQIds.length;
-}
+
+  int countUniqueQuestionsByCategory(
+      List<CategoryQuestionData> dataList, int catId) {
+    // Use a Set to collect unique qId values for the specified catId
+    final uniqueQIds = dataList
+        .where((data) => data.catId == catId)
+        .map((data) => data.qId)
+        .toSet();
+
+    return uniqueQIds.length;
+  }
 
   void _filterQuestions(String query) {
     if (query.isEmpty) {
@@ -114,40 +116,17 @@ int countUniqueQuestionsByCategory(List<CategoryQuestionData> dataList, int catI
                   itemCount: filteredQuestions.length,
                   itemBuilder: (context, index) {
                     final topic = filteredQuestions[index];
-                    return FutureBuilder<int>(
-                      future: QuestionProviderAPI()
-                          .getQuestionCountByCatId(topic.catId ?? 0),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return TopicTileComponent(
-                            topic: Topic(
-                              catId: topic.catId,
-                              title: topic.name ?? 'Unnamed Topic',
-                              count:
-                                  0, // Replace with actual count if available
-                              imageUrl: "assets/images/${topic.image}" ??
-                                  "", // Replace with actual URL if available
-                            ),
-                          ); // Show a loader while fetching
-                        } else if (snapshot.hasError) {
-                          return Text("Error: ${snapshot.error}");
-                        } else if (snapshot.hasData) {
-                          final questionCount = snapshot.data ?? 0;
-
-                          return TopicTileComponent(
-                            topic: Topic(
-                              catId: topic.catId,
-                              title: topic.name ?? 'Unnamed Topic',
-                              count:
-                                  countUniqueQuestionsByCategory(provider.categoryQuestion,topic.catId??0), // Replace with actual count if available
-                              imageUrl: "${AppImages.initialPath}${topic.image}", // Replace with actual URL if available
-                            ),
-                          );
-                        } else {
-                          return const Text("No data available.");
-                        }
-                      },
+                    return TopicTileComponent(
+                      topic: Topic(
+                        catId: topic.catId,
+                        title: topic.name ?? 'Unnamed Topic',
+                        count: countUniqueQuestionsByCategory(
+                            provider.categoryQuestion,
+                            topic.catId ??
+                                0), // Replace with actual count if available
+                        imageUrl:
+                            "${AppImages.initialPath}${topic.image}", // Replace with actual URL if available
+                      ),
                     );
                   },
                 );

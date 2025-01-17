@@ -86,11 +86,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 onTap: () async {
                   final String websiteLink =
                       'https://bibleresources.info/?page_id=${websiteId}'; // Replace with your actual website link
-                  debugPrint("in share");
-                  print(question);
-                  print(answer);
+                
                   await Share.share(
-                      "$question $answer \nSent from Bible FAQ App: $websiteLink",
+                      "$question ${answer!.replaceAll(RegExp(r'<[^>]*>'), '')} \nSent from Bible FAQ App: $websiteLink",
                       subject: '$question $answer');
                 },
               ),

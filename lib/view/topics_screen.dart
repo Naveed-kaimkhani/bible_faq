@@ -29,14 +29,7 @@ class TopicsScreen extends StatelessWidget {
           return const Center(child: CircularProgressIndicator.adaptive());
         }
 
-        if (provider.isAllQuestionsError.value) {
-          return const Center(
-            child: Text(
-              "Failed to load Topics.",
-              style: TextStyle(color: Colors.red, fontSize: 16),
-            ),
-          );
-        }
+      
 
         final questions = provider.filteredQuestions;
 

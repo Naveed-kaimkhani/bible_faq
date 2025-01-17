@@ -166,6 +166,14 @@ class QuestionProviderAPI extends GetxController {
       debugPrint("question result: ");
     }
     debugPrint("db updated");
+
+    // Get.put(QuestionsProviderSql());
+
+    final provider = Get.find<QuestionsProviderSql>();
+    provider.fetchAllQuestions();
+    provider.fetchLatestQuestions();
+
+    provider.fetchCategories();
     downloadProgress.value = 100.0;
 
     // Get.put(QuestionsProviderSql());
