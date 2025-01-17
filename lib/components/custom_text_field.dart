@@ -1,7 +1,7 @@
 import 'package:bible_faq/constants/app_colors.dart';
 import 'package:bible_faq/constants/app_routs.dart';
 import 'package:bible_faq/view_model/controllers/controllers.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,10 +1,11 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_faq/data/model/category_question.dart';
 import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
 import 'package:bible_faq/view_model/controllers/theme_controller.dart';
 import 'package:bible_faq/view_model/font_size_provider.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:gap/gap.dart';
@@ -21,6 +22,8 @@ class QuestionDetailScreen extends StatelessWidget {
 
   final questionController = Get.find<QuestionsProviderSql>();
 
+
+
   @override
   Widget build(BuildContext context) {
     QuestionData question = Get.arguments;
@@ -33,6 +36,8 @@ class QuestionDetailScreen extends StatelessWidget {
         isShowFavButton: true,
         isShowStarTrailing: true,
         isShowShareTrailing: true,
+        question: question.question,
+        answer: question.answer,
         qid: question.qId,
         websiteId: question.websiteId,
       ),

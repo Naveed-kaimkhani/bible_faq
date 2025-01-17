@@ -1,7 +1,6 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/view_model/api_controller/all_question_provider.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -36,7 +35,7 @@ class AllBilbeQuestionAndAnswerCard extends StatelessWidget {
                 children: [
                   LabelText(
                     text:
-                        "All Bible Questions and Answers ${controller.latestQuestions.length}",
+                        "All Bible Questions and Answers ${controller.latestQuestions.length - 33}",
                     maxLine: 2,
                     fontSize: AppFontSize.small,
                     fontWeight: FontWeight.w600,

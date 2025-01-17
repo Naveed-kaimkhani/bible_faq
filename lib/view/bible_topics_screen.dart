@@ -1,9 +1,10 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/app_images.dart';
+import 'package:bible_faq/data/model/category_question.dart';
 import 'package:bible_faq/data/model/question_category.dart';
 import 'package:bible_faq/model/topic.dart';
 import 'package:bible_faq/view_model/api_controller/all_question_provider.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,15 @@ class _BibleTopicsScreenState extends State<BibleTopicsScreen> {
       _filterQuestions(_searchController.text);
     });
   }
+int countUniqueQuestionsByCategory(List<CategoryQuestionData> dataList, int catId) {
+  // Use a Set to collect unique qId values for the specified catId
+  final uniqueQIds = dataList
+      .where((data) => data.catId == catId)
+      .map((data) => data.qId)
+      .toSet();
+  
+  return uniqueQIds.length;
+}
 
   void _filterQuestions(String query) {
     if (query.isEmpty) {
@@ -130,7 +140,7 @@ class _BibleTopicsScreenState extends State<BibleTopicsScreen> {
                               catId: topic.catId,
                               title: topic.name ?? 'Unnamed Topic',
                               count:
-                                  questionCount, // Replace with actual count if available
+                                  countUniqueQuestionsByCategory(provider.categoryQuestion,topic.catId??0), // Replace with actual count if available
                               imageUrl: "${AppImages.initialPath}${topic.image}", // Replace with actual URL if available
                             ),
                           );

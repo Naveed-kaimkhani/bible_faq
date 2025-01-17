@@ -1,3 +1,5 @@
+import 'package:bible_faq/data/model/category_question.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/data/model/question_category.dart';
@@ -25,6 +27,7 @@ class QuestionsProviderSql extends GetxController {
   var filteredQuestions =
       <QuestionData>[].obs; // Questions filtered by category
 
+  var categoryQuestion = <CategoryQuestionData>[].obs;
   Future<void> fetchCategories() async {
     try {
       isCategoriesLoading.value = true;
@@ -34,11 +37,21 @@ class QuestionsProviderSql extends GetxController {
 
       // Fetch raw data
       final result = await db.query('category');
+      
+      final categoryQuestionResult = await db.query('category_questions');
 
       // Map to Dart model
       categories.value = result.map((json) {
         try {
           return QuestionCategory.fromJson(json);
+        } catch (e) {
+          Get.snackbar("Error", " Error mapping category: $json, Error: $e");
+          throw e;
+        }
+      }).toList();
+       categoryQuestion.value = categoryQuestionResult.map((json) {
+        try {
+          return CategoryQuestionData.fromJson(json);
         } catch (e) {
           Get.snackbar("Error", " Error mapping category: $json, Error: $e");
           throw e;

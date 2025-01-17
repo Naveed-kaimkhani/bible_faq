@@ -9,6 +9,8 @@ import 'package:share_plus/share_plus.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  String? question;
+  String? answer;
   final bool isShowSettingTrailing;
   final bool isShowStarTrailing;
   final bool isShowShareTrailing;
@@ -20,6 +22,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required this.title,
     this.qid,
+    this.question,
+    this.answer,
     this.websiteId,
     this.isShowSettingTrailing = false,
     this.isShowFavButton = false,
@@ -75,19 +79,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           actions: [
-         if (isShowShareTrailing)
-  GestureDetector(
-    child: const Icon(Icons.ios_share_outlined, color: AppColors.white),
-    onTap: () async {
-      final String websiteLink = 'https://bibleresources.info/?page_id=${websiteId}'; // Replace with your actual website link
-
-      // Format the content to share
-      
-      // Use the share package to share the content
-      await Share.share(websiteLink, subject: 'Question & Answer');
-    },
-  ),
-
+            if (isShowShareTrailing)
+              GestureDetector(
+                child: const Icon(Icons.ios_share_outlined,
+                    color: AppColors.white),
+                onTap: () async {
+                  final String websiteLink =
+                      'https://bibleresources.info/?page_id=${websiteId}'; // Replace with your actual website link
+                  debugPrint("in share");
+                  print(question);
+                  print(answer);
+                  await Share.share(
+                      "$question $answer \nSent from Bible FAQ App: $websiteLink",
+                      subject: '$question $answer');
+                },
+              ),
             if (isShowStarTrailing) const Gap(10),
             if (isShowInternetTrailing) const Gap(10),
             if (isShowFavButton)

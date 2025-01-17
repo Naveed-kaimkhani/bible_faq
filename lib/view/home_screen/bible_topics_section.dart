@@ -3,7 +3,7 @@ import 'package:bible_faq/constants/app_images.dart';
 import 'package:bible_faq/constants/app_routs.dart';
 import 'package:bible_faq/model/topic.dart';
 import 'package:bible_faq/view_model/api_controller/all_question_provider.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

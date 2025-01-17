@@ -1,6 +1,6 @@
 import 'package:bible_faq/services/api_services/api_manager.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sqflite/sql.dart';
@@ -109,16 +109,23 @@ class QuestionProviderAPI extends GetxController {
     hasNewData = true.obs;
 
     // Insert or update categories
-    for (var category in categories) {
-      await db.insert(
-        'category',
-        {
-          'cat_id': category['cat_id'],
-          'Name': category['Name'],
-          'image': category['image'],
-        },
-        conflictAlgorithm: ConflictAlgorithm.ignore,
-      );
+    if (categories.length > 0) {
+      for (var category in categories) {
+        int result = await db.insert(
+          'category',
+          {
+            'cat_id': category['cat_id'],
+            'name': category['name'],
+            'description': category['description'],
+            'image': category['image'],
+          },
+          conflictAlgorithm: ConflictAlgorithm.ignore,
+        );
+        debugPrint("category result: $result");
+        if (result != 0) {
+          hasNewData = true.obs;
+        }
+      }
     }
 
     downloadProgress.value = 10.0;
@@ -161,7 +168,7 @@ class QuestionProviderAPI extends GetxController {
     debugPrint("db updated");
     downloadProgress.value = 100.0;
 
-    Get.put(QuestionsProviderSql());
+    // Get.put(QuestionsProviderSql());
     Get.back();
 
     if (hasNewData.value) {
@@ -185,15 +192,10 @@ class QuestionProviderAPI extends GetxController {
 
     // Query to fetch unique q_ids associated with the cat_id
     final result = await db.rawQuery(
-      '''
-SELECT COUNT(*) AS question_count
-FROM category_questions
-WHERE cat_id = ?;
-
-    ''',
+      'SELECT q_id FROM category_questions WHERE cat_id = ?',
       [catId],
     );
-
+    print("result: $result");
     // Return the count of unique q_ids for this category
     return result.length;
   }
