@@ -1,6 +1,5 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/data/model/category_question.dart';
 import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
 import 'package:bible_faq/view_model/controllers/theme_controller.dart';
@@ -21,8 +20,6 @@ class QuestionDetailScreen extends StatelessWidget {
   final QuestionsRepository _repository = QuestionsRepository.instance;
 
   final questionController = Get.find<QuestionsProviderSql>();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +71,6 @@ class QuestionDetailScreen extends StatelessWidget {
                                 fontSize: AppFontSize.medium,
                                 isChangeTextColor: false,
                               );
-                              ;
                             } else if (snapshot.hasError) {
                               return const Text("Error fetching category");
                             } else if (!snapshot.hasData ||
