@@ -37,26 +37,30 @@ class QuestionsProviderSql extends GetxController {
 
       // Fetch raw data
       final result = await db.query('category');
-      
       final categoryQuestionResult = await db.query('category_questions');
 
+      // Clear previous data and reinitialize lists
+      categories.clear();
+      categoryQuestion.clear();
+
       // Map to Dart model
-      categories.value = result.map((json) {
+      categories.addAll(result.map((json) {
         try {
           return QuestionCategory.fromJson(json);
         } catch (e) {
-          Get.snackbar("Error", " Error mapping category: $json, Error: $e");
+          Get.snackbar("Error", "Error mapping category: $json, Error: $e");
           throw e;
         }
-      }).toList();
-       categoryQuestion.value = categoryQuestionResult.map((json) {
+      }).toList());
+
+      categoryQuestion.addAll(categoryQuestionResult.map((json) {
         try {
           return CategoryQuestionData.fromJson(json);
         } catch (e) {
-          Get.snackbar("Error", " Error mapping category: $json, Error: $e");
+          Get.snackbar("Error", "Error mapping category: $json, Error: $e");
           throw e;
         }
-      }).toList();
+      }).toList());
     } catch (e) {
       isCategoriesError.value = true;
       Get.snackbar("Error", "Failed to fetch categories: $e");
@@ -221,10 +225,11 @@ class QuestionsProviderSql extends GetxController {
         'questions',
         orderBy: 'timestamp DESC',
       );
-        print("result: $result");
-      // Map the results to the model
-      latestQuestions.value =
-          result.map((json) => QuestionData.fromJson(json)).toList();
+
+      // Clear the existing list and add the new data
+      latestQuestions.clear();
+      latestQuestions
+          .addAll(result.map((json) => QuestionData.fromJson(json)).toList());
     } catch (e) {
       isLatestQuestionsError.value = true;
       Get.snackbar("Error", "Failed to fetch latest questions: $e");
