@@ -50,7 +50,8 @@ class QuestionsProviderSql extends GetxController {
           Get.snackbar("Error", "Error mapping category: $json, Error: $e");
           throw e;
         }
-      }).toList();
+      }).toList());
+      
       categoryQuestion.value = categoryQuestionResult.map((json) {
         try {
           return CategoryQuestionData.fromJson(json);
@@ -58,7 +59,7 @@ class QuestionsProviderSql extends GetxController {
           Get.snackbar("Error", "Error mapping category: $json, Error: $e");
           throw e;
         }
-      }).toList());
+      }).toList();
     } catch (e) {
       isCategoriesError.value = true;
       Get.snackbar("Error", "Failed to fetch categories: $e");
