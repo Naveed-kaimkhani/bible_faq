@@ -4,7 +4,6 @@ import 'package:bible_faq/view/ask_question_screen.dart';
 import 'package:bible_faq/view/free_bible_guide_screen.dart';
 import 'package:bible_faq/view/home_screen/fav_question_search_screen.dart';
 import 'package:bible_faq/view/question_details_screen.dart';
-import 'package:bible_faq/view/topic_details_screen.dart';
 import 'package:bible_faq/view/view.dart';
 import 'package:get/get.dart';
 
@@ -59,10 +58,6 @@ class Routes {
           name: AppRouts.aboutUsScreen,
           page: () => const AboutUsScreen(),
         ),
-        // GetPage(
-        //   name: AppRouts.newsAndResourcesScreen,
-        //   page: () => const NewsAndResourcesScreen(),
-        // ),
         GetPage(
           name: AppRouts.freeBilbeGuideScreen,
           page: () => const FreeBibleGuideScreen(),

@@ -3,7 +3,6 @@ import 'package:bible_faq/constants/app_images.dart';
 import 'package:bible_faq/constants/app_routs.dart';
 import 'package:bible_faq/data/model/category_question.dart';
 import 'package:bible_faq/model/topic.dart';
-import 'package:bible_faq/view_model/api_controller/all_question_provider.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,28 +45,26 @@ class BibleTopicsSection extends StatelessWidget {
             ],
           ),
           // const Gap(10),
-          SizedBox(
-            height: 160,
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: 5,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final topic = topics[index];
-                return TopicTileComponent(
-                  topic: Topic(
-                    catId: topic.catId,
-                    title: topic.name ?? 'Unnamed Topic',
-                    count: countUniqueQuestionsByCategory(
-                        provider.categoryQuestion,
-                        topic.catId ??
-                            0), // Replace with actual count if available
-                    imageUrl:
-                        "${AppImages.initialPath}${topic.image}", // Replace with actual URL if available
-                  ),
-                );
-              },
-            ),
+          ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: 5,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              final topic = topics[index];
+              return TopicTileComponent(
+                topic: Topic(
+                  catId: topic.catId,
+                  title: topic.name ?? 'Unnamed Topic',
+                  count: countUniqueQuestionsByCategory(
+                      provider.categoryQuestion,
+                      topic.catId ??
+                          0), // Replace with actual count if available
+                  imageUrl:
+                      "${AppImages.initialPath}${topic.image}", // Replace with actual URL if available
+                ),
+              );
+            },
           ),
         ],
       );

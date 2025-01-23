@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/model/topic.dart';
@@ -65,10 +67,17 @@ class TopicTileComponent extends StatelessWidget {
             ),
           ),
           onTap: () {
-            // Navigate to TopicScreen with the selected category's ID
+            log("TopicTileComponent: onTap: ${topic.catId}");
+            log("TopicTileComponent: onTap count: ${topic.count}");
+            log("TopicTileComponent: onTap title: ${topic.title}");
             Get.toNamed(
               AppRouts.topicScreen,
-              arguments: topic.catId, // Pass catId as an argument
+              arguments: Topic(
+                catId: topic.catId,
+                count: topic.count,
+                title: topic.title,
+                imageUrl: topic.imageUrl,
+              ),
             );
           },
         ),

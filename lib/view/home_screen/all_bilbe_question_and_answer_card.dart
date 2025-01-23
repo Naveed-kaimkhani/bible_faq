@@ -36,7 +36,7 @@ class AllBilbeQuestionAndAnswerCard extends StatelessWidget {
                   Obx(() {
                     return LabelText(
                       text:
-                          "All Bible Questions and Answers ${controller.latestQuestions.length - 33}",
+                          "All Bible Questions and Answers ${controller.latestQuestions.length - 1}",
                       maxLine: 2,
                       fontSize: AppFontSize.small,
                       fontWeight: FontWeight.w600,

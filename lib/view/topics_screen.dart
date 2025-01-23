@@ -2,34 +2,35 @@ import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/components/last_read_time.dart';
 import 'package:bible_faq/constants/app_images.dart';
 import 'package:bible_faq/constants/app_routs.dart';
+import 'package:bible_faq/model/topic.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TopicsScreen extends StatelessWidget {
-  final provider = Get.find<QuestionsProviderSql>(); // added this
+  final provider = Get.find<QuestionsProviderSql>();
   TopicsScreen({super.key});
   final QuestionsRepository _repository = QuestionsRepository.instance;
 
   @override
   Widget build(BuildContext context) {
-    final int catId = Get.arguments;
+    final Topic topic = Get.arguments;
 
-    provider.fetchQuestionsByCategory(catId);
+    provider.fetchQuestionsByCategory(topic.catId ?? 0);
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Questions",
+        title: topic.title,
         isShowSettingTrailing: true,
         isShowInternetTrailing: true,
+        isShowToicLength: true,
+        topicLength: topic.count.toString(),
       ),
       body: Obx(() {
         if (provider.isAllQuestionsLoading.value) {
           return const Center(child: CircularProgressIndicator.adaptive());
         }
-
-      
 
         final questions = provider.filteredQuestions;
 
@@ -56,7 +57,6 @@ class TopicsScreen extends StatelessWidget {
                 subtitle:
                     LastReadTime(repository: _repository, question: question),
                 onTap: () {
-                  // Navigate to QuestionDetailScreen with the selected question
                   Get.toNamed(
                     AppRouts.questionDetailScreen,
                     arguments: question,

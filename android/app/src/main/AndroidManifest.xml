@@ -19,7 +19,7 @@
   </intent>
 </queries>
     <application
-        android:label="Bible Faq"
+        android:label="Bible FAQ"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

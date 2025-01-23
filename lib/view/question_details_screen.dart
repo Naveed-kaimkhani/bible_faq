@@ -141,43 +141,36 @@ class QuestionDetailScreen extends StatelessWidget {
                               snapshot.data!.isEmpty) {
                             return const Text("No random questions available");
                           } else {
-                            return SizedBox(
-                              height: Get.height * 0.3,
-                              child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                itemCount: 5,
-                                itemBuilder: (context, index) {
-                                  final question = snapshot.data![index];
-                                  return GestureDetector(
-                                      child: Card(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8),
-                                          child: ListTile(
-                                            contentPadding: EdgeInsets.zero,
-                                            leading: Image.asset(
-                                                "assets/images/${question.image}"),
-                                            title: TitleText(
-                                              text: question.question ??
-                                                  'No text available',
-                                              fontSize: AppFontSize.xsmall,
-                                            ),
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: 5,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                final question = snapshot.data![index];
+                                return GestureDetector(
+                                    child: Card(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: ListTile(
+                                          contentPadding: EdgeInsets.zero,
+                                          leading: Image.asset(
+                                              "assets/images/${question.image}"),
+                                          title: TitleText(
+                                            text: question.question ??
+                                                'No text available',
+                                            fontSize: AppFontSize.xsmall,
                                           ),
                                         ),
                                       ),
-                                      onTap: () {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                QuestionDetailScreen(),
-                                            settings: RouteSettings(
-                                                arguments:
-                                                    question), // Pass the new question
-                                          ),
-                                        );
-                                      });
-                                },
-                              ),
+                                    ),
+                                    onTap: () {
+                                      Get.toNamed(
+                                        AppRouts.questionDetailScreen,
+                                        arguments: question,
+                                      );
+                                    });
+                              },
                             );
                           }
                         },

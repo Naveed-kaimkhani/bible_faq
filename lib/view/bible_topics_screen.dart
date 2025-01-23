@@ -3,7 +3,6 @@ import 'package:bible_faq/constants/app_images.dart';
 import 'package:bible_faq/data/model/category_question.dart';
 import 'package:bible_faq/data/model/question_category.dart';
 import 'package:bible_faq/model/topic.dart';
-import 'package:bible_faq/view_model/api_controller/all_question_provider.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -59,8 +58,8 @@ class _BibleTopicsScreenState extends State<BibleTopicsScreen> {
 
   @override
   void dispose() {
-    _searchController.dispose();
     super.dispose();
+    _searchController.dispose();
   }
 
   @override

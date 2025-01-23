@@ -40,35 +40,35 @@ class LatestQuestionSection extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: 134,
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                final question = questions[index];
-                return GestureDetector(
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          leading: Image.asset("${AppImages.initialPath}${question.image}"),
-                          title: TitleText(
-                            text: question.question ?? 'No text available',
-                            fontSize: AppFontSize.xsmall,
-                          ),
+          ListView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            itemCount: 5,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final question = questions[index];
+              return GestureDetector(
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: Image.asset(
+                            "${AppImages.initialPath}${question.image}"),
+                        title: TitleText(
+                          text: question.question ?? 'No text available',
+                          fontSize: AppFontSize.xsmall,
                         ),
                       ),
                     ),
-                    onTap: () {
-                      Get.toNamed(
-                        AppRouts.questionDetailScreen,
-                        arguments: question,
-                      );
-                    });
-              },
-            ),
+                  ),
+                  onTap: () {
+                    Get.toNamed(
+                      AppRouts.questionDetailScreen,
+                      arguments: question,
+                    );
+                  });
+            },
           ),
         ],
       );

@@ -1,5 +1,5 @@
+import 'package:bible_faq/components/label_text.dart';
 import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/view_model/controllers/controllers.dart';
 import 'package:bible_faq/view_model/controllers/favorites_provider.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isShowShareTrailing;
   final bool isShowInternetTrailing;
   final bool isShowFavButton;
+  final bool isShowToicLength;
+  final String topicLength;
   int? qid;
   int? websiteId;
   CustomAppBar({
@@ -30,6 +32,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.isShowStarTrailing = false,
     this.isShowShareTrailing = false,
     this.isShowInternetTrailing = false,
+    this.isShowToicLength = false,
+    this.topicLength = '',
   });
 
   @override
@@ -79,8 +83,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           actions: [
+            if (isShowToicLength)
+              TitleText(
+                text: topicLength,
+                textColor: AppColors.white,
+              ),
             if (isShowShareTrailing)
-              ShareButton(websiteId: websiteId, question: question, answer: answer),
+              ShareButton(
+                  websiteId: websiteId, question: question, answer: answer),
             if (isShowStarTrailing) const Gap(10),
             if (isShowInternetTrailing) const Gap(10),
             if (isShowFavButton)
@@ -177,12 +187,11 @@ class ShareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: const Icon(Icons.ios_share_outlined,
-          color: AppColors.white),
+      child: const Icon(Icons.ios_share_outlined, color: AppColors.white),
       onTap: () async {
         final String websiteLink =
-            'https://bibleresources.info/?page_id=${websiteId}'; // Replace with your actual website link
-      
+            'https://bibleresources.info/?page_id=$websiteId'; // Replace with your actual website link
+
         await Share.share(
             "Question: $question\nAnswer: ${answer!.replaceAll(RegExp(r'<[^>]*>'), '')} \nSent from Bible FAQ App: $websiteLink",
             subject: '$question $answer');

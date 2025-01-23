@@ -1,8 +1,8 @@
 import 'package:bible_faq/data/model/category_question.dart';
-import 'package:get/get.dart';
 import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/data/model/question_category.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
+import 'package:get/get.dart';
 
 class QuestionsProviderSql extends GetxController {
   final QuestionsRepository _repository = QuestionsRepository.instance;
@@ -45,7 +45,7 @@ class QuestionsProviderSql extends GetxController {
           return QuestionCategory.fromJson(json);
         } catch (e) {
           Get.snackbar("Error", " Error mapping category: $json, Error: $e");
-          throw e;
+          rethrow;
         }
       }).toList();
       categoryQuestion.value = categoryQuestionResult.map((json) {
@@ -53,7 +53,7 @@ class QuestionsProviderSql extends GetxController {
           return CategoryQuestionData.fromJson(json);
         } catch (e) {
           Get.snackbar("Error", " Error mapping category: $json, Error: $e");
-          throw e;
+          rethrow;
         }
       }).toList();
     } catch (e) {

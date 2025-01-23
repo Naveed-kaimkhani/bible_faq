@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/app_colors.dart';
