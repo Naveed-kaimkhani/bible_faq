@@ -1,6 +1,7 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/app_images.dart';
 import 'package:bible_faq/constants/app_routs.dart';
+import 'package:bible_faq/data/model/category_question.dart';
 import 'package:bible_faq/model/topic.dart';
 import 'package:bible_faq/view_model/api_controller/all_question_provider.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
@@ -53,31 +54,17 @@ class BibleTopicsSection extends StatelessWidget {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 final topic = topics[index];
-                return FutureBuilder<int>(
-                  future: QuestionProviderAPI()
-                      .getQuestionCountByCatId(topic.catId ?? 0),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator(); // Show a loader while fetching
-                    } else if (snapshot.hasError) {
-                      return Text("Error: ${snapshot.error}");
-                    } else if (snapshot.hasData) {
-                      final questionCount = snapshot.data ?? 0;
-
-                      return TopicTileComponent(
-                        topic: Topic(
-                          catId: topic.catId,
-                          title: topic.name ?? 'Unnamed Topic',
-                          count:
-                              questionCount, // Replace with actual count if available
-                          imageUrl:
-                              "${AppImages.initialPath}${topic.image}", // Replace with actual URL if available
-                        ),
-                      );
-                    } else {
-                      return const Text("No data available.");
-                    }
-                  },
+                return TopicTileComponent(
+                  topic: Topic(
+                    catId: topic.catId,
+                    title: topic.name ?? 'Unnamed Topic',
+                    count: countUniqueQuestionsByCategory(
+                        provider.categoryQuestion,
+                        topic.catId ??
+                            0), // Replace with actual count if available
+                    imageUrl:
+                        "${AppImages.initialPath}${topic.image}", // Replace with actual URL if available
+                  ),
                 );
               },
             ),
@@ -86,4 +73,15 @@ class BibleTopicsSection extends StatelessWidget {
       );
     });
   }
+}
+
+int countUniqueQuestionsByCategory(
+    List<CategoryQuestionData> dataList, int catId) {
+  // Use a Set to collect unique qId values for the specified catId
+  final uniqueQIds = dataList
+      .where((data) => data.catId == catId)
+      .map((data) => data.qId)
+      .toSet();
+
+  return uniqueQIds.length;
 }

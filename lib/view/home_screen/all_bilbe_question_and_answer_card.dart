@@ -33,14 +33,16 @@ class AllBilbeQuestionAndAnswerCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  LabelText(
-                    text:
-                        "All Bible Questions and Answers ${controller.latestQuestions.length - 33}",
-                    maxLine: 2,
-                    fontSize: AppFontSize.small,
-                    fontWeight: FontWeight.w600,
-                    textColor: AppColors.white,
-                  ),
+                  Obx(() {
+                    return LabelText(
+                      text:
+                          "All Bible Questions and Answers ${controller.latestQuestions.length - 33}",
+                      maxLine: 2,
+                      fontSize: AppFontSize.small,
+                      fontWeight: FontWeight.w600,
+                      textColor: AppColors.white,
+                    );
+                  }),
                   const Gap(6),
                   const LabelText(
                     text:

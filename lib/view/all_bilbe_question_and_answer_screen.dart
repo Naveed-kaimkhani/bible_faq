@@ -37,7 +37,7 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
         }
 
         // Retrieve all questions
-        final questions = dbController.allQuestions;
+        final questions = dbController.latestQuestions;
 
         // Handle the empty state
         if (questions.isEmpty) {

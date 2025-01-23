@@ -1,5 +1,4 @@
 import 'package:bible_faq/data/model/category_question.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/data/model/question_category.dart';
@@ -51,9 +50,8 @@ class QuestionsProviderSql extends GetxController {
           Get.snackbar("Error", "Error mapping category: $json, Error: $e");
           throw e;
         }
-      }).toList());
-
-      categoryQuestion.addAll(categoryQuestionResult.map((json) {
+      }).toList();
+      categoryQuestion.value = categoryQuestionResult.map((json) {
         try {
           return CategoryQuestionData.fromJson(json);
         } catch (e) {
@@ -81,7 +79,6 @@ class QuestionsProviderSql extends GetxController {
         whereArgs: [qid],
         columns: ['cat_id'],
       );
-      print("catIdResult: $catIdResult");
       if (catIdResult.isEmpty) {
         return [];
       }
@@ -90,7 +87,6 @@ class QuestionsProviderSql extends GetxController {
       if (catId == null) {
         return [];
       }
-      print("catId: $catId");
 
       // Step 2: Fetch the q_ids from the category_questions table based on the cat_id
       final qIdsResult = await db.query(
@@ -99,7 +95,6 @@ class QuestionsProviderSql extends GetxController {
         whereArgs: [catId],
         columns: ['q_id'],
       );
-      print("qIdsResult: $qIdsResult");
       // Step 3: Ensure there are at least 5 q_ids
       if (qIdsResult.isEmpty) {
         return [];
@@ -108,20 +103,18 @@ class QuestionsProviderSql extends GetxController {
           qIdsResult.map((e) => e['q_id'] as int)) // Create a mutable list
         ..shuffle() // Shuffle the list
         ..take(5); // Take the first 5 items after shuffling
-      print("randomQIds: $randomQIds");
+
       // Step 5: Fetch the questions corresponding to these random q_ids
       final questionsResult = await db.query(
         'questions',
         where: 'q_id IN (${List.filled(randomQIds.length, '?').join(',')})',
         whereArgs: randomQIds,
       );
-      print("questionsResult: $questionsResult");
       // Step 6: Return the list of questions
       return questionsResult.map((question) {
         return QuestionData.fromJson(question);
       }).toList();
     } catch (e) {
-      print("Error fetching random questions: $e");
       return [];
     }
   }
@@ -167,7 +160,6 @@ class QuestionsProviderSql extends GetxController {
     }
   }
 
-  // Fetch Questions by `cat_id`
   Future<void> fetchQuestionsByCategory(int catId) async {
     try {
       isAllQuestionsLoading.value = true;
@@ -193,24 +185,79 @@ class QuestionsProviderSql extends GetxController {
           .toList();
 
       // Fetch questions based on `q_id`s
-      if (qIds.isNotEmpty) {
-        final questionResults = await db.query(
-          'questions',
-          where: 'q_id IN (${List.filled(qIds.length, '?').join(', ')})',
-          whereArgs: qIds,
+      List<QuestionData> allQuestions = [];
+      const batchSize = 500; // Ensure the batch size is less than 999
+
+      for (int i = 0; i < qIds.length; i += batchSize) {
+        final batchIds = qIds.sublist(
+          i,
+          i + batchSize > qIds.length ? qIds.length : i + batchSize,
         );
 
-        filteredQuestions.value =
-            questionResults.map((json) => QuestionData.fromJson(json)).toList();
-      } else {
-        filteredQuestions.clear();
+        final questionResults = await db.query(
+          'questions',
+          where: 'q_id IN (${List.filled(batchIds.length, '?').join(', ')})',
+          whereArgs: batchIds,
+        );
+
+        allQuestions.addAll(questionResults
+            .map((json) => QuestionData.fromJson(json))
+            .toList());
       }
+
+      filteredQuestions.value = allQuestions;
     } catch (e) {
       isAllQuestionsError.value = true;
     } finally {
       isAllQuestionsLoading.value = false;
     }
   }
+
+  // Fetch Questions by `cat_id`
+  // Future<void> fetchQuestionsByCategory(int catId) async {
+  //   try {
+  //     isAllQuestionsLoading.value = true;
+  //     isAllQuestionsError.value = false;
+
+  //     final db = await _repository.database;
+
+  //     // Fetch `q_id`s for the given `cat_id`
+  //     final categoryQuestionsResult = await db.query(
+  //       'category_questions',
+  //       where: 'cat_id = ?',
+  //       whereArgs: [catId],
+  //     );
+
+  //     // Extract `q_id`s
+  //     final qIds = categoryQuestionsResult
+  //         .map((e) {
+  //           return e['q_id'] is int
+  //               ? e['q_id']
+  //               : int.tryParse(e['q_id'].toString());
+  //         })
+  //         .where((id) => id != null)
+  //         .toList();
+
+  //     // Fetch questions based on `q_id`s
+  //     if (qIds.isNotEmpty) {
+  //       final questionResults = await db.query(
+  //         'questions',
+  //         where: 'q_id IN (${List.filled(qIds.length, '?').join(', ')})',
+  //         whereArgs: qIds,
+  //       );
+
+  //       filteredQuestions.value =
+  //           questionResults.map((json) => QuestionData.fromJson(json)).toList();
+  //     } else {
+  //       filteredQuestions.clear();
+  //     }
+  //   } catch (e) {
+  //     print("Error fetching questions by category: $e");
+  //     isAllQuestionsError.value = true;
+  //   } finally {
+  //     isAllQuestionsLoading.value = false;
+  //   }
+  // }
 
   // Fetch Latest Questions (Fetch All)
   Future<void> fetchLatestQuestions() async {

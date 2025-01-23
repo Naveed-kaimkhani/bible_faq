@@ -80,20 +80,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           actions: [
             if (isShowShareTrailing)
-              GestureDetector(
-                child: const Icon(Icons.ios_share_outlined,
-                    color: AppColors.white),
-                onTap: () async {
-                  final String websiteLink =
-                      'https://bibleresources.info/?page_id=${websiteId}'; // Replace with your actual website link
-                  debugPrint("in share");
-                  print(question);
-                  print(answer);
-                  await Share.share(
-                      "$question $answer \nSent from Bible FAQ App: $websiteLink",
-                      subject: '$question $answer');
-                },
-              ),
+              ShareButton(websiteId: websiteId, question: question, answer: answer),
             if (isShowStarTrailing) const Gap(10),
             if (isShowInternetTrailing) const Gap(10),
             if (isShowFavButton)
@@ -173,4 +160,33 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(65);
+}
+
+class ShareButton extends StatelessWidget {
+  const ShareButton({
+    super.key,
+    required this.websiteId,
+    required this.question,
+    required this.answer,
+  });
+
+  final int? websiteId;
+  final String? question;
+  final String? answer;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: const Icon(Icons.ios_share_outlined,
+          color: AppColors.white),
+      onTap: () async {
+        final String websiteLink =
+            'https://bibleresources.info/?page_id=${websiteId}'; // Replace with your actual website link
+      
+        await Share.share(
+            "Question: $question\nAnswer: ${answer!.replaceAll(RegExp(r'<[^>]*>'), '')} \nSent from Bible FAQ App: $websiteLink",
+            subject: '$question $answer');
+      },
+    );
+  }
 }
