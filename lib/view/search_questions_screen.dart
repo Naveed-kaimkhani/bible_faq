@@ -94,7 +94,8 @@ class SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
                         padding: const EdgeInsets.all(8),
                         child: ListTile(
                           contentPadding: const EdgeInsets.all(0),
-                          leading: Image.asset("${AppImages.initialPath}${question.image}"),
+                          leading: Image.asset(
+                              "${AppImages.initialPath}${question.image}"),
                           title: TitleText(
                             text: question.question ?? 'Unnamed Question',
                             fontSize: AppFontSize.xsmall,
@@ -104,7 +105,7 @@ class SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
                           onTap: () {
                             Get.toNamed(
                               AppRouts.questionDetailScreen,
-                              arguments: question,
+                              arguments: [question, false],
                             );
                           },
                         ),

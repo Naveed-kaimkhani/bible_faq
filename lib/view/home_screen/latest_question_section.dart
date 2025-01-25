@@ -1,5 +1,6 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_faq/utils/utils.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -56,7 +57,8 @@ class LatestQuestionSection extends StatelessWidget {
                         leading: Image.asset(
                             "${AppImages.initialPath}${question.image}"),
                         title: TitleText(
-                          text: question.question ?? 'No text available',
+                          text:
+                              cleanQuestion(question.question ?? 'No Question'),
                           fontSize: AppFontSize.xsmall,
                         ),
                       ),
@@ -65,7 +67,7 @@ class LatestQuestionSection extends StatelessWidget {
                   onTap: () {
                     Get.toNamed(
                       AppRouts.questionDetailScreen,
-                      arguments: question,
+                      arguments: [question, false],
                     );
                   });
             },

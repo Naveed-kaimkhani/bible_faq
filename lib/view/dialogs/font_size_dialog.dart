@@ -113,21 +113,26 @@ class FontSizeDialog {
       child: Obx(() {
         return Column(
           children: [
-            LabelText(
-              text: font,
-              fontWeight: controller.selectedFont.value == font
-                  ? FontWeight.bold
-                  : FontWeight.normal,
-              textColor: controller.selectedFont.value == font
-                  ? AppColors.tealBlue
-                  : (isDarkMode ? Colors.white : Colors.black),
+            Text(
+              font,
+              style: TextStyle(
+                fontWeight: controller.selectedFont.value == font
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+                color: controller.selectedFont.value == font
+                    ? AppColors.tealBlue
+                    : (isDarkMode ? Colors.white : Colors.black),
+              ),
             ),
             const Gap(4),
-            TitleText(
-              text: "A",
-              textColor: controller.selectedFont.value == font
-                  ? AppColors.tealBlue
-                  : (isDarkMode ? Colors.white : Colors.black),
+            Text(
+              "A",
+              style: TextStyle(
+                fontFamily: font,
+                color: controller.selectedFont.value == font
+                    ? AppColors.tealBlue
+                    : (isDarkMode ? Colors.white : Colors.black),
+              ),
             ),
           ],
         );

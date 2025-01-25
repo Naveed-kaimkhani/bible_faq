@@ -91,8 +91,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             if (isShowShareTrailing)
               ShareButton(
                   websiteId: websiteId, question: question, answer: answer),
-            if (isShowStarTrailing) const Gap(10),
-            if (isShowInternetTrailing) const Gap(10),
+            if (isShowStarTrailing) const Gap(15),
+            if (isShowInternetTrailing) const Gap(50),
             if (isShowFavButton)
               GestureDetector(
                 onTap: () {
@@ -109,7 +109,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   );
                 }),
               ),
-            const Gap(10),
+            const Gap(15),
             if (isShowSettingTrailing)
               GestureDetector(
                 onTap: () {
@@ -118,7 +118,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child:
                     const Icon(Icons.settings_outlined, color: AppColors.white),
               ),
-            if (isShowSettingTrailing) const Gap(9),
+            if (isShowSettingTrailing) const Gap(15),
           ],
           backgroundColor: AppColors.transparent,
           elevation: 0,

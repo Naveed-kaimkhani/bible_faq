@@ -1,18 +1,24 @@
+import 'dart:developer';
+
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
+import 'package:bible_faq/utils/string_utils.dart'; // Import the utility function
+import 'package:bible_faq/utils/utils.dart';
 import 'package:bible_faq/view_model/controllers/theme_controller.dart';
 import 'package:bible_faq/view_model/font_size_provider.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart'; // Import the new package
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import url_launcher package
 
 class QuestionDetailScreen extends StatelessWidget {
   QuestionDetailScreen({super.key});
 
+  bool isTopic = false;
   final themeController = Get.find<ThemeController>();
 
   final fontSizeController = Get.find<FontSizeController>();
@@ -23,17 +29,24 @@ class QuestionDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuestionData question = Get.arguments;
+    final arguments = Get.arguments as List;
+    QuestionData question = arguments.first;
+    // log("message: ${question.question}");
+    isTopic = arguments.last;
     _repository.updateTimestamp(question.qId ?? 0);
+    // log("istopic: $isTopic");
+    log("question.answer: ${question.answer}");
+    final cleanedQuestion =
+        cleanQuestion(question.question ?? 'No Question Text');
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Question Details",
+        title: "Question",
         isShowSettingTrailing: true,
         isShowFavButton: true,
         isShowStarTrailing: true,
         isShowShareTrailing: true,
-        question: question.question,
+        question: cleanedQuestion,
         answer: question.answer,
         qid: question.qId,
         websiteId: question.websiteId,
@@ -48,53 +61,51 @@ class QuestionDetailScreen extends StatelessWidget {
               child: IntrinsicHeight(
                 child: SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 302,
-                        decoration: BoxDecoration(
-                          color: AppColors.aquaBlue.withOpacity(.2),
-                          borderRadius: BorderRadius.circular(5),
+                      if (isTopic) ...[
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: const Color(0xffe1f3f6),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: FutureBuilder<String?>(
+                            future: questionController
+                                .fetchCategoryNameByQid(question.qId ?? 0),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                    child:
+                                        CircularProgressIndicator.adaptive());
+                              } else if (snapshot.hasError) {
+                                return const Text("Error fetching category");
+                              } else if (!snapshot.hasData ||
+                                  snapshot.data == null) {
+                                return const Text("Category not found");
+                              } else {
+                                return LabelText(
+                                  text: "${snapshot.data}",
+                                  textColor: const Color(0xff18a2b8),
+                                  textAlign: TextAlign.center,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: AppFontSize.medium,
+                                  isChangeTextColor: false,
+                                );
+                              }
+                            },
+                          ),
                         ),
-                        child: FutureBuilder<String?>(
-                          future: questionController
-                              .fetchCategoryNameByQid(question.qId ?? 0),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const LabelText(
-                                text:
-                                    "Bible and Bible Characters", // Your dynamic data here
-                                textColor: AppColors.tealBlue,
-                                textAlign: TextAlign.center,
-                                fontWeight: FontWeight.w700,
-                                fontSize: AppFontSize.medium,
-                                isChangeTextColor: false,
-                              );
-                            } else if (snapshot.hasError) {
-                              return const Text("Error fetching category");
-                            } else if (!snapshot.hasData ||
-                                snapshot.data == null) {
-                              return const Text("Category not found");
-                            } else {
-                              return LabelText(
-                                text:
-                                    "${snapshot.data}", // Your dynamic data here
-                                textColor: AppColors.tealBlue,
-                                textAlign: TextAlign.center,
-                                fontWeight: FontWeight.w700,
-                                fontSize: AppFontSize.medium,
-                                isChangeTextColor: false,
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                      const Gap(16),
+                      ],
+
                       Obx(() {
-                        return TitleText(
-                          text: question.question ?? 'No Question Text',
-                          fontSize: fontSizeController.fontSize.value,
+                        return Align(
+                          alignment: Alignment.centerLeft,
+                          child: TitleText(
+                            text: cleanedQuestion,
+                            fontSize: fontSizeController.fontSize.value,
+                          ),
                         );
                       }),
                       const Gap(16),
@@ -112,21 +123,35 @@ class QuestionDetailScreen extends StatelessWidget {
                       ),
                       // const Gap(10),
                       Obx(() {
-                        return Html(
-                          data: question.answer ?? "<p>No Answer Available</p>",
-                          style: {
-                            "body": Style(
-                              fontSize:
-                                  FontSize(fontSizeController.fontSize.value),
+                        return Align(
+                          alignment: Alignment.centerLeft,
+                          child: HtmlWidget(
+                            question.answer ?? "<p>No Answer Available</p>",
+                            onTapUrl: (url) {
+                              log("url: $url");
+                              return launchHtmlURL(url);
+                            },
+                            textStyle: TextStyle(
+                              fontSize: fontSizeController.fontSize.value,
                               fontWeight: FontWeight.w400,
                               color: themeController.isDarkMode.value
                                   ? Colors.white
                                   : Colors.black,
                             ),
-                          },
+                          ),
                         );
                       }),
-                      const Gap(16),
+                      const Gap(5),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: TitleText(
+                          text: "Related Questions",
+                          fontSize: AppFontSize.xmedium,
+                          weight: FontWeight.w600,
+                        ),
+                      ),
+                      const Gap(5),
+
                       FutureBuilder<List<QuestionData>>(
                         future: questionController
                             .fetchRandomQuestionsFromSameCategory(
@@ -157,17 +182,18 @@ class QuestionDetailScreen extends StatelessWidget {
                                           leading: Image.asset(
                                               "assets/images/${question.image}"),
                                           title: TitleText(
-                                            text: question.question ??
-                                                'No text available',
+                                            text: cleanQuestion(
+                                                question.question ??
+                                                    'No text available'),
                                             fontSize: AppFontSize.xsmall,
                                           ),
                                         ),
                                       ),
                                     ),
                                     onTap: () {
-                                      Get.toNamed(
+                                      Get.offAndToNamed(
                                         AppRouts.questionDetailScreen,
-                                        arguments: question,
+                                        arguments: [question, false],
                                       );
                                     });
                               },
@@ -184,5 +210,19 @@ class QuestionDetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> launchHtmlURL(String url) async {
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      url = 'https://$url';
+    }
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+      return true;
+    } else {
+      log('Could not launch launchHtmlURL $url');
+      return false;
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/model/topic.dart';
+import 'package:bible_faq/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -75,7 +76,7 @@ class TopicTileComponent extends StatelessWidget {
               arguments: Topic(
                 catId: topic.catId,
                 count: topic.count,
-                title: topic.title,
+                title: cleanQuestion(topic.title),
                 imageUrl: topic.imageUrl,
               ),
             );

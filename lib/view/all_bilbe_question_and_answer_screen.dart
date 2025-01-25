@@ -2,6 +2,7 @@ import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/components/last_read_time.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
+import 'package:bible_faq/utils/utils.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -84,18 +85,17 @@ class AllBilbeQuestionAndAnswerScreen extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        title: Text(
-                                question.question ?? 'No Question Text',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w900,
-                                )),
+                        title: Text(cleanQuestion(question.question!),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900,
+                            )),
                         subtitle: LastReadTime(
                             repository: _repository, question: question),
                         onTap: () {
                           Get.toNamed(
                             AppRouts.questionDetailScreen,
-                            arguments: question,
+                            arguments: [question, false],
                           );
                         },
                       ),

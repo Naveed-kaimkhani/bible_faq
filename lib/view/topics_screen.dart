@@ -59,7 +59,7 @@ class TopicsScreen extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(
                     AppRouts.questionDetailScreen,
-                    arguments: question,
+                    arguments: [question, true],
                   );
                 },
               ),

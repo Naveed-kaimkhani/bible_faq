@@ -1,9 +1,12 @@
 import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_faq/view_model/font_size_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AppDarkTheme {
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
+    fontFamily: Get.find<FontSizeController>().selectedFont.value,
     scaffoldBackgroundColor: const Color(0xFF1B1E25),
     primaryColor: const Color(0xFF1B1E25),
 
@@ -33,36 +36,5 @@ class AppDarkTheme {
         ),
       ),
     ),
-    // List tile theme
-    // listTileTheme: const ListTileThemeData(
-    //   textColor: Colors.white,
-    //   iconColor: Colors.white,
-    //   tileColor: Color(0xFF2C2F36), // Tile background color
-    //   shape: RoundedRectangleBorder(
-    //     borderRadius: BorderRadius.all(Radius.circular(12)),
-    //   ),
-    // ),
-
-    // Icon theme
-    // iconTheme: const IconThemeData(
-    //   color: Colors.white,
-    // ),
-
-    // Floating action button theme
-    // floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    //   backgroundColor: Color(0xFF2C2F36),
-    //   foregroundColor: Colors.white,
-    // ),
-
-    // Elevated button theme
-    // elevatedButtonTheme: ElevatedButtonThemeData(
-    //   style: ElevatedButton.styleFrom(
-    //     // primary: const Color(0xFF2C2F36),
-    //     // onPrimary: Colors.white,
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.circular(12),
-    //     ),
-    //   ),
-    // ),
   );
 }
