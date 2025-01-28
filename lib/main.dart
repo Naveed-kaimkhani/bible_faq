@@ -11,11 +11,27 @@ import 'package:get/get.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize GetX controllers
   Get.put(ThemeController());
   Get.put(QuestionsProviderSql());
   Get.put(FontSizeController());
 
-  runApp(const BibleFAQ());
+  // Properly wrap the app with MediaQuery
+  runApp(
+    Builder(
+      builder: (context) {
+        // Copy existing MediaQueryData and override textScaler
+        final mediaQueryData =
+            MediaQueryData.fromView(WidgetsBinding.instance.window);
+        return MediaQuery(
+          data: mediaQueryData.copyWith(
+            textScaler: const TextScaler.linear(1.0), // Lock text scale factor
+          ),
+          child: const BibleFAQ(),
+        );
+      },
+    ),
+  );
 }
 
 class BibleFAQ extends StatelessWidget {
