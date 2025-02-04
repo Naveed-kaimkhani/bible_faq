@@ -13,6 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isShowInternetTrailing;
   final bool isShowFavButton;
   int? qid;
+  final VoidCallback? onFilterTap; // New parameter for filter action
 
   CustomAppBar({
     super.key,
@@ -22,6 +23,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.isShowFavButton = false,
     this.isShowStarTrailing = false,
     this.isShowShareTrailing = false,
+        this.onFilterTap, // Initialize filter action
+
     this.isShowInternetTrailing = false,
   });
 
@@ -75,7 +78,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             if (isShowShareTrailing)
               const Icon(Icons.ios_share_outlined, color: AppColors.white),
             if (isShowStarTrailing) const Gap(10),
-            if (isShowInternetTrailing) const Gap(10),
+            if (isShowInternetTrailing) GestureDetector(
+              child: Icon(Icons.filter_alt_outlined),
+              onTap:
+                            onFilterTap, // Call the function when tapped
+            ),
             if (isShowFavButton)
               GestureDetector(
                 onTap: () {
@@ -154,3 +161,4 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(65);
 }
+
