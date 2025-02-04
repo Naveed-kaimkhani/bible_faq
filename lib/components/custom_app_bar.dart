@@ -1,31 +1,39 @@
+import 'package:bible_faq/components/label_text.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/view_model/controllers/controllers.dart';
 import 'package:bible_faq/view_model/controllers/favorites_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  String? question;
+  String? answer;
   final bool isShowSettingTrailing;
   final bool isShowStarTrailing;
   final bool isShowShareTrailing;
   final bool isShowInternetTrailing;
   final bool isShowFavButton;
+  final bool isShowToicLength;
+  final String topicLength;
   int? qid;
-  final VoidCallback? onFilterTap; // New parameter for filter action
-
+  int? websiteId;
   CustomAppBar({
     super.key,
     required this.title,
     this.qid,
+    this.question,
+    this.answer,
+    this.websiteId,
     this.isShowSettingTrailing = false,
     this.isShowFavButton = false,
     this.isShowStarTrailing = false,
     this.isShowShareTrailing = false,
-        this.onFilterTap, // Initialize filter action
-
     this.isShowInternetTrailing = false,
+    this.isShowToicLength = false,
+    this.topicLength = '',
   });
 
   @override
@@ -75,14 +83,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           actions: [
+            if (isShowToicLength)
+              TitleText(
+                text: topicLength,
+                textColor: AppColors.white,
+              ),
             if (isShowShareTrailing)
-              const Icon(Icons.ios_share_outlined, color: AppColors.white),
-            if (isShowStarTrailing) const Gap(10),
-            if (isShowInternetTrailing) GestureDetector(
-              child: Icon(Icons.filter_alt_outlined),
-              onTap:
-                            onFilterTap, // Call the function when tapped
-            ),
+              ShareButton(
+                  websiteId: websiteId, question: question, answer: answer),
+            if (isShowStarTrailing) const Gap(15),
+            if (isShowInternetTrailing) const Gap(50),
             if (isShowFavButton)
               GestureDetector(
                 onTap: () {
@@ -99,7 +109,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   );
                 }),
               ),
-            const Gap(10),
+            const Gap(15),
             if (isShowSettingTrailing)
               GestureDetector(
                 onTap: () {
@@ -108,7 +118,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child:
                     const Icon(Icons.settings_outlined, color: AppColors.white),
               ),
-            if (isShowSettingTrailing) const Gap(9),
+            if (isShowSettingTrailing) const Gap(15),
           ],
           backgroundColor: AppColors.transparent,
           elevation: 0,
@@ -162,3 +172,30 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(65);
 }
 
+class ShareButton extends StatelessWidget {
+  const ShareButton({
+    super.key,
+    required this.websiteId,
+    required this.question,
+    required this.answer,
+  });
+
+  final int? websiteId;
+  final String? question;
+  final String? answer;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: const Icon(Icons.ios_share_outlined, color: AppColors.white),
+      onTap: () async {
+        final String websiteLink =
+            'https://bibleresources.info/?page_id=$websiteId'; // Replace with your actual website link
+
+        await Share.share(
+            "Question: $question\nAnswer: ${answer!.replaceAll(RegExp(r'<[^>]*>'), '')} \nSent from Bible FAQ App: $websiteLink",
+            subject: '$question $answer');
+      },
+    );
+  }
+}

@@ -2,7 +2,8 @@ import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/components/last_read_time.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider.dart';
+import 'package:bible_faq/utils/utils.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -52,10 +53,11 @@ class LatestQuestionScreen extends StatelessWidget {
                         child: ListTile(
                           contentPadding: const EdgeInsets.all(0),
                           leading: Image.asset(
-                            AppImages.getRandomImage(),
+                            "${AppImages.initialPath}${question.image}",
                           ), // Replace with question.imagePath if applicable
                           title: TitleText(
-                            text: question.question ?? 'No text available',
+                            text: cleanQuestion(
+                                question.question ?? 'No text available'),
                             fontSize: AppFontSize.xsmall,
                           ),
                           subtitle: LastReadTime(
@@ -64,7 +66,7 @@ class LatestQuestionScreen extends StatelessWidget {
                             // Navigate to QuestionDetailScreen with the selected question as an argument
                             Get.toNamed(
                               AppRouts.questionDetailScreen,
-                              arguments: question,
+                              arguments: [question, false],
                             );
                           },
                         ),

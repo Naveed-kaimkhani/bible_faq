@@ -1,4 +1,3 @@
-
 import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +16,8 @@ class LastReadTime extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
       future: _repository.getTimestamp(question.qId ?? 0),
-      builder: (BuildContext context,
-          AsyncSnapshot<String> snapshot) {
-        if (snapshot.connectionState ==
-            ConnectionState.waiting) {
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text(
             'Loading...',
             style: TextStyle(fontSize: 14),
@@ -31,15 +28,24 @@ class LastReadTime extends StatelessWidget {
             style: TextStyle(fontSize: 14),
           );
         } else if (snapshot.hasData) {
-  if (snapshot.data?.isEmpty ?? true) {
-    return const SizedBox.shrink(); // Transparent widget
-  }
-  return Text(
-    'Read on: ${snapshot.data}',
-    style: const TextStyle(fontSize: 14),
-  );
-}
- else {
+          if (snapshot.data?.isEmpty ?? true) {
+            return const SizedBox.shrink(); // Transparent widget
+          }
+          return Text.rich(
+            TextSpan(
+              children: [
+                const TextSpan(
+                  text: 'Read on: ',
+                  style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic),
+                ),
+                TextSpan(
+                  text: '${snapshot.data}',
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+          );
+        } else {
           return const Text(
             'No timestamp found',
             style: TextStyle(fontSize: 14),

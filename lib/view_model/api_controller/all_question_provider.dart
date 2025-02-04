@@ -1,5 +1,6 @@
 import 'package:bible_faq/services/api_services/api_manager.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sqflite/sql.dart';
@@ -25,13 +26,14 @@ class QuestionProviderAPI extends GetxController {
 
       debugPrint(
           "Latest Cat ID: $latestCatId, Latest QID: $latestQId, Total Count: $totalCount");
-    
+
       final response = await _fetchNewDataFromApi(
         latestCatId: latestCatId,
         latestQId: latestQId,
         totalCount: totalCount,
       );
-      if (response == null) {
+      debugPrint(response.toString());
+      if (response == null || response.isEmpty) {
         Get.back();
         _showSnackbar("Info", "Your app is already updated. Lord bless you!");
         return;
@@ -43,13 +45,6 @@ class QuestionProviderAPI extends GetxController {
       Get.back();
       _showSnackbar("Error", "An error occurred: $e");
     }
-  }
-
-// Utility Methods
-
-  /// Set the loading state
-  void _setLoadingState(bool value) {
-    isLoading.value = value;
   }
 
   /// Fetch the latest values from the database
@@ -94,9 +89,7 @@ class QuestionProviderAPI extends GetxController {
       _showSnackbar("Info", "Your app is already updated. Lord bless you!");
       return;
     } else {
-        Get.back();
-      _showSnackbar("Info", "Your app is already updated. Lord bless you!");
-      // await updateDatabaseWithResponse(response);
+      await updateDatabaseWithResponse(response);
     }
   }
 
@@ -116,16 +109,23 @@ class QuestionProviderAPI extends GetxController {
     hasNewData = true.obs;
 
     // Insert or update categories
-    for (var category in categories) {
-      await db.insert(
-        'category',
-        {
-          'cat_id': category['cat_id'],
-          'Name': category['Name'],
-          'image': category['image'],
-        },
-        conflictAlgorithm: ConflictAlgorithm.ignore,
-      );
+    if (categories.length > 0) {
+      for (var category in categories) {
+        int result = await db.insert(
+          'category',
+          {
+            'cat_id': category['cat_id'],
+            'name': category['name'],
+            'description': category['description'],
+            'image': category['image'],
+          },
+          conflictAlgorithm: ConflictAlgorithm.ignore,
+        );
+        debugPrint("category result: $result");
+        if (result != 0) {
+          hasNewData = true.obs;
+        }
+      }
     }
 
     downloadProgress.value = 10.0;
@@ -157,6 +157,8 @@ class QuestionProviderAPI extends GetxController {
           'answer': question['answer'],
           'hits': question['hits'],
           'timestamp': question['timestamp'],
+          'website_id': question['website_id'],
+          'image': question['image'],
         },
         conflictAlgorithm: ConflictAlgorithm.ignore,
       );
@@ -164,10 +166,19 @@ class QuestionProviderAPI extends GetxController {
       debugPrint("question result: ");
     }
     debugPrint("db updated");
+
+    // Get.put(QuestionsProviderSql());
+
+    final provider = Get.find<QuestionsProviderSql>();
+    provider.fetchAllQuestions();
+    provider.fetchLatestQuestions();
+
+    provider.fetchCategories();
     downloadProgress.value = 100.0;
 
-    _setLoadingState(false);
-    // Show Snackbar based on update status
+    // Get.put(QuestionsProviderSql());
+    Get.back();
+
     if (hasNewData.value) {
       Get.snackbar(
         "Update Successful",
@@ -181,6 +192,20 @@ class QuestionProviderAPI extends GetxController {
         snackPosition: SnackPosition.TOP,
       );
     }
+  }
+
+// Method to get the number of questions in a specific category by catId
+  Future<int> getQuestionCountByCatId(int catId) async {
+    final db = await _repository.database;
+
+    // Query to fetch unique q_ids associated with the cat_id
+    final result = await db.rawQuery(
+      'SELECT q_id FROM category_questions WHERE cat_id = ?',
+      [catId],
+    );
+    print("result: $result");
+    // Return the count of unique q_ids for this category
+    return result.length;
   }
 
   @override

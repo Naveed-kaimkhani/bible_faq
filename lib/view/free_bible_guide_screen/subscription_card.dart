@@ -15,7 +15,7 @@ class SubscriptionCard extends StatelessWidget {
         leading: Transform.scale(
           scale: .8,
           child: CupertinoSwitch(
-            activeColor: AppColors.tealBlue,
+            activeTrackColor: AppColors.tealBlue,
             value: true,
             onChanged: (val) {},
           ),

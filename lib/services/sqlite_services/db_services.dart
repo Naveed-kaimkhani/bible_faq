@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bible_faq/data/model/category_question.dart';
 import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/data/model/question_category.dart';
@@ -7,7 +9,6 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
-import 'dart:io';
 
 class QuestionsRepository {
   static Database? _database;
@@ -59,9 +60,8 @@ class QuestionsRepository {
 
   Future<String> getTimestamp(int questionId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String timestamp = prefs.getString('timestamp_$questionId') ??
-        "";
-        if (timestamp.isEmpty) return "";
+    final String timestamp = prefs.getString('timestamp_$questionId') ?? "";
+    if (timestamp.isEmpty) return "";
     DateTime parsedTimestamp = DateTime.parse(timestamp);
     String formattedTimestamp =
         DateFormat('yyyy-MM-dd hh:mm a').format(parsedTimestamp);

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/app_colors.dart';
 import 'package:bible_faq/view_model/controllers/controllers.dart';
@@ -66,18 +64,17 @@ class DarkModeDialog {
             child: CustomGradientButton(
               text: "Apply",
               onTap: () {
-
-      // Apply the selected theme option
-      if (controller.selectedOption.value == 0) {
-        // Match device setting
-        themeController.toggleTheme();
-      } else if (controller.selectedOption.value == 1) {
-        // Light mode
-        themeController.toggleTheme();
-      } else if (controller.selectedOption.value == 2) {
-        // Dark mode
-        themeController.toggleTheme();
-      }
+                // Apply the selected theme option
+                if (controller.selectedOption.value == 0) {
+                  // Match device setting
+                  themeController.toggleTheme();
+                } else if (controller.selectedOption.value == 1) {
+                  // Light mode
+                  themeController.toggleTheme();
+                } else if (controller.selectedOption.value == 2) {
+                  // Dark mode
+                  themeController.toggleTheme();
+                }
                 Get.back();
               },
             ),

@@ -1,6 +1,7 @@
 import 'package:bible_faq/components/componets.dart';
 import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider.dart';
+import 'package:bible_faq/utils/utils.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,35 +41,36 @@ class LatestQuestionSection extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: 134,
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                final question = questions[index];
-                return GestureDetector(
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          leading: Image.asset(AppImages.getRandomImage()),
-                          title: TitleText(
-                            text: question.question ?? 'No text available',
-                            fontSize: AppFontSize.xsmall,
-                          ),
+          ListView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            itemCount: 5,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final question = questions[index];
+              return GestureDetector(
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: Image.asset(
+                            "${AppImages.initialPath}${question.image}"),
+                        title: TitleText(
+                          text:
+                              cleanQuestion(question.question ?? 'No Question'),
+                          fontSize: AppFontSize.xsmall,
                         ),
                       ),
                     ),
-                    onTap: () {
-                      Get.toNamed(
-                        AppRouts.questionDetailScreen,
-                        arguments: question,
-                      );
-                    });
-              },
-            ),
+                  ),
+                  onTap: () {
+                    Get.toNamed(
+                      AppRouts.questionDetailScreen,
+                      arguments: [question, false],
+                    );
+                  });
+            },
           ),
         ],
       );

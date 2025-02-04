@@ -3,7 +3,7 @@ import 'package:bible_faq/components/last_read_time.dart';
 import 'package:bible_faq/constants/constants.dart';
 import 'package:bible_faq/data/model/question.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider.dart';
+import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -94,7 +94,8 @@ class SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
                         padding: const EdgeInsets.all(8),
                         child: ListTile(
                           contentPadding: const EdgeInsets.all(0),
-                          leading: Image.asset(AppImages.getRandomImage()),
+                          leading: Image.asset(
+                              "${AppImages.initialPath}${question.image}"),
                           title: TitleText(
                             text: question.question ?? 'Unnamed Question',
                             fontSize: AppFontSize.xsmall,
@@ -104,7 +105,7 @@ class SearchQuestionsScreenState extends State<SearchQuestionsScreen> {
                           onTap: () {
                             Get.toNamed(
                               AppRouts.questionDetailScreen,
-                              arguments: question,
+                              arguments: [question, false],
                             );
                           },
                         ),
