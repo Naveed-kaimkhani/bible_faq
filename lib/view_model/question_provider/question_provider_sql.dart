@@ -25,7 +25,7 @@ class QuestionsProviderSql extends GetxController {
   var latestQuestions = <QuestionData>[].obs; // Latest questions list
   var filteredQuestions =
       <QuestionData>[].obs; // Questions filtered by category
-
+  var sortOrder = 'Newest First'.obs;
   var categoryQuestion = <CategoryQuestionData>[].obs;
   Future<void> fetchCategories() async {
     try {
@@ -161,6 +161,36 @@ class QuestionsProviderSql extends GetxController {
     }
   }
 
+  void sortQuestions(String order) {
+    if (allQuestions.isEmpty) return;
+
+    sortOrder.value = order; // Update sorting order state
+
+    // Create a fresh copy to ensure sorting works properly
+    List<QuestionData> sortedList = List.from(allQuestions);
+
+    sortedList.sort((a, b) {
+      if (order == 'Newest First' || order == 'Oldest First') {
+        DateTime dateA = DateTime.tryParse(a.timestamp ?? '') ?? DateTime(0);
+        DateTime dateB = DateTime.tryParse(b.timestamp ?? '') ?? DateTime(0);
+        return (order == 'Newest First')
+            ? dateB.compareTo(dateA)
+            : dateA.compareTo(dateB);
+      } else if (order == 'Alphabetical (A-Z)') {
+        return (a.question ?? '')
+            .trim()
+            .toLowerCase()
+            .compareTo((b.question ?? '').trim().toLowerCase());
+      }
+      return 0;
+    });
+
+    // Ensure UI refresh by clearing and reassigning the list
+    allQuestions.clear();
+    allQuestions.addAll(sortedList);
+    allQuestions.refresh(); // Force UI update
+  }
+
   Future<void> fetchQuestionsByCategory(int catId) async {
     try {
       isAllQuestionsLoading.value = true;
@@ -214,52 +244,6 @@ class QuestionsProviderSql extends GetxController {
     }
   }
 
-  // Fetch Questions by `cat_id`
-  // Future<void> fetchQuestionsByCategory(int catId) async {
-  //   try {
-  //     isAllQuestionsLoading.value = true;
-  //     isAllQuestionsError.value = false;
-
-  //     final db = await _repository.database;
-
-  //     // Fetch `q_id`s for the given `cat_id`
-  //     final categoryQuestionsResult = await db.query(
-  //       'category_questions',
-  //       where: 'cat_id = ?',
-  //       whereArgs: [catId],
-  //     );
-
-  //     // Extract `q_id`s
-  //     final qIds = categoryQuestionsResult
-  //         .map((e) {
-  //           return e['q_id'] is int
-  //               ? e['q_id']
-  //               : int.tryParse(e['q_id'].toString());
-  //         })
-  //         .where((id) => id != null)
-  //         .toList();
-
-  //     // Fetch questions based on `q_id`s
-  //     if (qIds.isNotEmpty) {
-  //       final questionResults = await db.query(
-  //         'questions',
-  //         where: 'q_id IN (${List.filled(qIds.length, '?').join(', ')})',
-  //         whereArgs: qIds,
-  //       );
-
-  //       filteredQuestions.value =
-  //           questionResults.map((json) => QuestionData.fromJson(json)).toList();
-  //     } else {
-  //       filteredQuestions.clear();
-  //     }
-  //   } catch (e) {
-  //     print("Error fetching questions by category: $e");
-  //     isAllQuestionsError.value = true;
-  //   } finally {
-  //     isAllQuestionsLoading.value = false;
-  //   }
-  // }
-
   // Fetch Latest Questions (Fetch All)
   Future<void> fetchLatestQuestions() async {
     try {
@@ -293,15 +277,16 @@ class QuestionsProviderSql extends GetxController {
       isAllQuestionsError.value = false;
 
       final db = await _repository.database;
-
-      // Fetch all questions
       final result = await db.query(
         'questions',
         orderBy: 'timestamp DESC',
       );
 
-      allQuestions.value =
-          result.map((json) => QuestionData.fromJson(json)).toList();
+      allQuestions.assignAll(
+          result.map((json) => QuestionData.fromJson(json)).toList());
+
+      // Apply sorting immediately after fetching data
+      sortQuestions(sortOrder.value);
     } catch (e) {
       isAllQuestionsError.value = true;
       Get.snackbar("Error", "Failed to fetch all questions: $e");

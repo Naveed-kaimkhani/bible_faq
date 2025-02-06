@@ -18,7 +18,7 @@ class CustomAppBarForFilter extends StatelessWidget
   final RxString sortOrder;
   final ValueChanged<String?> onSortChanged;
 
-  CustomAppBarForFilter({
+  const CustomAppBarForFilter({
     super.key,
     required this.title,
     this.qid,
@@ -39,84 +39,79 @@ class CustomAppBarForFilter extends StatelessWidget
     return Obx(() {
       bool isDarkMode = themeController.isDarkMode.value;
 
-      return AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: isDarkMode
-                  ? [Color(0xFF2A2D32), Color(0xFF1B1E25)]
-                  : [AppColors.aquaBlue, AppColors.tealBlue],
+      return PreferredSize(
+        preferredSize: const Size.fromHeight(65),
+        child: AppBar(
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: isDarkMode
+                    ? [const Color(0xFF2A2D32), const Color(0xFF1B1E25)]
+                    : [AppColors.aquaBlue, AppColors.tealBlue],
+              ),
             ),
           ),
-        ),
-        automaticallyImplyLeading: false,
-        leading: appBarButton(
-          Icon(Icons.arrow_back_ios,
-              color: isDarkMode ? Colors.white : AppColors.tealBlue),
-          () => Get.back(),
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: AppFontSize.xmedium,
-            color: AppColors.white,
+          automaticallyImplyLeading: false,
+          leading: appBarButton(
+            Icon(Icons.arrow_back_ios,
+                color: isDarkMode ? Colors.white : AppColors.tealBlue),
+            () => Get.back(),
           ),
-        ),
-        actions: [
-          if (isShowShareTrailing)
-            Icon(Icons.ios_share_outlined, color: AppColors.white),
-          if (isShowStarTrailing) Gap(10),
-          // if (isShowInternetTrailing) GestureDetector(
-          //   child: Icon(Icons.filter_alt_outlined),
-          //   onTap: onFilterTap,
-          // ),
-          Obx(() => DropdownButton<String>(
-                value: sortOrder.value,
-                dropdownColor: isDarkMode ? Colors.black : Colors.white,
-                icon: Icon(Icons.sort, color: AppColors.white),
-                onChanged: onSortChanged,
-                items: ['Newest First', 'Oldest First', 'Alphabetical (A-Z)']
-                    .map((String option) {
-                  return DropdownMenuItem<String>(
-                    value: option,
-                    // child: SizedBox(),
-                    child: Text(option,
-                        style: TextStyle(
-                            color:
-                                isDarkMode ? Colors.white : AppColors.black)),
+          title: Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: AppFontSize.xmedium,
+              color: AppColors.white,
+            ),
+          ),
+          actions: [
+            if (onFilterTap != null)
+              GestureDetector(
+                onTap: onFilterTap,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Image.asset(
+                    AppImages.sortIcon,
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.cover,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            if (isShowShareTrailing)
+              const Icon(Icons.ios_share_outlined, color: AppColors.white),
+            if (isShowStarTrailing) const Gap(10),
+            if (isShowFavButton)
+              GestureDetector(
+                onTap: () {
+                  final favProvider = Get.put(FavoritesProvider());
+                  favProvider.toggleFavorite(qid.toString());
+                },
+                child: Obx(() {
+                  final favProvider = Get.put(FavoritesProvider());
+                  bool isFav = favProvider.isFavorite(qid.toString());
+                  return Icon(
+                    isFav ? Icons.star : Icons.star_border,
+                    color: Colors.white,
                   );
-                }).toList(),
-              )),
-          if (isShowFavButton)
-            GestureDetector(
-              onTap: () {
-                final favProvider = Get.put(FavoritesProvider());
-                favProvider.toggleFavorite(qid.toString());
-              },
-              child: Obx(() {
-                final favProvider = Get.put(FavoritesProvider());
-                bool isFav = favProvider.isFavorite(qid.toString());
-                return Icon(
-                  isFav ? Icons.star : Icons.star_border,
-                  color: Colors.white,
-                );
-              }),
-            ),
-          SizedBox(
-            width: 10,
-          ),
-          if (isShowSettingTrailing)
-            GestureDetector(
-              onTap: () => Get.toNamed(AppRouts.settingScreen),
-              child: Icon(Icons.settings_outlined, color: AppColors.white),
-            ),
-          if (isShowSettingTrailing) Gap(9),
-        ],
-        backgroundColor: AppColors.transparent,
-        elevation: 0,
+                }),
+              ),
+            const SizedBox(width: 10),
+            if (isShowSettingTrailing)
+              GestureDetector(
+                onTap: () => Get.toNamed(AppRouts.settingScreen),
+                child:
+                    const Icon(Icons.settings_outlined, color: AppColors.white),
+              ),
+            if (isShowSettingTrailing) const Gap(9),
+          ],
+          backgroundColor: AppColors.transparent,
+          elevation: 0,
+        ),
       );
     });
   }
@@ -125,17 +120,28 @@ class CustomAppBarForFilter extends StatelessWidget
     final themeController = Get.find<ThemeController>();
     return Obx(() {
       bool isDarkMode = themeController.isDarkMode.value;
-      return GestureDetector(
-        onTap: onTap,
-        child: Container(
-          height: 39,
-          width: 39,
-          decoration: BoxDecoration(
-            color: isDarkMode ? AppColors.transparent : AppColors.white,
-            borderRadius: BorderRadius.circular(10),
-            border: isDarkMode ? Border.all(color: AppColors.white) : null,
+      return Transform.scale(
+        scaleX: 0.7,
+        scaleY: 0.7,
+        child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            height: 39,
+            width: 39,
+            decoration: BoxDecoration(
+              color: isDarkMode ? AppColors.transparent : AppColors.white,
+              borderRadius: BorderRadius.circular(10),
+              border: isDarkMode ? Border.all(color: AppColors.white) : null,
+            ),
+            child: Center(
+              child: Transform.scale(
+                alignment: Alignment.centerLeft,
+                scaleX: 1.5,
+                scaleY: 1.5,
+                child: icon,
+              ),
+            ),
           ),
-          child: Center(child: icon),
         ),
       );
     });

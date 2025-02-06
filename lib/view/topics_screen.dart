@@ -4,6 +4,7 @@ import 'package:bible_faq/constants/app_images.dart';
 import 'package:bible_faq/constants/app_routs.dart';
 import 'package:bible_faq/model/topic.dart';
 import 'package:bible_faq/services/sqlite_services/db_services.dart';
+import 'package:bible_faq/utils/utils.dart';
 import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,7 +54,8 @@ class TopicsScreen extends StatelessWidget {
                 leading: Image.asset(
                   "${AppImages.initialPath}${question.image}",
                 ),
-                title: Text(question.question ?? 'No Question Text'),
+                title: Text(
+                    cleanQuestion(question.question ?? "No Question Text")),
                 subtitle:
                     LastReadTime(repository: _repository, question: question),
                 onTap: () {

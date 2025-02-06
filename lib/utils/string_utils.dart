@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 String cleanQuestion(String question) {
+  log("question: $question");
   return question
       .replaceAll('&quot;', '"')
       .replaceAll('&#039;', "'")

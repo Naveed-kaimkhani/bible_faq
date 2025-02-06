@@ -1,10 +1,9 @@
-
-
 class AppImages {
   static const String splashImage = "assets/images/splash_image.png";
   static const String askQuestion = "assets/images/ask_question.png";
   static const String favoriteImage = "assets/images/favorite_image.png";
-static const String initialPath = "assets/images/";
+  static const String sortIcon = "assets/images/arrow-left-right.png";
+  static const String initialPath = "assets/images/";
 
   static List<String> questionImages = [
     "assets/images/questionImage1.png",

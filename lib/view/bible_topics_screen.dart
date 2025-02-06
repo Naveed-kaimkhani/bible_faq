@@ -74,16 +74,16 @@ class _BibleTopicsScreenState extends State<BibleTopicsScreen> {
       body: BodyContainerComponent(
         child: Column(
           children: [
-            TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: "Search questions...",
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
+            // TextField(
+            //   controller: _searchController,
+            //   decoration: InputDecoration(
+            //     hintText: "Search questions...",
+            //     prefixIcon: const Icon(Icons.search),
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(15),
+            //     ),
+            //   ),
+            // ),
             const Gap(10),
             Expanded(
               child: Obx(() {

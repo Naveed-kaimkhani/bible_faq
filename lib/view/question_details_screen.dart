@@ -121,7 +121,7 @@ class QuestionDetailScreen extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      // const Gap(10),
+                      const Gap(10),
                       Obx(() {
                         return Align(
                           alignment: Alignment.centerLeft,
@@ -141,7 +141,7 @@ class QuestionDetailScreen extends StatelessWidget {
                           ),
                         );
                       }),
-                      const Gap(5),
+                      const Gap(10),
                       const Align(
                         alignment: Alignment.centerLeft,
                         child: TitleText(
@@ -150,7 +150,7 @@ class QuestionDetailScreen extends StatelessWidget {
                           weight: FontWeight.w600,
                         ),
                       ),
-                      const Gap(5),
+                      const Gap(10),
 
                       FutureBuilder<List<QuestionData>>(
                         future: questionController
@@ -201,6 +201,7 @@ class QuestionDetailScreen extends StatelessWidget {
                           }
                         },
                       ),
+                      const Gap(10),
                     ],
                   ),
                 ),
