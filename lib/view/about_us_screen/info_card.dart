@@ -1,6 +1,6 @@
-import 'package:bible_faq/components/componets.dart';
-import 'package:bible_faq/constants/app_colors.dart';
-import 'package:bible_faq/view_model/controllers/controllers.dart';
+import 'package:bible_app/components/componets.dart';
+import 'package:bible_app/constants/app_colors.dart';
+import 'package:bible_app/view_model/controllers/controllers.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';

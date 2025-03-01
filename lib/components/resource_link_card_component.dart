@@ -1,4 +1,4 @@
-import 'package:bible_faq/components/componets.dart';
+import 'package:bible_app/components/componets.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

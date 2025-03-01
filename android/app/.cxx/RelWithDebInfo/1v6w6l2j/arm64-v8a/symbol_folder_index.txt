@@ -1,0 +1,1 @@
+/Users/muhammadshakil/Projects/bible_app/build/app/intermediates/cxx/RelWithDebInfo/1v6w6l2j/obj/arm64-v8a

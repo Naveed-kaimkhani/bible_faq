@@ -1,7 +1,7 @@
-import 'package:bible_faq/components/componets.dart';
-import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/view_model/controllers/controllers.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
+import 'package:bible_app/components/componets.dart';
+import 'package:bible_app/constants/constants.dart';
+import 'package:bible_app/view_model/controllers/controllers.dart';
+import 'package:bible_app/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';

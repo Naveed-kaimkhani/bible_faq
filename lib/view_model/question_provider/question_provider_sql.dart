@@ -1,7 +1,7 @@
-import 'package:bible_faq/data/model/category_question.dart';
-import 'package:bible_faq/data/model/question.dart';
-import 'package:bible_faq/data/model/question_category.dart';
-import 'package:bible_faq/services/sqlite_services/db_services.dart';
+import 'package:bible_app/data/model/category_question.dart';
+import 'package:bible_app/data/model/question.dart';
+import 'package:bible_app/data/model/question_category.dart';
+import 'package:bible_app/services/sqlite_services/db_services.dart';
 import 'package:get/get.dart';
 
 class QuestionsProviderSql extends GetxController {
@@ -282,6 +282,8 @@ class QuestionsProviderSql extends GetxController {
         orderBy: 'timestamp DESC',
       );
 
+      // Clear the existing list before adding new data
+      allQuestions.clear();
       allQuestions.assignAll(
           result.map((json) => QuestionData.fromJson(json)).toList());
 

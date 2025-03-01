@@ -1,14 +1,14 @@
 import 'dart:developer';
 
-import 'package:bible_faq/components/componets.dart';
-import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/data/model/question.dart';
-import 'package:bible_faq/services/sqlite_services/db_services.dart';
-import 'package:bible_faq/utils/string_utils.dart'; // Import the utility function
-import 'package:bible_faq/utils/utils.dart';
-import 'package:bible_faq/view_model/controllers/theme_controller.dart';
-import 'package:bible_faq/view_model/font_size_provider.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
+import 'package:bible_app/components/componets.dart';
+import 'package:bible_app/constants/constants.dart';
+import 'package:bible_app/data/model/question.dart';
+import 'package:bible_app/services/sqlite_services/db_services.dart';
+import 'package:bible_app/utils/string_utils.dart'; // Import the utility function
+import 'package:bible_app/utils/utils.dart';
+import 'package:bible_app/view_model/controllers/theme_controller.dart';
+import 'package:bible_app/view_model/font_size_provider.dart';
+import 'package:bible_app/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart'; // Import the new package
 import 'package:gap/gap.dart';
@@ -141,7 +141,7 @@ class QuestionDetailScreen extends StatelessWidget {
                           ),
                         );
                       }),
-                      const Gap(10),
+                      const Gap(20),
                       const Align(
                         alignment: Alignment.centerLeft,
                         child: TitleText(
@@ -150,7 +150,7 @@ class QuestionDetailScreen extends StatelessWidget {
                           weight: FontWeight.w600,
                         ),
                       ),
-                      const Gap(10),
+                      const Gap(20),
 
                       FutureBuilder<List<QuestionData>>(
                         future: questionController

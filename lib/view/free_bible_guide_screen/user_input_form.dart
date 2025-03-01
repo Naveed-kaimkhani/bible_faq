@@ -1,5 +1,5 @@
-import 'package:bible_faq/components/componets.dart';
-import 'package:bible_faq/constants/app_svg_icons.dart';
+import 'package:bible_app/components/componets.dart';
+import 'package:bible_app/constants/app_svg_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';

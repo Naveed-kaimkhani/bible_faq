@@ -1,7 +1,7 @@
-import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
+import 'package:bible_app/view_model/question_provider/question_provider_sql.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:bible_faq/data/model/question.dart';
+import 'package:bible_app/data/model/question.dart';
 
 class FavoritesProvider extends GetxController {
   final QuestionsProviderSql _questionsProvider = Get.find();

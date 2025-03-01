@@ -1,9 +1,9 @@
 import 'dart:developer';
 
-import 'package:bible_faq/components/componets.dart';
-import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/model/topic.dart';
-import 'package:bible_faq/utils/utils.dart';
+import 'package:bible_app/components/componets.dart';
+import 'package:bible_app/constants/constants.dart';
+import 'package:bible_app/model/topic.dart';
+import 'package:bible_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

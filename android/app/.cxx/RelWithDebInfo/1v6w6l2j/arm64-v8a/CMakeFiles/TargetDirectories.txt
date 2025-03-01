@@ -1,0 +1,2 @@
+/Users/muhammadshakil/Projects/bible_app/android/app/.cxx/RelWithDebInfo/1v6w6l2j/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/muhammadshakil/Projects/bible_app/android/app/.cxx/RelWithDebInfo/1v6w6l2j/arm64-v8a/CMakeFiles/rebuild_cache.dir

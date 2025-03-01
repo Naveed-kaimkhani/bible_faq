@@ -1,5 +1,5 @@
-import 'package:bible_faq/data/model/question.dart';
-import 'package:bible_faq/services/sqlite_services/db_services.dart';
+import 'package:bible_app/data/model/question.dart';
+import 'package:bible_app/services/sqlite_services/db_services.dart';
 import 'package:flutter/material.dart';
 
 class LastReadTime extends StatelessWidget {

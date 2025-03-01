@@ -1,6 +1,6 @@
-// import 'package:bible_faq/components/componets.dart';
-// import 'package:bible_faq/components/resource_link_card_component.dart';
-// import 'package:bible_faq/constants/app_images.dart';
+// import 'package:bible_app/components/componets.dart';
+// import 'package:bible_app/components/resource_link_card_component.dart';
+// import 'package:bible_app/constants/app_images.dart';
 // import 'package:flutter/material.dart';
 // import 'package:gap/gap.dart';
 

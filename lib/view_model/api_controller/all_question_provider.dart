@@ -1,6 +1,6 @@
-import 'package:bible_faq/services/api_services/api_manager.dart';
-import 'package:bible_faq/services/sqlite_services/db_services.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
+import 'package:bible_app/services/api_services/api_manager.dart';
+import 'package:bible_app/services/sqlite_services/db_services.dart';
+import 'package:bible_app/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sqflite/sql.dart';
@@ -13,7 +13,7 @@ class QuestionProviderAPI extends GetxController {
   var isNetworkError = false.obs;
   var apiResponse = {}.obs; // Holds the raw API response for requestGet
   var hasNewData = false.obs;
-  var downloadProgress = 0.0.obs; // Track download progress
+  var downloadProgress = 0.0.obs; 
   //  int processedItems = 0;
   Future<void> fetchAndUpdateDataDynamically() async {
     try {
@@ -203,15 +203,15 @@ class QuestionProviderAPI extends GetxController {
       'SELECT q_id FROM category_questions WHERE cat_id = ?',
       [catId],
     );
-    print("result: $result");
+    debugPrint("result: $result");
     // Return the count of unique q_ids for this category
     return result.length;
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    // Automatically fetch and update data when the controller is initialized
-    fetchAndUpdateDataDynamically();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   // Automatically fetch and update data when the controller is initialized
+  //   fetchAndUpdateDataDynamically();
+  // }
 }

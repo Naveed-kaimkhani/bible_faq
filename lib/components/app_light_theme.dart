@@ -1,5 +1,5 @@
-import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/view_model/font_size_provider.dart';
+import 'package:bible_app/constants/constants.dart';
+import 'package:bible_app/view_model/font_size_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

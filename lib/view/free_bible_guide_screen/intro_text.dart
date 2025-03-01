@@ -1,4 +1,4 @@
-import 'package:bible_faq/constants/constants.dart';
+import 'package:bible_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class IntroText extends StatelessWidget {

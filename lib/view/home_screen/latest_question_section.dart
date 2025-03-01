@@ -1,7 +1,9 @@
-import 'package:bible_faq/components/componets.dart';
-import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/utils/utils.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
+import 'dart:developer';
+
+import 'package:bible_app/components/componets.dart';
+import 'package:bible_app/constants/constants.dart';
+import 'package:bible_app/utils/utils.dart';
+import 'package:bible_app/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,8 +12,7 @@ class LatestQuestionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Get.find<
-        QuestionsProviderSql>(); //this way we can get the instance of QuestionsProviderSql
+    final provider = Get.find<QuestionsProviderSql>();
 
     return Obx(() {
       if (provider.isLatestQuestionsLoading.value) {
@@ -27,6 +28,10 @@ class LatestQuestionSection extends StatelessWidget {
       }
 
       final questions = provider.latestQuestions;
+
+      // Debug log to trace the questions being displayed
+      log("Displaying latest questions in section: ${questions.length}");
+
       return Column(
         children: [
           Row(

@@ -1,4 +1,4 @@
-# bible_faq
+# bible_app
 
 A new Flutter project.
 

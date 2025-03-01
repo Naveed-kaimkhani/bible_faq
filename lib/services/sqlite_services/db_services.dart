@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:bible_faq/data/model/category_question.dart';
-import 'package:bible_faq/data/model/question.dart';
-import 'package:bible_faq/data/model/question_category.dart';
+import 'package:bible_app/data/model/category_question.dart';
+import 'package:bible_app/data/model/question.dart';
+import 'package:bible_app/data/model/question_category.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';

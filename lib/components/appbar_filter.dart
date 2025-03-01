@@ -1,6 +1,6 @@
-import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/view_model/controllers/controllers.dart';
-import 'package:bible_faq/view_model/controllers/favorites_provider.dart';
+import 'package:bible_app/constants/constants.dart';
+import 'package:bible_app/view_model/controllers/controllers.dart';
+import 'package:bible_app/view_model/controllers/favorites_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';

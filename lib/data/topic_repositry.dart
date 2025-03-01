@@ -1,5 +1,5 @@
-// import 'package:bible_faq/constants/constants.dart';
-// import 'package:bible_faq/model/model.dart';
+// import 'package:bible_app/constants/constants.dart';
+// import 'package:bible_app/model/model.dart';
 
 // class TopicRepository {
 //   List<Topic> fetchTopics() {

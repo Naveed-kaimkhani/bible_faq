@@ -1,7 +1,7 @@
-import 'package:bible_faq/components/componets.dart'; // Assuming CustomGradientButton is here
-import 'package:bible_faq/constants/app_colors.dart';
-import 'package:bible_faq/view_model/controllers/controllers.dart';
-import 'package:bible_faq/view_model/font_size_provider.dart';
+import 'package:bible_app/components/componets.dart'; // Assuming CustomGradientButton is here
+import 'package:bible_app/constants/app_colors.dart';
+import 'package:bible_app/view_model/controllers/controllers.dart';
+import 'package:bible_app/view_model/font_size_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -31,48 +31,46 @@ class FontSizeDialog {
               ),
             ),
           ),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Preview text using temporary font size
-                ValueListenableBuilder(
-                  valueListenable: tempFontSize,
-                  builder: (context, value, child) => Text(
-                    "The Lord is my shepherd; I shall not want. — Psalm 23:1",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: tempFontSize.value,
-                      // fontStyle: FontStyle.italic,
-                      color: isDarkMode ? Colors.white : Colors.black,
-                    ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Preview text using temporary font size
+              ValueListenableBuilder(
+                valueListenable: tempFontSize,
+                builder: (context, value, child) => Text(
+                  "The Lord is my shepherd; I shall not want. — Psalm 23:1",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: tempFontSize.value,
+                    // fontStyle: FontStyle.italic,
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _fontOptionButton(controller, "Arial", isDarkMode),
-                    _fontOptionButton(controller, "Gentium", isDarkMode),
-                    _fontOptionButton(controller, "Georgia", isDarkMode),
-                  ],
+              ),
+              const SizedBox(height: 16),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: [
+              //     _fontOptionButton(controller, "Arial", isDarkMode),
+              //     _fontOptionButton(controller, "Gentium", isDarkMode),
+              //     _fontOptionButton(controller, "Georgia", isDarkMode),
+              //   ],
+              // ),
+              const SizedBox(height: 16),
+              // Slider updates the temporary font size
+              ValueListenableBuilder(
+                valueListenable: tempFontSize,
+                builder: (context, value, child) => Slider.adaptive(
+                  value: tempFontSize.value,
+                  min: 12,
+                  max: 50,
+                  activeColor: AppColors.tealBlue,
+                  onChanged: (value) {
+                    tempFontSize.value = value;
+                  },
                 ),
-                const SizedBox(height: 16),
-                // Slider updates the temporary font size
-                ValueListenableBuilder(
-                  valueListenable: tempFontSize,
-                  builder: (context, value, child) => Slider.adaptive(
-                    value: tempFontSize.value,
-                    min: 12,
-                    max: 50,
-                    activeColor: AppColors.tealBlue,
-                    onChanged: (value) {
-                      tempFontSize.value = value;
-                    },
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
           actions: [
             Padding(
@@ -113,26 +111,21 @@ class FontSizeDialog {
       child: Obx(() {
         return Column(
           children: [
-            Text(
-              font,
-              style: TextStyle(
-                fontWeight: controller.selectedFont.value == font
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-                color: controller.selectedFont.value == font
-                    ? AppColors.tealBlue
-                    : (isDarkMode ? Colors.white : Colors.black),
-              ),
+            LabelText(
+              text: font,
+              fontWeight: controller.selectedFont.value == font
+                  ? FontWeight.bold
+                  : FontWeight.normal,
+              textColor: controller.selectedFont.value == font
+                  ? AppColors.tealBlue
+                  : (isDarkMode ? Colors.white : Colors.black),
             ),
             const Gap(4),
-            Text(
-              "A",
-              style: TextStyle(
-                fontFamily: font,
-                color: controller.selectedFont.value == font
-                    ? AppColors.tealBlue
-                    : (isDarkMode ? Colors.white : Colors.black),
-              ),
+            TitleText(
+              text: "A",
+              textColor: controller.selectedFont.value == font
+                  ? AppColors.tealBlue
+                  : (isDarkMode ? Colors.white : Colors.black),
             ),
           ],
         );

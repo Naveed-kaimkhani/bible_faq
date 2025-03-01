@@ -1,7 +1,7 @@
-// import 'package:bible_faq/components/componets.dart';
-// import 'package:bible_faq/constants/constants.dart';
-// import 'package:bible_faq/data/data.dart';
-// import 'package:bible_faq/model/model.dart';
+// import 'package:bible_app/components/componets.dart';
+// import 'package:bible_app/constants/constants.dart';
+// import 'package:bible_app/data/data.dart';
+// import 'package:bible_app/model/model.dart';
 // import 'package:flutter/material.dart';
 // import 'package:gap/gap.dart';
 

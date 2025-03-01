@@ -1,9 +1,9 @@
-import 'package:bible_faq/components/componets.dart';
-import 'package:bible_faq/constants/app_images.dart';
-import 'package:bible_faq/data/model/category_question.dart';
-import 'package:bible_faq/data/model/question_category.dart';
-import 'package:bible_faq/model/topic.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
+import 'package:bible_app/components/componets.dart';
+import 'package:bible_app/constants/app_images.dart';
+import 'package:bible_app/data/model/category_question.dart';
+import 'package:bible_app/data/model/question_category.dart';
+import 'package:bible_app/model/topic.dart';
+import 'package:bible_app/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';

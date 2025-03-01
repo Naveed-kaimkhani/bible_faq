@@ -1,7 +1,7 @@
-import 'package:bible_faq/components/componets.dart';
-import 'package:bible_faq/constants/app_colors.dart';
-import 'package:bible_faq/constants/app_fonts.dart';
-import 'package:bible_faq/view/about_us_screen/info_card.dart';
+import 'package:bible_app/components/componets.dart';
+import 'package:bible_app/constants/app_colors.dart';
+import 'package:bible_app/constants/app_fonts.dart';
+import 'package:bible_app/view/about_us_screen/info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

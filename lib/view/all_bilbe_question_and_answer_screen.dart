@@ -1,10 +1,10 @@
-import 'package:bible_faq/components/appbar_filter.dart';
-import 'package:bible_faq/components/componets.dart';
-import 'package:bible_faq/components/last_read_time.dart';
-import 'package:bible_faq/constants/constants.dart';
-import 'package:bible_faq/services/sqlite_services/db_services.dart';
-import 'package:bible_faq/utils/utils.dart';
-import 'package:bible_faq/view_model/question_provider/question_provider_sql.dart';
+import 'package:bible_app/components/appbar_filter.dart';
+import 'package:bible_app/components/componets.dart';
+import 'package:bible_app/components/last_read_time.dart';
+import 'package:bible_app/constants/constants.dart';
+import 'package:bible_app/services/sqlite_services/db_services.dart';
+import 'package:bible_app/utils/utils.dart';
+import 'package:bible_app/view_model/question_provider/question_provider_sql.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

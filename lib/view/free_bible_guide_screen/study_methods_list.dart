@@ -1,4 +1,4 @@
-import 'package:bible_faq/view/free_bible_guide_screen/free_bible_guide_screen.dart';
+import 'package:bible_app/view/free_bible_guide_screen/free_bible_guide_screen.dart';
 import 'package:flutter/material.dart';
 
 class StudyMethodsList extends StatelessWidget {
