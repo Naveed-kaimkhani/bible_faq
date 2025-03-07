@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 <uses-permission android:name="android.permission.INTERNET"/>
 
-
+<!-- Make sure there are no typos in any permission declarations -->
 <queries>
   <!-- If your app checks for http or https link support -->
   <intent>
